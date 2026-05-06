@@ -506,130 +506,161 @@ function renderFinale() {
     </div>
   `;
 }
-
 // ════════════════════════════════════════
-// MOTOR DE NAVEGAÇÃO E INTERFACE (NÃO ALTERAR)
+// MOTOR DE NAVEGAÇÃO E INTERFACE (VERSÃO CORRIGIDA)
 // ════════════════════════════════════════
 const app = document.getElementById('app');
 
+// Inicializa a tela
+function update() {
+  if (S.screen === 'splash') app.innerHTML = renderSplash();
+  else if (S.screen === 'select') app.innerHTML = renderSelect();
+  else if (S.screen === 'era') app.innerHTML = renderEra();
+  else if (S.screen === 'finale') app.innerHTML = renderFinale();
+  window.scrollTo(0, 0);
+}
+
+function nav(screenId) {
+  S.screen = screenId;
+  update();
+}
+
+function startNode(charId) {
+  // Trava opcional: Se quiser que o Edu seja o último, avise aqui
+  if (charId === 'edu' && CITY.playedChars.length < 3) {
+    alert("O arquivo do Edu é o sensor final da cidade. Jogue primeiro com Marco, Amara e Rodrigo para que a realidade dele seja processada.");
+    return;
+  }
+  
+  S.char = charId;
+  // Pega a primeira era definida no objeto do personagem
+  const firstEra = Object.keys(CHARS[charId].eras)[0];
+  S.eraId = firstEra;
+  nav('era');
+}
+
 function renderSplash() {
-  app.innerHTML = `
+  return `
     <div class="screen" style="text-align:center">
-      <div class="label" style="margin-bottom:1.5rem">SIMULADOR ESTRUTURAL</div>
-      <div class="era-title" style="font-size:clamp(3.5rem,8vw,5.5rem);margin-bottom:0">CIDADE<br><em style="color:var(--amber);font-style:normal">ONLINE</em></div>
-      <div style="font-size:.85rem;color:var(--text);margin:2rem auto;max-width:550px">Câmeras, contratos e culpa.<br>Uma rede de decisões ramificadas sobre vigilância e justiça.</div>
-      <button class="btn" onclick="nav('select')">▶ ACESSAR MÓDULO DE PERSONAGENS</button>
+      <div class="label" style="margin-bottom:1.5rem">Simulador de Impacto Sistêmico</div>
+      <div class="era-title" style="font-size:clamp(3.5rem,10vw,6rem);color:var(--text-bright);line-height:1">CIDADE<br><em style="color:var(--char-col);font-style:normal">ONLINE</em></div>
+      <div style="font-size:.9rem;color:var(--amber);margin:2rem auto;max-width:500px">
+        O futuro de Salvador não é um destino, é uma sucessão de contratos, teses e algoritmos.
+      </div>
+      <button class="btn" onclick="nav('select')">▶ ACESSAR TERMINAL</button>
+      <div style="margin-top:1.5rem"><button class="btn btn-ghost" style="font-size:.65rem;border:none" onclick="resetGame()">⟳ APAGAR MEMÓRIA (RESET)</button></div>
     </div>
   `;
 }
 
 function renderSelect() {
   const cs = Object.values(CHARS);
-  app.innerHTML = `
+  const canSeeFinale = CITY.playedChars.length >= 3;
+
+  return `
     <div class="screen screen-left">
-      <div class="label" style="margin-bottom:1rem">ARQUIVOS DE MEMÓRIA</div>
-      <div class="era-title" style="font-size:2rem;color:var(--text-bright)">Por qual perspectiva você cruzará a cidade?</div>
+      <div class="label" style="margin-bottom:1rem">MÓDULO DE PERSPECTIVAS</div>
+      <div class="display" style="font-size:2rem;color:var(--text-bright)">Quem você quer ser agora?</div>
       
       <div class="char-grid">
-      ${cs.map(c => `
-        <div class="char-card" style="--c-col:${c.color}; ${S.playedChars.includes(c.id) ? 'opacity:0.6' : ''}" onclick="startNode('${c.id}')">
+      ${cs.map(c => {
+        const played = CITY.playedChars.includes(c.id);
+        const isEdu = c.id === 'edu';
+        return `
+        <div class="char-card" style="--c-col:${c.color}; ${played ? 'opacity:0.5' : ''}" onclick="startNode('${c.id}')">
           <div class="char-name">${c.name}</div>
-          <div style="font-size:.7rem; color:${c.color}; text-transform:uppercase; letter-spacing:0.1em">${c.role}</div>
-          <div style="font-size:.75rem; margin-top:1rem; color:var(--text-dim); border-top:1px solid var(--border); padding-top:1rem">${c.lens}</div>
-        </div>
-      `).join('')}
+          <div style="font-size:.7rem; color:${c.color}; text-transform:uppercase; font-weight:bold">${c.role}</div>
+          <div class="char-lens">${isEdu ? '<strong>[BLOQUEADO ATÉ TER DADOS DA CIDADE]</strong>' : c.lens}</div>
+          ${played ? '<div style="margin-top:1rem; color:var(--green); font-weight:bold; font-size:0.7rem;">✓ DADOS PROCESSADOS</div>' : ''}
+        </div>`;
+      }).join('')}
       </div>
+      
+      ${canSeeFinale ? `
+      <div style="margin-top:3rem; width:100%; text-align:center; border-top:1px solid var(--amber); padding-top:2rem">
+        <button class="btn btn-doc" onclick="nav('finale')">★ GERAR DIAGNÓSTICO FINAL DA CIDADE</button>
+      </div>` : ''}
+      
       <div style="margin-top:2rem"><button class="btn btn-ghost" onclick="nav('splash')">← VOLTAR</button></div>
     </div>
   `;
-}
-
-function nav(screenId) {
-  S.screen = screenId;
-  if(screenId === 'splash') renderSplash();
-  if(screenId === 'select') renderSelect();
-  window.scrollTo(0,0);
-}
-
-function startNode(charId) {
-  S.char = charId;
-  S.eraId = Object.keys(CHARS[charId].eras)[0]; // Pega a raiz da árvore
-  renderEra();
 }
 
 function renderEra() {
   const c = CHARS[S.char];
   const era = c.eras[S.eraId];
   
+  // Processa o contexto se ele for uma função (caso do Edu)
+  let ctx = typeof era.context === 'function' ? era.context(CITY) : era.context;
+  
   let docBtn = '';
   if (era.doc) {
-    docBtn = `<button class="btn btn-doc" style="margin-bottom:1.5rem" onclick="openDoc('${era.doc.meta}', '${era.doc.title}', \`${era.doc.body}\`)">📄 ABRIR ANEXO/PROVA DIGITAL</button>`;
+    const d = typeof era.doc === 'function' ? era.doc(CITY) : era.doc;
+    if (d) docBtn = `<button class="btn btn-doc" style="margin-bottom:1.5rem" onclick="openDoc('${d.meta}', '${d.title}', \`${d.body}\`)">📄 ANALISAR DOCUMENTO: ${d.meta}</button>`;
   }
 
-  let conceptHtml = '';
-  if (era.concept) {
-    conceptHtml = `<div class="concept-box"><div class="concept-title">${era.concept.title}</div>${era.concept.text}</div>`;
-  }
+  let conceptHtml = era.concept ? `<div class="concept-box"><div class="concept-title">${era.concept.title}</div>${era.concept.text}</div>` : '';
 
-  app.innerHTML = `
+  // Filtra as escolhas baseadas no estado da cidade
+  const choices = era.decisions[0].choices.filter(ch => !ch.showIf || ch.showIf(CITY));
+
+  return `
     <div class="screen screen-left" style="--char-col:${c.color}">
       <div class="label" style="color:${c.color}">${c.name} · ${era.year}</div>
       <div class="era-title">${era.title}</div>
       ${docBtn}
-      <div class="context-text">${era.context.replace(/\n\n/g, '<br><br>')}</div>
+      <div class="context-text">${ctx.replace(/\n\n/g, '<br><br>')}</div>
       ${conceptHtml}
-      <div style="font-family:'Syne',sans-serif;color:var(--amber);margin-top:2rem;font-weight:700;font-size:1.1rem">${era.decisions[0].q}</div>
+      <div style="font-family:'Syne',sans-serif;color:var(--amber);margin-top:2rem;font-weight:700">${era.decisions[0].q}</div>
       <div class="choices">
-        ${era.decisions[0].choices.map((ch, idx) => `
-          <button class="choice-btn" onclick="makeChoice(${idx})">
-            <span style="font-size:.65rem;color:var(--text-dim);display:block;margin-bottom:.3rem">DECISÃO ${String.fromCharCode(65+idx)}</span>
-            ${ch.text}
-          </button>
-        `).join('')}
+        ${choices.map((ch, i) => `<button class="choice-btn" onclick="makeChoice(${i})">${ch.text}</button>`).join('')}
       </div>
     </div>
   `;
-  window.scrollTo(0,0);
 }
 
 function makeChoice(idx) {
   const c = CHARS[S.char];
-  const ch = c.eras[S.eraId].decisions[0].choices[idx];
+  const era = c.eras[S.eraId];
+  const ch = era.decisions[0].choices.filter(x => !x.showIf || x.showIf(CITY))[idx];
+  
+  // Aplica impactos no estado global
+  if (ch.impact) Object.assign(CITY, ch.impact);
   
   const isFinalNode = !ch.nextEraId;
-  
-  let nextBtn = '';
-  if (!isFinalNode) {
-    nextBtn = `<button class="btn" style="border-color:${c.color};color:${c.color}" onclick="S.eraId='${ch.nextEraId}'; renderEra();">AVANÇAR NA LINHA DO TEMPO →</button>`;
-  } else {
-    nextBtn = `<button class="btn" style="border-color:var(--amber);color:var(--amber)" onclick="endChar()">FINALIZAR ARQUIVO DESTE PERSONAGEM ⟳</button>`;
-  }
+  const nextAction = isFinalNode 
+    ? `onclick="endChar()"` 
+    : `onclick="S.eraId='${ch.nextEraId}'; update();"`;
 
   app.innerHTML = `
     <div class="screen screen-left" style="--char-col:${c.color}">
-      <div class="label" style="color:var(--red)">O PESO DA ESCOLHA</div>
-      <div class="era-title" style="font-size:2rem">Análise de Impacto</div>
-      <div class="consequence-box">
-        <strong style="color:var(--text-bright)">O que aconteceu materialmente:</strong><br><br>${ch.consequence}
+      <div class="label" style="color:var(--red)">CONSEQUÊNCIA</div>
+      <div class="consequence-box">${ch.consequence}</div>
+      <div class="reveal-box"><strong>Por que isso importa:</strong><br>${ch.reveal}</div>
+      <div style="margin-top:2rem">
+        <button class="btn" style="border-color:${c.color};color:${c.color}" ${nextAction}>
+          ${isFinalNode ? 'FINALIZAR PERSPECTIVA' : 'CONTINUAR JORNADA →'}
+        </button>
       </div>
-      <div class="reveal-box">
-        <strong style="color:var(--amber)">A Lição Sistêmica:</strong><br><br>${ch.reveal}
-      </div>
-      <div style="margin-top:2rem">${nextBtn}</div>
     </div>
   `;
-  window.scrollTo(0,0);
 }
 
 function endChar() {
-  if (!S.playedChars.includes(S.char)) {
-    S.playedChars.push(S.char);
-  }
+  if (!CITY.playedChars.includes(S.char)) CITY.playedChars.push(S.char);
+  saveCity(CITY);
   nav('select');
 }
 
-// INICIAR O APP
-renderSplash();
+function resetGame() {
+  localStorage.removeItem(CK);
+  CITY = freshCity();
+  reset();
+  update();
+}
+
+// Inicia o sistema
+update();
 </script>
 </body>
 </html>

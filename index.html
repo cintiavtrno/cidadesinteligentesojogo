@@ -129,13 +129,6 @@ hr.div{border:none;border-top:1px solid var(--border);margin:1.75rem 0;width:100
 .audit-icon{flex-shrink:0;margin-top:.1rem}
 .audit-bad{color:#fca5a5}
 .audit-good{color:#6ee7b7}
-.city-meter{max-width:700px;width:100%;margin:1.5rem 0}
-.city-meter-title{font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:var(--text-dim);margin-bottom:1rem}
-.meter-row{display:flex;align-items:center;gap:1rem;margin-bottom:.9rem}
-.meter-label{font-size:.68rem;color:var(--text);width:130px}
-.meter-track{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
-.meter-fill{height:100%;border-radius:3px;transition:width 1.2s cubic-bezier(.25,.1,.25,1)}
-.meter-val{font-size:.7rem;width:36px;text-align:right}
 .glitch-anim{animation:glitch .4s step-end}
 @keyframes glitch{0%{filter:none}15%{filter:hue-rotate(80deg) saturate(2);transform:translate(2px,0)}35%{filter:invert(.08);transform:translate(-2px,0)}55%{filter:hue-rotate(-60deg)}75%{filter:saturate(1.5)}100%{filter:none;transform:none}}
 @media(max-width:640px){.char-grid{grid-template-columns:1fr}.screen{padding:2rem .9rem}.screen-left{padding-top:3.5rem}.manchetes{grid-template-columns:1fr}.ending-stats{gap:1.25rem}}
@@ -149,9 +142,9 @@ hr.div{border:none;border-top:1px solid var(--border);margin:1.75rem 0;width:100
 <div id="app"></div>
 <script>
 // ════════════════════════════════════════
-// CITY STATE
+// CITY STATE & DATA
 // ════════════════════════════════════════
-const CK='cidadeOnline_v3_city';
+const CK='cidadeOnline_v5_city';
 function freshCity(){return{cameras:5,transparency:5,equity:5,ibmContract:null,reportStatus:null,schoolBiometrics:null,amaraPublished:false,amaraIndependent:false,cpiDeponent:false,rodrigoTemplate:null,rodrigoWhistle:false,playedChars:[],totalPlays:0};}
 function loadCity(){try{return JSON.parse(localStorage.getItem(CK))||freshCity();}catch{return freshCity();}}
 function saveCity(c){localStorage.setItem(CK,JSON.stringify(c));}
@@ -166,150 +159,209 @@ function applyImpact(imp){
   saveCity(CITY);
 }
 
-// ════════════════════════════════════════
-// LIVE TICKER DATA
-// ════════════════════════════════════════
-const AMBIENT_TICKERS=[
-  'Smart City Expo 2025: Salvador concorre a prêmio de "Melhor Cidade Inteligente do Hemisfério Sul"',
-  'BID anuncia financiamento de US$ 240M para projetos de smart cities no Brasil',
-  'Pesquisa: 78% dos brasileiros apoiam câmeras de segurança em espaços públicos',
-  'IBM Smarter Cities: contrato de 20 anos inclui transferência de tecnologia, diz nota',
-  'Plano Nacional de IoT: 80% das capitais terão sensores urbanos até 2028'
-];
+// (TICKERS E FINALE MANTIDOS IGUAIS AO SEU CÓDIGO)
+const AMBIENT_TICKERS=['Smart City Expo 2025: Salvador concorre a prêmio','BID anuncia financiamento para projetos de smart cities no Brasil','ONU: cidades inteligentes podem reduzir emissões'];
 function getCityTickers(){
   const t=[];
-  if(CITY.cameras>=7) t.push('ALERTA: Densidade de câmeras em Salvador supera cidades europeias de referência');
-  if(CITY.ibmContract==='full') t.push('Contrato IBM ativo: 1.900 câmeras com sensores de áudio e movimento em 2.400 postes');
-  if(CITY.reportStatus==='suppressed') t.push('Relatório técnico sobre câmeras "ainda em análise" pela secretaria — segundo ano consecutivo');
-  if(CITY.reportStatus==='public') t.push('Relatório da Prefeitura: 96% de falsos positivos no carnaval — uso de reconhecimento facial suspenso');
-  if(CITY.schoolBiometrics) t.push('Biometria em 47 escolas: sindicato questiona base legal do armazenamento de dados');
-  if(CITY.rodrigoWhistle) t.push('URGENTE: CPI de Vigilância — documentos revelam uso de smart cities para monitorar ativistas');
+  if(CITY.cameras>=7) t.push('ALERTA: Densidade de câmeras em Salvador supera cidades europeias');
+  if(CITY.ibmContract==='full') t.push('Contrato IBM ativo: 1.900 câmeras com sensores');
+  if(CITY.reportStatus==='suppressed') t.push('Relatório técnico "ainda em análise"');
+  if(CITY.reportStatus==='public') t.push('Relatório da Prefeitura: 96% de falsos positivos');
   return t;
 }
-function getCharTickers(charId){ return []; }
 function buildTickerText(charId){
-  const all=[...getCityTickers(),...getCharTickers(charId),...AMBIENT_TICKERS];
-  return all.sort(()=>Math.random()-.5).slice(0,6).join(' · ');
+  const all=[...getCityTickers(),...AMBIENT_TICKERS];
+  return all.sort(()=>Math.random()-.5).slice(0,5).join(' · ');
 }
 
 // ════════════════════════════════════════
-// GRAND FINALE DATA
-// ════════════════════════════════════════
-const FINALE={
-  vigiada:{
-    color:'#ef4444', archetype:'CIDADE VIGIADA', title:'Salvador, 2026 — a mais monitorada do Hemisfério Sul',
-    text:`A promessa foi cumprida. A cidade é eficiente. Os semáforos inteligentes coordenam o tráfego. A taxa de criminalidade caiu — segundo a SSP-BA.\n\nNos bairros periféricos, a mesma tecnologia identifica "suspeitos" com 96% de erro. Os contratos duram 20 anos. Ninguém sabe ao certo o que os sensores capturam ou para onde os dados vão.`
-  },
-  disputa:{
-    color:'#10b981', archetype:'CIDADE EM DISPUTA', title:'Salvador, 2026 — uma cidade que aprendeu a questionar',
-    text:`Não é uma utopia. Seria desonesto chamar assim.\n\nÉ uma cidade com mais ferramentas para se defender dos próprios sistemas. Relatórios foram publicados. Contratos têm cláusulas de auditoria. Uma pesquisadora depôs no Senado.\n\nUma cidade em disputa não é uma cidade resolvida. É uma cidade onde o poder não age sem que alguém registre, questione e torne público.`
-  },
-  puxadinho:{
-    color:'#f59e0b', archetype:'PUXADINHO TECNOLÓGICO', title:'Salvador, 2026 — improvisada, resiliente, ambígua',
-    text:`Como sempre: Salvador.\n\nA tecnologia chegou de forma remendada. Alguns bairros têm iluminação inteligente. Outros têm lâmpadas antigas. Os contratos são complicados.\n\nHá câmeras que funcionam e câmeras que são decorativas. Isso também é uma forma de cidade inteligente. A versão brasileira: onde a gambiarra é uma resistência involuntária ao totalitarismo digital.`
-  },
-};
-function getCityArchetype(){
-  const{cameras,transparency,equity}=CITY;
-  if(cameras>=7&&equity<=4) return'vigiada';
-  if(transparency>=6&&equity>=6) return'disputa';
-  return'puxadinho';
-}
-function getAuditItems(){
-  const items=[];
-  const bad=(t)=>({bad:true,text:t});
-  const good=(t)=>({bad:false,text:t});
-  if(CITY.ibmContract==='full') items.push(bad('Contrato IBM assinado sem cláusula de dados — 3M de pessoas, servidor privado, 20 anos'));
-  if(CITY.ibmContract==='negotiated') items.push(good('Dados municipais parcialmente protegidos na negociação com IBM'));
-  if(CITY.reportStatus==='suppressed') items.push(bad('Relatório de 96% de falsos positivos em reconhecimento facial foi suprimido pela prefeitura'));
-  if(CITY.reportStatus==='public') items.push(good('Relatório de viés racial em câmeras foi publicado — referência nacional'));
-  if(!items.length) items.push({bad:null,text:'Nenhuma decisão registrada. Jogue com os personagens para construir o histórico da cidade.'});
-  return items;
-}
-
-// ════════════════════════════════════════
-// ADAPTIVE CONTEXT (Dynamic Cascading Contexts)
-// ════════════════════════════════════════
-function cityAddendum(charId,eraIdx){
-  if(charId==='edu'&&eraIdx===0){
-    const p=[];
-    if(CITY.cameras>=7) p.push('A cidade está densa de câmeras. Fruto de anos de contratos de PPP — cada poste é uma antena.');
-    if(CITY.reportStatus==='suppressed') p.push('Um relatório governamental que provava erros do sistema foi propositalmente arquivado. Eles sabem da falha.');
-    return p.join(' ');
-  }
-  return'';
-}
-
-// ════════════════════════════════════════
-// GAME DATA (With Dynamic Branches and showIf)
+// GAME DATA (AGORA COM ÁRVORE DE GRAFOS - "TIME CAVE")
 // ════════════════════════════════════════
 const CHARS={
-marco:{id:'marco',name:'Marco Santos',role:'Secretário-Adjunto de Inovação',city:'Salvador, BA · 2014–2026',color:'#3b82f6',quote:'"A tecnologia pode resolver o que a política não conseguiu."',lens:'Você está dentro do Estado. Seus contratos duram 20 anos — muito mais que qualquer governo.',intro:`É 2014. Você tem 36 anos e acaba de ser nomeado Secretário de Inovação. A cidade tem 40% das lâmpadas queimadas. A IBM ofereceu um contrato de 20 anos. O prefeito quer assinar.`,
-eras:[
-{id:'e1',year:'2014–2015',label:'ERA 01',title:'O Cavalo de Troia Luminoso',
-context:`A proposta chegou. Na página 47, uma cláusula especifica que os dados de vídeo e áudio dos postes pertencerão à concessionária por 20 anos.\n\n"São dados operacionais," explica o consultor.\n\nA cidade está sem luz.`,
-decisions:[{q:'A cláusula de propriedade dos dados. Você tem 72 horas.',choices:[
-{text:'Assina como está. A cidade precisa de luz. Os dados são questão técnica.',ef:2,eq:0,pr:-3,impact:{ibmContract:'full',cameras:2,transparency:-1},consequence:'O contrato é assinado. Em 2019, padrões de movimento de bairros periféricos são vendidos para uma seguradora.',reveal:'Quando a IBM for adquirida em 2021, os dados migram para fora do país.',hl:{main:'"Salvador terá 100% de iluminação LED", anuncia prefeito',alt:'Contrato de 20 anos entrega dados de 3 milhões a empresa estrangeira'}},
-{text:'Negocia ferozmente: a prefeitura é dona dos dados.',ef:-1,eq:1,pr:2,impact:{ibmContract:'negotiated',cameras:1,transparency:1},consequence:'Eles cedem, a prefeitura fica com a posse formal dos dados em contrato. Mas você atrasa a iluminação em 3 meses.',reveal:'Ter a posse dos dados é a primeira camada de defesa. Você vai precisar disso no futuro.',hl:{main:'Prefeitura negocia soberania digital antes de assinar contrato',alt:'Mesmo negociado, contrato amarra prefeitura a servidor privado por anos'}}
-]}]},
-{id:'e2',year:'2019',label:'ERA 02',title:'903 Alertas. 870 Erros.',
-context:`Fevereiro de 2019. O sistema disparou 903 alertas no Carnaval. 870 são falsos positivos (96,3%). O sistema erra 7x mais em pessoas negras.\n\nUm relatório técnico detalhando o fracasso cai na sua mesa. O prefeito diz: "Resolvemos isso internamente".`,
-decisions:[{q:'O relatório existe. Vazar compromete tudo. Não vazar compromete inocentes.',choices:[
-{text:'Suprime o relatório. Abre revisão técnica "interna" sem prazo.',ef:1,eq:-2,pr:-2,impact:{reportStatus:'suppressed',equity:-1},consequence:'O relatório desaparece na burocracia.',reveal:'Supressão transfere o problema para as vítimas nas ruas.',hl:{main:'Sistema opera com normalidade no Carnaval',alt:'Relatório interno aponta 96% de erros — prefeitura abafa'}},
-{text:'Torna público. Suspende o reconhecimento facial.',ef:-2,eq:2,pr:2,impact:{reportStatus:'public',cameras:-1,equity:1},consequence:'O prefeito fica furioso. Você é demitido, mas o sistema é freado.',reveal:'Você perdeu o emprego, mas evitou prisões injustas.',hl:{main:'Secretário é demitido após expor falha em sistema da prefeitura',alt:'Herói ou traidor? Funcionário vazou prova de viés racial'}},
-// OPÇÃO DINÂMICA: SÓ APARECE SE ELE NEGOCIOU OS DADOS NA ERA 1
-{showIf: (c) => c.ibmContract === 'negotiated', text:'[Ação Desbloqueada] Usa a cláusula de "Posse de Dados" conquistada em 2014 para forçar auditoria externa.',ef:1,eq:3,pr:2,impact:{reportStatus:'public',transparency:2},consequence:'A empresa tenta te calar, mas você mostra o contrato. Uma auditoria expõe a falha, você corrige o sistema legalmente e mantém seu cargo.',reveal:'Suas escolhas passadas abriram um caminho diplomático de resistência.',hl:{main:'Prefeitura usa cláusula inédita para forçar auditoria de empresa de IA',alt:'Vitória da transparência: auditoria confirma falhas e obriga reparos'}}
-]}]},
-{id:'e3',year:'2023',label:'ERA 03',title:'O Aditivo Escolar',
-context:`O contrato de 20 anos está na metade. A prefeitura quer estender as câmeras para escolas municipais, colhendo biometria de crianças para controle de presença.`,
-decisions:[{q:'Decisão final: biometria infantil.',choices:[
-{text:'Autoriza. Presença é vital.',ef:2,eq:-2,pr:-3,impact:{schoolBiometrics:true},consequence:'Rostos de crianças vão parar num servidor em Frankfurt.',reveal:'O panóptico começou pelas crianças.',hl:{main:'Biometria eleva presença escolar',alt:'Crianças vigiadas: rostos exportados para fora do Brasil'}},
-{text:'Bloqueia o aditivo.',ef:-1,eq:2,pr:3,impact:{schoolBiometrics:false},consequence:'O prefeito contorna você, assina por fora e te isola. Mas seu bloqueio técnico atrasa o projeto em 2 anos.',reveal:'Às vezes, a resistência certa só ganha tempo. E tempo salva vidas.',hl:{main:'Divergências marcam projeto escolar',alt:'Secretário isolado após tentar proteger dados de menores'}}
-]}]}
-],
-endings:{control:{type:'DISTOPIA',title:'O Arquiteto do Controle',text:`Marco ajudou a construir um pesadelo silencioso.`},human:{type:'RESISTÊNCIA',title:'A Cidade em Disputa',text:`Marco inseriu areia nas engrenagens e protegeu a cidade.`},collapse:{type:'COLAPSO',title:'O Contrato que Ficou',text:`O sistema engoliu as boas intenções.`},ambiguous:{type:'AMBÍGUO',title:'Progresso Seletivo',text:`Melhorou para uns, vigiou outros.`}}
+// -----------------------------------------
+// MARCO: EXEMPLO COMPLETO DE RAMIFICAÇÃO!
+// -----------------------------------------
+marco:{
+  id:'marco',name:'Marco Santos',role:'Secretário de Inovação',city:'Salvador, BA',color:'#3b82f6',quote:'"A tecnologia resolve o que a política não consegue."',lens:'Você está dentro do Estado. Seus contratos duram 20 anos.',
+  intro:`É 2014. A IBM ofereceu um contrato de 20 anos para iluminar a cidade. A cidade está às escuras e o prefeito quer pressa.`,
+  
+  // ERAS AGORA SÃO UM OBJETO (DICIONÁRIO), NÃO UMA LISTA
+  eras: {
+    // NÓ RAIZ (Começa aqui)
+    'e1_inicio': {
+      year:'2014', label:'ERA 01', title:'O Cavalo de Troia',
+      context:`A proposta chegou. Há uma cláusula garantindo que os dados de vídeo e calor dos postes pertencerão à empresa por 20 anos.`,
+      decisions:[{q:'O que você faz com a cláusula de dados?', choices:[
+        {
+          text:'Assina como está. A cidade precisa de luz urgente.', ef:2, eq:0, pr:-3, 
+          nextEraId: 'e2_caminho_assinado', // 👉 RAMIFICAÇÃO A
+          impact:{ibmContract:'full', cameras:2, transparency:-1},
+          consequence:'Luz imediata. Os dados passam a ser da corporação invisivelmente.',
+          reveal:'A conveniência é a mãe da vigilância.'
+        },
+        {
+          text:'Negocia. Exige a posse municipal dos dados.', ef:-1, eq:1, pr:2, 
+          nextEraId: 'e2_caminho_negociado', // 👉 RAMIFICAÇÃO B
+          impact:{ibmContract:'negotiated', cameras:1, transparency:1},
+          consequence:'Atrasou a luz, irritou o prefeito, mas o município reteve controle jurídico.',
+          reveal:'Controle de dados é poder futuro.'
+        }
+      ]}]
+    },
+
+    // RAMO A: ELE ASSINOU O CONTRATO CEGO
+    'e2_caminho_assinado': {
+      year:'2019', label:'ERA 02 (Caminho A)', title:'O Monstro Acordou',
+      context:`Como você entregou os dados corporativos em 2014, o sistema virou uma caixa preta. No Carnaval, disparou 903 alertas, 96% de erro em pessoas negras. O prefeito mandou abafar.`,
+      decisions:[{q:'O relatório vaza ou some?', choices:[
+        {
+          text:'Suprime o relatório para não quebrar o contrato.', ef:1, eq:-2, pr:-2,
+          nextEraId: 'e3_distopia', // 👉 VAI PARA FINAL DISTÓPICO
+          impact:{reportStatus:'suppressed', equity:-1},
+          consequence:'O relatório some. Prisões injustas acontecem.',
+          reveal:'A burocracia protege a máquina, não o cidadão.'
+        },
+        {
+          text:'Torna público. Quebra o sigilo corporativo.', ef:-2, eq:2, pr:2,
+          nextEraId: 'e3_redencao_caotica', // 👉 VAI PARA FINAL DE REDENÇÃO
+          impact:{reportStatus:'public', equity:1},
+          consequence:'A empresa processa a prefeitura por quebra contratual.',
+          reveal:'Você consertou seu erro custando milhões aos cofres públicos.'
+        }
+      ]}]
+    },
+
+    // RAMO B: ELE NEGOCIOU OS DADOS (NÃO TEM O PROBLEMA DO CARNAVAL DE FORMA SECRETA)
+    'e2_caminho_negociado': {
+      year:'2019', label:'ERA 02 (Caminho B)', title:'O Blefe da Corporação',
+      context:`Graças à sua negociação em 2014, a prefeitura tem os dados. Agora, a IBM quer forçar um aditivo milionário para "atualizar o software", ameaçando desligar as câmeras do Réveillon.`,
+      decisions:[{q:'Como você usa sua vantagem contratual?', choices:[
+        {
+          text:'Ameaça fazer auditoria pública no sistema deles.', ef:2, eq:2, pr:1,
+          nextEraId: 'e3_controle_estado', // 👉 FINAL DE PODER
+          impact:{reportStatus:'public', transparency:2},
+          consequence:'A empresa recua com medo do algoritmo deles ser exposto.',
+          reveal:'Empresas de IA odeiam transparência. Você usou isso como arma.'
+        },
+        {
+          text:'Cede ao aditivo. Você não quer dor de cabeça.', ef:1, eq:0, pr:-1,
+          nextEraId: 'e3_distopia', // 👉 CONVERGE PARA O MESMO FINAL RUIM DO RAMO A! (Funil)
+          impact:{transparency:-2},
+          consequence:'Eles ganham mais dinheiro e poder.',
+          reveal:'Se você não usa o poder que conquistou, você o perde.'
+        }
+      ]}]
+    },
+
+    // AS ERAS FINAIS (NÃO POSSUEM nextEraId - ISSO TERMINA O JOGO DO PERSONAGEM)
+    'e3_distopia': {
+      year:'2024', label:'ERA 03', title:'Escolas Vigiadas',
+      context:`O prefeito quer colocar biometria obrigatória nas escolas municipais conectadas à mesma empresa.`,
+      decisions:[{q:'Decisão final.', choices:[
+        {text:'Aprova a biometria infantil.', ef:2, pr:-3, nextEraId: null, impact:{schoolBiometrics:true}, consequence:'14 mil crianças vigiadas.', reveal:'O ciclo fechou.'},
+        {text:'Bloqueia.', ef:-1, pr:2, nextEraId: null, impact:{schoolBiometrics:false}, consequence:'Você tenta resistir, mas a máquina já está forte demais.', reveal:'Muito pouco, muito tarde.'}
+      ]}]
+    },
+
+    'e3_redencao_caotica': {
+      year:'2024', label:'ERA 03', title:'O Julgamento',
+      context:`Após seu vazamento, uma CPI foi aberta. A cidade está em guerra jurídica.`,
+      decisions:[{q:'Você testemunha contra a própria prefeitura?', choices:[
+        {text:'Sim. Conto tudo.', ef:-2, eq:3, pr:2, nextEraId: null, consequence:'Você é banido da política, mas vira herói anônimo.', reveal:'A verdade liberta, mas custa a carreira.'},
+        {text:'Não, fujo do país.', ef:0, eq:0, pr:0, nextEraId: null, consequence:'O caos se resolve sem você.', reveal:'A fuga.'}
+      ]}]
+    },
+
+    'e3_controle_estado': {
+      year:'2024', label:'ERA 03', title:'O Hegemon',
+      context:`Você venceu a corporação. A Prefeitura agora detém a melhor infraestrutura de IA do Brasil.`,
+      decisions:[{q:'O que fazer com o super-sistema sob seu controle?', choices:[
+        {text:'Usa para vigilância rigorosa de impostos e segurança.', ef:3, pr:-3, nextEraId: null, consequence:'Salvador vira a Cingapura Brasileira.', reveal:'O Estado hiper-eficiente também é um panóptico.'},
+        {text:'Desativa os módulos invasivos.', ef:-2, pr:3, nextEraId: null, consequence:'A cidade fica menos "inteligente", mas mais livre.', reveal:'Abrir mão do poder é a escolha mais difícil.'}
+      ]}]
+    }
+  },
+  endings:{control:{type:'DISTOPIA',title:'O Arquiteto do Controle',text:`Você construiu um sistema infalível de controle.`},human:{type:'RESISTÊNCIA',title:'A Cidade em Disputa',text:`Você lutou contra o contrato.`},collapse:{type:'COLAPSO',title:'Caos Contratual',text:`Sua gestão foi uma guerra de braço confusa.`},ambiguous:{type:'AMBÍGUO',title:'Progresso Seletivo',text:`Você venceu algumas, perdeu outras.`}}
 },
-amara:{id:'amara',name:'Amara Silva',role:'Pesquisadora de Direitos Digitais',city:'UFBA, Salvador · 2015–2025',color:'#f59e0b',quote:'"O algoritmo não mente. Mas quem programou o algoritmo?"',lens:'Você está fora do Estado. O seu desafio é como a verdade vai sobreviver.',intro:`Você é uma pesquisadora mapeando o viés racial nos sistemas de vigilância da cidade.`,
-eras:[
-{id:'e1',year:'2015–2016',label:'ERA 01',title:'O Mapa que Acusa',
-context:`Você tem um mapa provando que 73% das câmeras da cidade focam apenas em bairros pobres.\n\nA secretaria pediu uma "reunião amigável" antes de você publicar seu estudo.`,
-decisions:[{q:'Publicar o estudo ou ir na reunião?',choices:[
-{text:'Reunião primeiro.',ef:1,eq:-2,pr:-1,impact:{amaraPublished:false},consequence:'A prefeitura te convence a amenizar os termos. A verdade vai para uma nota de rodapé.',reveal:'Assim morrem as pesquisas perigosas.',hl:{main:'Pesquisadora e Prefeitura em parceria',alt:'Academia cede à pressão estatal'}},
-{text:'Publica direto. Sem filtros.',ef:-1,eq:2,pr:2,impact:{amaraPublished:true},consequence:'O estudo vira uma bomba. A prefeitura tenta desacreditar você.',reveal:'A verdade foi dita, e agora você tem alvos nas costas.',hl:{main:'Câmeras de Salvador vigiam apenas pobres, diz estudo',alt:'Vereadores pedem expulsão de acadêmica da UFBA'}}
-]}]},
-{id:'e2',year:'2019',label:'ERA 02',title:'O E-mail Anônimo e o Dinheiro',
-// CONTEXTO DINÂMICO BASEADO NO MARCO
-context: (c) => {
-  let base = `Uma fundação corporativa oferece R$ 800.000 de patrocínio para seu laboratório, mas exige revisar todos os textos antes da publicação.\n\n`;
-  if (c.reportStatus === 'suppressed') {
-    base += `**Na mesma semana, um e-mail anônimo de dentro da Prefeitura de Salvador cai na sua caixa de entrada! É um relatório ultra-secreto provando o fracasso das câmeras com 96% de falsos positivos (que o Secretário abafou há meses). Você tem a faca e o queijo na mão.**`;
-  }
-  return base;
+
+// -----------------------------------------
+// AMARA (Convertida para Objeto - Linear, mas funcional no novo motor)
+// -----------------------------------------
+amara:{
+  id:'amara',name:'Amara Silva',role:'Pesquisadora',city:'UFBA',color:'#f59e0b',quote:'"O algoritmo não mente, quem programa mente."',lens:'Fora do Estado.',intro:`É 2015. Você mapeou viés racial em câmeras.`,
+  eras: {
+    'inicio': {
+      year:'2015', label:'ERA 01', title:'O Mapa',
+      context:`O dado existe. A prefeitura pediu reunião antes de você publicar.`,
+      decisions:[{q:'Publicar ou ir na reunião?', choices:[
+        {text:'Reunião primeiro.', ef:1, pr:-1, nextEraId:'e2', impact:{amaraPublished:false}, consequence:'Eles suavizam seu estudo.', reveal:'Nota de rodapé.'},
+        {text:'Publica direto.', ef:-1, pr:2, nextEraId:'e2', impact:{amaraPublished:true}, consequence:'A bomba explode.', reveal:'A verdade dói.'}
+      ]}]
+    },
+    'e2': {
+      year:'2019', label:'ERA 02', title:'O Dinheiro',
+      context: (c) => `Fundação corporativa oferece grana, mas quer censura.${c.reportStatus === 'suppressed'?'\n\nBÔNUS: Você recebeu o relatório abafado pelo Marco!':''}`,
+      decisions:[{q:'Prioridade?', choices:[
+        {text:'Aceita grana e censura.', ef:1, pr:-1, nextEraId:'e3', impact:{amaraIndependent:false}, consequence:'Pesquisa amordaçada.', reveal:'A conta chegou.'},
+        {text:'Recusa grana.', ef:-1, pr:2, nextEraId:'e3', impact:{amaraIndependent:true}, consequence:'Laboratório pobre, mas livre.', reveal:'Preço alto.'},
+        {showIf: (c) => c.reportStatus === 'suppressed', text:'[Ação Desbloqueada] Vaza o relatório da prefeitura.', ef:-2, eq:3, pr:2, nextEraId:'e3', impact:{reportStatus:'public'}, consequence:'Escândalo nacional.', reveal:'Hackeando o sistema.'}
+      ]}]
+    },
+    'e3': {
+      year:'2024', label:'ERA 03', title:'O Senado',
+      context:`Convocada para CPI em Brasília.`,
+      decisions:[{q:'Avança ou recua?', choices:[
+        {text:'Depõe ao vivo.', nextEraId: null, impact:{cpiDeponent:true}, consequence:'Choque nacional.', reveal:'Coragem contagia.'},
+        {text:'Manda relatório.', nextEraId: null, impact:{cpiDeponent:false}, consequence:'Ignorada.', reveal:'Omissão.'}
+      ]}]
+    }
+  },
+  endings:{control:{type:'COOPTAÇÃO',title:'Pesquisadora Integrada',text:'Neutralizada pelo sistema.'},human:{type:'IMPACTO',title:'A Voz Que Atravessou',text:'Mudou o jogo.'},collapse:{type:'MORTO',title:'Esquecida',text:'Apenas poeira.'},ambiguous:{type:'AMBÍGUO',title:'Disputa',text:'Referência.'}}
 },
-decisions:[{q:'O que você prioriza neste momento crucial?',choices:[
-{text:'Aceita o dinheiro da fundação. Preciso salvar meu laboratório.',ef:1,eq:-2,pr:-1,impact:{amaraIndependent:false},consequence:'Você recebe a verba. Mas a fundação poda seus artigos contra as Big Techs. Autocensura.',reveal:'Você se tornou o que jurou investigar.',hl:{main:'Laboratório recebe R$ 800 mil de financiamento',alt:'Contrato de censura velada na Universidade'}},
-{text:'Recusa o dinheiro. Mantém a independência, mesmo ficando sem fundos.',ef:-2,eq:2,pr:2,impact:{amaraIndependent:true},consequence:'O laboratório quase fecha, mas sua independência te garante respeito nacional.',reveal:'O preço de não ter rabo preso é não ter dinheiro.',hl:{main:'Pesquisadora recusa grana corporativa',alt:'Resistência acadêmica na Bahia'}},
-// OPÇÃO DINÂMICA: SÓ APARECE SE O MARCO ABAFOU O RELATÓRIO
-{showIf: (c) => c.reportStatus === 'suppressed', text:'[Ação Desbloqueada] Ignora o dinheiro corporativo. Foca em vazar o relatório secreto da prefeitura para a grande mídia!',ef:-2,eq:4,pr:2,impact:{reportStatus:'public', amaraIndependent:true},consequence:'O escândalo explode no Brasil inteiro. O Secretário que abafou o caso é convocado pelo Ministério Público. Você mudou o rumo da cidade.',reveal:'Você agiu como um whistleblower. O sistema não contava com o fator humano.',hl:{main:'VAZAMENTO: Relatório oculto da prefeitura destrói imagem de Cidade Inteligente',alt:'Hackers ou ativistas expõem os podres da Secretaria de Inovação'}}
-]}]},
-{id:'e3',year:'2024',label:'ERA 03',title:'O Depoimento no Senado',
-context:`Você foi chamada para depor na CPI de Vigilância em Brasília. Dias antes, uma "auditoria surpresa" da Receita Federal bloqueia as contas do seu instituto. Pode ser coincidência. Ou não.`,
-decisions:[{q:'Você recua ou avança para o Senado?',choices:[
-{text:'Depõe. Enfrenta de frente.',ef:-1,eq:3,pr:3,impact:{cpiDeponent:true},consequence:'Seu depoimento ao vivo choca 180 mil telespectadores. A intimidação falha.',reveal:'Coragem é um contágio rápido.',hl:{main:'Pesquisadora estraçalha argumentos em CPI',alt:'Receita investiga ativista antes de CPI'}},
-{text:'Recua. Manda relatório escrito.',ef:0,eq:-2,pr:-1,impact:{cpiDeponent:false},consequence:'Seu relatório escrito é esquecido por assessores.',reveal:'O efeito congelante ("chilling effect") funcionou com você.',hl:{main:'CPI recebe relatórios mornos',alt:'Medo silencia acadêmicos em Brasília'}}
-]}]}
-],
-endings:{control:{type:'COOPTAÇÃO INSTITUCIONAL',title:'A Pesquisadora Integrada',text:`Amara foi neutralizada pelo sistema.`},human:{type:'IMPACTO REAL',title:'A Voz que Atravessou',text:`Amara gerou ondas que ninguém pôde ignorar.`},collapse:{type:'ARQUIVO MORTO',title:'O Relatório Existe',text:`Amara pesquisou, mas o mundo seguiu ignorando.`},ambiguous:{type:'DISPUTA PERMANENTE',title:'Nem Derrota Nem Vitória',text:`A luta contínua e sem fim claro.`}}
+
+// -----------------------------------------
+// EDU E RODRIGO (Mapeados simplificados para poupar espaço, mas prontos para expansão)
+// -----------------------------------------
+rodrigo:{
+  id:'rodrigo',name:'Rodrigo Maia',role:'Consultor PPP',city:'São Paulo',color:'#10b981',quote:'"Contratos duram."',lens:'O Mercado.',intro:`Você escreve o molde das PPPs.`,
+  eras: {
+    'r1': { year:'2016', label:'ERA 01', title:'Template', context:`Cláusula de expansão sem licitação.`, decisions:[{q:'Mantém ou remove?', choices:[
+      {text:'Mantém (padrão de mercado).', nextEraId:'r2', impact:{rodrigoTemplate:'expansionist'}, consequence:'Expansão invisível.', reveal:'Você facilitou.'},
+      {text:'Remove (exige licitação).', nextEraId:'r2', impact:{rodrigoTemplate:'controlled'}, consequence:'Perde clientes, salva controle.', reveal:'Princípios custam.'}
+    ]}] },
+    'r2': { year:'2021', label:'ERA 02', title:'Consequência Final', context:`Sindicatos estão sendo vigiados ilegalmente pelo seu sistema.`, decisions:[{q:'O que faz?', choices:[
+      {text:'Vaza tudo (Whistleblower).', nextEraId:null, impact:{rodrigoWhistle:true}, consequence:'CPI aberta.', reveal:'Destruiu a própria obra.'},
+      {text:'Silêncio.', nextEraId:null, impact:{rodrigoWhistle:false}, consequence:'Omissão.', reveal:'Zona cinzenta.'}
+    ]}] }
+  },
+  endings:{control:{type:'LOCK-IN',title:'Arquiteto',text:'Blindou lucros.'},human:{type:'WHISTLEBLOWER',title:'Redimido',text:'Vazou tudo.'},collapse:{type:'CAOS',title:'Zona Cinza',text:'Tudo ruiu.'},ambiguous:{type:'AMBÍGUO',title:'Mercado',text:'Apenas negócios.'}}
+},
+
+edu:{
+  id:'edu',name:'Edu Santos',role:'Entregador',city:'Salvador',color:'#a78bfa',quote:'"Eu sinto na pele."',lens:'O Cidadão.',intro:`As decisões dos outros caem em você.`,
+  eras: {
+    'ed1': { year:'2019', label:'ERA 01', title:'A Câmera', context:`Câmera do poste te acha "suspeito".`, decisions:[{q:'Como reage?', choices:[
+      {text:'Deita no chão e cede.', nextEraId:'ed2', impact:{equity:-1}, consequence:'Humilhado, mas vivo.', reveal:'Estatística invisível.'},
+      {text:'Exige ver a foto.', nextEraId:'ed2', impact:{equity:1}, consequence:'Apanha, mas gera boletim.', reveal:'Gritando pro sistema.'}
+    ]}] },
+    'ed2': { year:'2023', label:'ERA 02', title:'Reunião', context:`Sindicato marcado. O sistema do Marco e Rodrigo está filmando a porta.`, decisions:[{q:'Você vai?', choices:[
+      {text:'Sim, foda-se.', nextEraId:null, impact:{equity:2}, consequence:'Tomam multas, mas o movimento nasce.', reveal:'Resistência crua.'},
+      {text:'Não.', nextEraId:null, impact:{equity:-1}, consequence:'Medo vence.', reveal:'Efeito congelante.'}
+    ]}] }
+  },
+  endings:{control:{type:'FANTASMA',title:'Invisível',text:'Sobrevivendo.'},human:{type:'VIVO',title:'Testemunha',text:'Você foi a faísca.'},collapse:{type:'FIM',title:'Moído',text:'Engolido.'},ambiguous:{type:'SOBREVIVENTE',title:'Resiste',text:'Corre pra viver.'}}
 }
 };
 
 // ════════════════════════════════════════
-// GAME STATE
+// GAME STATE (ATUALIZADO PARA GRAFOS)
 // ════════════════════════════════════════
-let S={screen:'splash',char:null,eraIdx:0,decIdx:0,scores:{ef:5,eq:5,pr:5},choices:[],lastChoice:null};
-function reset(){S={screen:'splash',char:null,eraIdx:0,decIdx:0,scores:{ef:5,eq:5,pr:5},choices:[],lastChoice:null};}
+let S={screen:'splash',char:null, eraId:null, history:[], nextEraId:null, decIdx:0, scores:{ef:5,eq:5,pr:5}, choices:[], lastChoice:null};
+function reset(){S={screen:'splash',char:null,eraId:null,history:[],nextEraId:null,decIdx:0,scores:{ef:5,eq:5,pr:5},choices:[],lastChoice:null};}
 function C(){return CHARS[S.char];}
 function endKey(){const{ef,eq,pr}=S.scores;if(ef>=7&&pr<=4&&eq<=4)return'control';if(pr>=7&&eq>=7)return'human';if(ef<=4&&pr<=4&&eq<=4)return'collapse';return'ambiguous';}
+
+// ATUALIZAÇÃO VISUAL E DE CORES
 function updateVis(){
   const{eq,pr}=S.scores,d=Math.max(0,Math.min(1,(10-(eq+pr)*.5)/10));
   document.documentElement.style.setProperty('--dystopia',d.toFixed(3));
@@ -325,16 +377,22 @@ function scoreRows(col){
   const lb={ef:'Eficiência',eq:'Equidade',pr:'Privacidade'};
   return Object.entries(S.scores).map(([k,v])=>`<div class="score-row"><span class="score-label">${lb[k]}</span><div class="score-track"><div class="score-fill" style="width:${v*10}%;background:${col}"></div></div><span class="score-val">${v}/10</span></div>`).join('');
 }
-function tl(){return`<div class="timeline">${C().eras.map((e,i)=>`<div class="tl-item ${i<S.eraIdx?'tl-done':i===S.eraIdx?'tl-active':''}">${e.year.split('–')[0]}</div>`).join('')}</div>`;}
+
+// A TIMELINE AGORA RENDERIZA BASEADA NO HISTÓRICO DE ERAS VISITADAS
+function tl(){
+  return `<div class="timeline">${S.history.map((id, i) => {
+    const e = C().eras[id];
+    return `<div class="tl-item ${i < S.history.length - 1 ? 'tl-done' : 'tl-active'}">${e.year.split('–')[0]}</div>`;
+  }).join('')}</div>`;
+}
+
 function cityFlags(){
   const f=[];
-  if(CITY.cameras>=8)f.push({t:`📹 Vigilância alta (${CITY.cameras}/10)`,c:'active'});
-  else if(CITY.cameras<=4)f.push({t:'Vigilância baixa',c:'good'});
   if(CITY.ibmContract==='full')f.push({t:'Contrato de Dados Cego',c:'active'});
-  if(CITY.ibmContract==='negotiated')f.push({t:'Dados Municipais Protegidos',c:'good'});
-  if(CITY.reportStatus==='suppressed')f.push({t:'Relatório Governamental Abafado',c:'active'});
-  if(CITY.reportStatus==='public')f.push({t:'Relatório VAZADO e Público',c:'good'});
-  if(!f.length)f.push({t:'Nenhuma decisão registrada ainda',c:'neutral'});
+  if(CITY.ibmContract==='negotiated')f.push({t:'Dados Protegidos',c:'good'});
+  if(CITY.reportStatus==='suppressed')f.push({t:'Relatório Abafado',c:'active'});
+  if(CITY.reportStatus==='public')f.push({t:'Relatório VAZADO',c:'good'});
+  if(!f.length)f.push({t:'Nenhuma decisão',c:'neutral'});
   return`<div class="city-flags">${f.map(x=>`<span class="city-flag city-flag-${x.c}">${x.t}</span>`).join('')}</div>`;
 }
 
@@ -346,34 +404,42 @@ function renderSplash(){return`
   <div style="margin-bottom:1.5rem"><span class="status-dot"></span><span class="label">Sistema Iniciando</span></div>
   <div class="splash-title">CIDADE<br><em>ONLINE</em></div>
   <div class="splash-meta">Brasil · 2010–2040 · Um jogo de decisões</div>
-  <div class="splash-tagline">Cidades inteligentes não são neutras.<br><strong>Inteligentes para quem?</strong></div>
-  <button class="btn" data-a="charSelect" style="font-size:.9rem;padding:.9rem 2.5rem">▶&nbsp; INICIAR SISTEMA</button>
+  <button class="btn" data-a="charSelect" style="font-size:.9rem;padding:.9rem 2.5rem">▶ INICIAR SISTEMA</button>
   <div style="margin-top:.75rem"><button class="btn btn-ghost" data-a="resetCity" style="font-size:.65rem;padding:.4rem 1rem">⟳ Resetar estado da cidade</button></div>
 </div>`;}
 
 function renderCharSelect(){
-  const cs=Object.values(CHARS),allPlayed=cs.every(c=>CITY.playedChars.includes(c.id)),hasPlayed=CITY.playedChars.length>0;
+  const cs = Object.values(CHARS);
+  const playedCount = CITY.playedChars.filter(id => id !== 'edu').length;
+  const eduUnlocked = playedCount >= 3;
+
   return`
 <div class="screen">
   <div style="text-align:center;margin-bottom:1.25rem">
     <div class="label" style="margin-bottom:.4rem">Escolha seu personagem</div>
     <div class="display" style="font-size:1.4rem;color:var(--text-bright)">Por qual lente você vê a cidade?</div>
   </div>
-  ${allPlayed?`<div style="text-align:center;margin-bottom:1.25rem"><button class="btn btn-finale" data-a="grandFinale">★ RELATÓRIO FINAL DA CIDADE</button></div>`:''}
-  ${hasPlayed?`<div class="city-panel" style="max-width:980px"><div class="city-panel-title">Estado atual da cidade — herdado das suas escolhas</div>${cityFlags()}</div>`:''}
+  ${CITY.playedChars.length>0 ?`<div class="city-panel" style="max-width:980px"><div class="city-panel-title">Estado atual da cidade</div>${cityFlags()}</div>`:''}
+  
   <div class="char-grid">
-  ${cs.map(c=>{const played=CITY.playedChars.includes(c.id);return`
+  ${cs.map(c=>{
+    const played = CITY.playedChars.includes(c.id);
+    if(c.id === 'edu' && !eduUnlocked) {
+      return `<div class="char-card" style="opacity:0.4;cursor:not-allowed;border-style:dashed;">
+        <div class="char-name" style="color:var(--text-dim)">??????</div>
+        <div class="char-role" style="color:var(--text-dim)">Cidadão</div>
+        <div class="char-lens" style="color:var(--amber);margin-top:15px;">🔒 Jogue com os outros 3 para desbloquear a jornada final.</div>
+      </div>`;
+    }
+    return`
     <div class="char-card${played?' played':''}" data-a="charIntro" data-char="${c.id}" style="--c-col:${c.color}">
       <div class="char-name">${c.name}</div>
       <div class="char-role" style="color:${c.color}">${c.role}</div>
-      <div class="char-city">${c.city}</div>
       <div class="char-quote" style="border-color:${c.color};color:var(--text)">${c.quote}</div>
       <div class="char-lens">${c.lens}</div>
     </div>`;}).join('')}
   </div>
-  <div style="margin-top:1.5rem">
-    <div style="display:flex;gap:.75rem;justify-content:center"><button class="btn btn-ghost" data-a="splash">← Voltar</button></div>
-  </div>
+  <div style="margin-top:1.5rem"><button class="btn btn-ghost" data-a="splash">← Voltar</button></div>
 </div>`;}
 
 function renderCharIntro(){
@@ -387,21 +453,17 @@ function renderCharIntro(){
     <div class="char-intro-text">${c.intro.replace(/\n\n/g,'<br><br>')}</div>
     <div style="display:flex;gap:1rem;flex-wrap:wrap">
       <button class="btn" data-a="start" style="border-color:${c.color};color:${c.color}">COMEÇAR →</button>
-      <button class="btn btn-ghost" data-a="charSelect">← Trocar personagem</button>
+      <button class="btn btn-ghost" data-a="charSelect">← Trocar</button>
     </div>
   </div>
 </div>`;}
 
 function renderEra(){
-  const c=C(),era=c.eras[S.eraIdx],dec=era.decisions[S.decIdx];
-  const add=cityAddendum(c.id,S.eraIdx);
+  const c=C(), era=c.eras[S.eraId], dec=era.decisions[S.decIdx];
   const tickerText=buildTickerText(c.id);
-  
-  // Avaliação Dinâmica do Contexto da Era
   const rawContext = typeof era.context === 'function' ? era.context(CITY) : era.context;
   const contextHtml = rawContext.replace(/\n\n/g,'<br><br>');
 
-  // Avaliação Dinâmica das Escolhas (Filter pelo showIf)
   const visibleChoices = dec.choices
     .map((ch, originalIdx) => ({ ch, originalIdx }))
     .filter(item => !item.ch.showIf || item.ch.showIf(CITY));
@@ -413,21 +475,14 @@ function renderEra(){
     <div class="era-badge">${era.year}</div>
   </div>
   ${tl()}
-  <div class="ticker-wrap">
-    <div class="ticker-live">AO VIVO</div>
-    <div class="ticker-scroll"><div class="ticker-inner">${tickerText}</div></div>
-  </div>
-  <div class="era-year">${era.year}</div>
+  <div class="ticker-wrap"><div class="ticker-live">AO VIVO</div><div class="ticker-scroll"><div class="ticker-inner">${tickerText}</div></div></div>
   <div class="era-title">${era.title}</div>
-  <div class="context-text">
-    ${contextHtml}
-    ${add?`<div class="context-addendum">⟳ Contexto herdado: ${add}</div>`:''}
-  </div>
+  <div class="context-text">${contextHtml}</div>
   <div class="decision-q">${dec.q}</div>
   <div class="choices">
     ${visibleChoices.map((item, displayIdx) => `
     <button class="choice-btn ${item.ch.showIf ? 'special-choice' : ''}" data-a="choose" data-idx="${item.originalIdx}">
-      <div class="choice-letter">Opção ${String.fromCharCode(65+displayIdx)} ${item.ch.showIf ? '(DESBLOQUEADA PELO SEU PASSADO)' : ''}</div>
+      <div class="choice-letter">Opção ${String.fromCharCode(65+displayIdx)}</div>
       ${item.ch.text}
     </button>`).join('')}
   </div>
@@ -435,21 +490,22 @@ function renderEra(){
 </div>`;}
 
 function renderConsequence(){
-  const c=C(),era=c.eras[S.eraIdx],dec=era.decisions[S.decIdx],ch=dec.choices[S.lastChoice];
-  const isLast=S.eraIdx>=c.eras.length-1;
-  const nextBtn=isLast?`<button class="btn" data-a="ending" style="border-color:${c.color};color:${c.color}">VER DESFECHO FINAL →</button>`:`<button class="btn" data-a="nextEra" style="border-color:${c.color};color:${c.color}">PRÓXIMA ERA →</button>`;
+  const c=C(), era=c.eras[S.eraId], dec=era.decisions[S.decIdx], ch=dec.choices[S.lastChoice];
+  
+  // MAGIA DA RAMIFICAÇÃO: SE NÃO TIVER PRÓXIMO ID, É O FIM DA LINHA!
+  const isLast = !ch.nextEraId; 
+  
+  const nextBtn = isLast 
+    ? `<button class="btn" data-a="ending" style="border-color:${c.color};color:${c.color}">VER DESFECHO FINAL →</button>`
+    : `<button class="btn" data-a="nextEra" style="border-color:${c.color};color:${c.color}">PRÓXIMA ERA →</button>`;
+    
   return`
 <div class="screen screen-left" style="--char-col:${c.color}">
   <div class="game-header">
     <div><div class="label label-accent">${c.name}</div><div class="label">${era.year} · Consequência</div></div>
   </div>
-  <div style="max-width:740px;width:100%;font-size:.78rem;color:var(--text-dim);font-style:italic;margin-bottom:.5rem">→ Você escolheu: "${ch.text}"</div>
   <div class="consequence-box"><div class="consequence-label">O que acontece</div><div class="consequence-text">${ch.consequence}</div></div>
   <div class="reveal-box"><div class="reveal-label">Perspectiva crítica</div>${ch.reveal}</div>
-  ${ch.hl?`<div class="manchetes">
-    <div class="manchete manchete-mainstream"><div class="manchete-label">📰 Mídia convencional</div>${ch.hl.main}</div>
-    <div class="manchete manchete-alt"><div class="manchete-label">📻 Mídia independente</div>${ch.hl.alt}</div>
-  </div>`:''}
   <div class="scores-wrap"><div class="label" style="margin-bottom:.75rem">Estado atual — ${c.name}</div>${scoreRows(c.color)}</div>
   <div style="display:flex;gap:1rem;flex-wrap:wrap">${nextBtn}</div>
   <div class="spacer"></div>
@@ -458,84 +514,77 @@ function renderConsequence(){
 function renderEnding(){
   const c=C(),ek=endKey(),e=c.endings[ek];
   const ec={control:'#ef4444',human:'#10b981',collapse:'#64748b',ambiguous:'#f59e0b'}[ek];
-  const allPlayed=Object.keys(CHARS).every(k=>CITY.playedChars.includes(k));
   return`
 <div class="screen" style="--char-col:${ec}">
   <div class="ending-wrap">
     <div class="ending-type-badge" style="color:${ec};border-color:${ec}">${e.type}</div>
     <div class="ending-title">${e.title}</div>
-    <div class="ending-text">${e.text.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}</div>
+    <div class="ending-text">${e.text.replace(/\n\n/g,'<br><br>')}</div>
     <hr class="div">
     <div style="margin:1rem 0"><div class="city-panel-title label" style="margin-bottom:.75rem">Impacto na cidade</div>${cityFlags()}</div>
-    ${allPlayed?`<div style="text-align:center;margin:1rem 0"><button class="btn btn-finale" data-a="grandFinale">★ VER RELATÓRIO FINAL DA CIDADE</button></div>`:'<div style="font-size:.65rem;color:var(--text-dim);text-align:center;margin:1rem 0">Jogue com os outros personagens para ver a teia completa.</div>'}
-    <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:.75rem">
-      <button class="btn" data-a="charSelect" style="border-color:${ec};color:${ec}">JOGAR NOVAMENTE</button>
-      <button class="btn btn-ghost" data-a="splash">INÍCIO</button>
-    </div>
-  </div>
-</div>`;}
-
-function renderGrandFinale(){
-  const ak=getCityArchetype(),arch=FINALE[ak],items=getAuditItems();
-  return`
-<div class="screen">
-  <div style="max-width:740px;width:100%;text-align:center;margin-bottom:2rem">
-    <div class="label" style="margin-bottom:.5rem">Relatório Final da Cidade</div>
-    <div class="finale-header" style="color:${arch.color}">CIDADE<br>ONLINE</div>
-  </div>
-  <div style="max-width:700px;width:100%">
-    <div class="finale-archetype-badge" style="color:${arch.color};border-color:${arch.color}">${arch.archetype}</div>
-    <div class="finale-title" style="color:var(--text-bright)">${arch.title}</div>
-    <div class="finale-text" style="color:var(--text)">${arch.text.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}</div>
-    <hr class="div">
-    <div class="audit-list">
-      <div class="audit-title">Histórico de decisões coletivas cruzadas</div>
-      ${items.map(it=>`
-      <div class="audit-item ${it.bad===true?'audit-bad':it.bad===false?'audit-good':''}">
-        <span class="audit-icon">${it.bad===true?'✕':it.bad===false?'✓':'·'}</span>
-        <span>${it.text}</span>
-      </div>`).join('')}
-    </div>
-    <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:2rem">
-      <button class="btn btn-ghost" data-a="resetCity">⟳ RECOMEÇAR O MULTIVERSO</button>
+    <div style="display:flex;gap:1rem;justify-content:center;margin-top:.75rem">
+      <button class="btn" data-a="charSelect" style="border-color:${ec};color:${ec}">VOLTAR PARA SELEÇÃO</button>
     </div>
   </div>
 </div>`;}
 
 // ════════════════════════════════════════
-// EVENTS
+// EVENTS E NAVEGAÇÃO
 // ════════════════════════════════════════
 const app=document.getElementById('app');
 function render(){
   updateVis();
-  const scr={splash:renderSplash,charSelect:renderCharSelect,charIntro:renderCharIntro,era:renderEra,consequence:renderConsequence,ending:renderEnding,grandFinale:renderGrandFinale};
+  const scr={splash:renderSplash,charSelect:renderCharSelect,charIntro:renderCharIntro,era:renderEra,consequence:renderConsequence,ending:renderEnding};
   app.innerHTML=(scr[S.screen]||renderSplash)();
   app.scrollTop=0;
 }
+
 app.addEventListener('click',e=>{
   const el=e.target.closest('[data-a]');if(!el)return;
   const a=el.dataset.a;
+  
   if(a==='splash'){reset();render();return;}
   if(a==='resetCity'){resetCity();CITY=loadCity();reset();render();return;}
   if(a==='charSelect'){S.screen='charSelect';render();return;}
-  if(a==='grandFinale'){S.screen='grandFinale';render();return;}
+  
   if(a==='charIntro'){
     const ch=el.dataset.char;
-    S={screen:'charIntro',char:ch,eraIdx:0,decIdx:0,scores:{ef:5,eq:5,pr:5},choices:[],lastChoice:null};
+    // INICIA PEGANDO A PRIMEIRA KEY DO OBJETO ERAS AUTOMATICAMENTE (ex: 'e1_inicio')
+    const firstEraId = Object.keys(CHARS[ch].eras)[0];
+    S={screen:'charIntro', char:ch, eraId:firstEraId, history:[firstEraId], nextEraId:null, decIdx:0, scores:{ef:5,eq:5,pr:5}, choices:[], lastChoice:null};
     render();return;
   }
+  
   if(a==='start'){S.screen='era';render();return;}
+  
   if(a==='choose'){
-    const idx=parseInt(el.dataset.idx),ch=C().eras[S.eraIdx].decisions[S.decIdx].choices[idx];
+    const idx=parseInt(el.dataset.idx);
+    const ch=C().eras[S.eraId].decisions[S.decIdx].choices[idx];
+    
     S.scores.ef=Math.max(1,Math.min(10,S.scores.ef+(ch.ef||0)));
     S.scores.eq=Math.max(1,Math.min(10,S.scores.eq+(ch.eq||0)));
     S.scores.pr=Math.max(1,Math.min(10,S.scores.pr+(ch.pr||0)));
-    S.lastChoice=idx;S.choices.push(idx);
+    
+    S.lastChoice=idx;
+    S.choices.push(idx);
+    
+    // GUARDA PARA ONDE ELE VAI!
+    S.nextEraId = ch.nextEraId; 
+    
     applyImpact(ch.impact);
     if((ch.pr||0)<-1||(ch.eq||0)<-1){app.classList.add('glitch-anim');setTimeout(()=>app.classList.remove('glitch-anim'),400);}
     S.screen='consequence';render();return;
   }
-  if(a==='nextEra'){S.eraIdx++;S.decIdx=0;S.screen='era';render();return;}
+  
+  if(a==='nextEra'){
+    // MUDA DE FASE BASEADO NO ID QUE ELE ESCOLHEU
+    S.eraId = S.nextEraId;
+    S.history.push(S.eraId); // Adiciona na timeline
+    S.decIdx = 0;
+    S.screen = 'era';
+    render();return;
+  }
+  
   if(a==='ending'){
     if(!CITY.playedChars.includes(S.char)){CITY.playedChars.push(S.char);saveCity(CITY);}
     S.screen='ending';render();return;

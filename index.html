@@ -3,649 +3,655 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CIDADE ONLINE — Rastreamento Urbano</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+<title>CIDADE ONLINE — Cidades Inteligentes no Brasil</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#020617; --surface:#0f172a; --surface2:#1e293b;
-  --border:rgba(56,189,248,.2); --text:#94a3b8;
-  --text-bright:#f8fafc; --text-dim:#475569;
-  --cyan:#38bdf8; --teal:#2dd4bf; --red:#f43f5e; --alert:#fbbf24;
-  --char-col:#38bdf8;
+  --bg:#07090f;--surface:#0c1018;--surface2:#111827;
+  --border:rgba(148,163,184,.1);--text:#94a3b8;
+  --text-bright:#e2e8f0;--text-dim:#475569;
+  --red:#ef4444;--amber:#f59e0b;--blue:#3b82f6;--green:#10b981;
+  --char-col:#3b82f6;--dystopia:0;
 }
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Space Mono',monospace;font-size:14px;line-height:1.6;overflow:hidden;user-select:none;}
-
-/* ── UI SCREENS ── */
-#ui-layer{position:absolute;inset:0;z-index:20;overflow-y:auto;overflow-x:hidden;transition:background 0.3s;}
-#ui-layer.in-game{background:rgba(2,6,23,0.9);backdrop-filter:blur(8px);}
-#ui-layer.hidden{display:none;}
-
-.screen{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;animation:bootUp .4s cubic-bezier(0,0.6,0.3,1)}
-.screen-left{align-items:flex-start;justify-content:center;padding-top:4rem;padding-bottom:4rem;}
-@keyframes bootUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
-.display{font-family:'Inter',sans-serif;font-weight:700;line-height:1.1;letter-spacing:-0.03em;}
-.label{font-size:.6rem;text-transform:uppercase;letter-spacing:.25em;color:var(--text-dim);}
-.status-indicator{display:inline-flex;align-items:center;gap:.5rem;font-size:.65rem;color:var(--cyan);text-transform:uppercase;letter-spacing:.15em;border:1px solid var(--border);padding:.4rem 1rem;background:rgba(15,23,42,0.8);position:absolute;top:2rem;left:2rem;z-index:30;}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
-
-.btn{display:inline-block;padding:.8rem 1.5rem;border:1px solid var(--char-col);color:var(--char-col);background:rgba(15,23,42,0.8);font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.1em;cursor:pointer;transition:all .2s;text-transform:uppercase;}
-.btn:hover{background:var(--char-col);color:var(--bg);box-shadow:0 0 15px rgba(56,189,248,.3);}
-.btn-ghost{border-color:var(--text-dim);color:var(--text);}
-.btn-ghost:hover{border-color:var(--text-bright);color:var(--text-bright);background:var(--surface2);box-shadow:none;}
-
-.panel{background:rgba(15,23,42,0.9);border:1px solid var(--border);padding:2rem;position:relative;width:100%;max-width:740px;}
-.panel::before{content:'';position:absolute;top:0;left:0;width:20px;height:20px;border-top:2px solid var(--char-col);border-left:2px solid var(--char-col);}
-.panel::after{content:'';position:absolute;bottom:0;right:0;width:20px;height:20px;border-bottom:2px solid var(--char-col);border-right:2px solid var(--char-col);}
-
-.choices{display:flex;flex-direction:column;gap:.75rem;width:100%;margin-top:2rem;}
-.choice-btn{border:1px solid var(--border);background:rgba(15,23,42,0.6);padding:1.2rem;text-align:left;cursor:pointer;transition:all .2s;color:var(--text);font-family:'Inter',sans-serif;font-size:.85rem;line-height:1.6;position:relative;overflow:hidden;}
-.choice-btn::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--char-col);transform:scaleY(0);transition:transform .2s;transform-origin:bottom;}
-.choice-btn:hover{background:rgba(30,41,59,0.8);color:var(--text-bright);border-color:var(--text-dim);}
-.choice-btn:hover::before{transform:scaleY(1);}
-.choice-letter{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--char-col);margin-bottom:.4rem;letter-spacing:.1em;}
-
-/* ── CONSEQUENCE STYLES ── */
-.consequence-box{border:1px solid var(--char-col); background:rgba(15,23,42,0.8); padding:1.4rem; margin:1.4rem 0; width:100%;}
-.consequence-label{font-size:.6rem; text-transform:uppercase; letter-spacing:.15em; color:var(--char-col); margin-bottom:.75rem;}
-.consequence-text{font-size:.87rem; line-height:1.9; color:var(--text-bright);}
-.reveal-box{border:1px solid rgba(245,158,11,.3); background:rgba(245,158,11,.05); padding:1.2rem; font-size:.8rem; line-height:1.8; color:var(--alert); font-style:italic;}
-.reveal-label{font-size:.58rem; text-transform:uppercase; letter-spacing:.15em; color:var(--alert); margin-bottom:.5rem;}
-.manchetes{display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-top:1.5rem;}
-.manchete{padding:1rem; border:1px solid rgba(148,163,184,.2); background:rgba(15,23,42,0.5); font-size:.75rem; line-height:1.7;}
-.manchete-label{font-size:.55rem; text-transform:uppercase; letter-spacing:.18em; margin-bottom:.45rem; opacity:.7;}
-.manchete-mainstream .manchete-label{color:var(--text-dim);}
-.manchete-alt{border-color:rgba(239,68,68,.3); background:rgba(239,68,68,.05); color:#fca5a5;}
-.manchete-alt .manchete-label{color:var(--red);}
-
-/* ── GAME CANVAS ── */
-#gameCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:5;background:#020617;cursor:crosshair;}
-#hud{position:absolute;top:2rem;left:50%;transform:translateX(-50%);z-index:10;display:none;background:rgba(15,23,42,0.9);border:1px solid var(--char-col);padding:1rem 2rem;text-align:center;color:var(--text-bright);font-family:'Space Mono';font-size:.8rem;letter-spacing:.1em;box-shadow:0 0 20px rgba(0,0,0,0.8);animation:bootUp 0.3s;}
-#controls-hint{position:absolute;bottom:2rem;right:2rem;z-index:10;display:none;text-align:right;font-size:.65rem;color:var(--text-dim);line-height:1.8;background:rgba(2,6,23,0.6);padding:1rem;border:1px solid var(--border);backdrop-filter:blur(4px);}
-.glitch-anim{animation:glitch .3s cubic-bezier(.25,.46,.45,.94) both;}
-@keyframes glitch{0%{transform:translate(0)}20%{transform:translate(-3px, 3px);filter:hue-rotate(-90deg)}40%{transform:translate(-3px, -3px)}60%{transform:translate(3px, 3px);filter:hue-rotate(90deg)}80%{transform:translate(3px, -3px)}100%{transform:translate(0);filter:none}}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Space Mono',monospace;font-size:14px;line-height:1.7;transition:background .7s}
+#app{position:fixed;inset:0;overflow-y:auto;overflow-x:hidden}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(59,130,246,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.025) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;z-index:0}
+.bg-vignette{position:fixed;inset:0;background:radial-gradient(ellipse at center,transparent 35%,rgba(7,9,15,.92) 100%);pointer-events:none;z-index:1}
+.scanlines{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px);pointer-events:none;z-index:999;animation:scanmove 12s linear infinite}
+@keyframes scanmove{0%{background-position:0 0}100%{background-position:0 200vh}}
+.distort-bg{position:fixed;inset:0;pointer-events:none;z-index:3;background:radial-gradient(ellipse at top left,rgba(239,68,68,calc(var(--dystopia)*0.07)) 0%,transparent 55%),radial-gradient(ellipse at bottom right,rgba(239,68,68,calc(var(--dystopia)*0.04)) 0%,transparent 45%);transition:background .9s}
+.screen{position:relative;z-index:10;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem 1.5rem;animation:fadeIn .4s ease}
+.screen-left{align-items:flex-start;justify-content:flex-start;padding-top:5rem;padding-bottom:4rem}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.display{font-family:'Syne',sans-serif;font-weight:800;line-height:1.05}
+.label{font-size:.62rem;text-transform:uppercase;letter-spacing:.2em;color:var(--text-dim)}
+.label-accent{color:var(--char-col)}
+.status-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:#10b981;margin-right:.5rem;animation:blink 2s ease-in-out infinite;vertical-align:middle}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.splash-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3.5rem,12vw,8rem);letter-spacing:-.03em;color:var(--text-bright);text-align:center;line-height:.95}
+.splash-title em{color:var(--char-col);font-style:normal}
+.splash-meta{font-size:.65rem;color:var(--text-dim);text-align:center;margin:.75rem 0 2.5rem;letter-spacing:.25em;text-transform:uppercase}
+.splash-tagline{font-family:'Syne',sans-serif;font-size:clamp(.95rem,2.5vw,1.25rem);color:var(--amber);text-align:center;max-width:520px;margin-bottom:3rem;line-height:1.5}
+.btn{display:inline-block;padding:.7rem 1.8rem;border:1px solid var(--char-col);color:var(--char-col);background:transparent;font-family:'Space Mono',monospace;font-size:.78rem;letter-spacing:.08em;cursor:pointer;transition:all .2s;text-transform:uppercase}
+.btn:hover{background:var(--char-col);color:var(--bg)}
+.btn-ghost{border-color:var(--border);color:var(--text-dim)}
+.btn-ghost:hover{border-color:var(--text-dim);color:var(--text-bright);background:var(--surface2)}
+.btn-finale{border-color:var(--amber);color:var(--amber);background:rgba(245,158,11,.06);animation:pulseBtn 2.5s ease-in-out infinite}
+.btn-finale:hover{background:var(--amber);color:var(--bg)}
+@keyframes pulseBtn{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,0)}50%{box-shadow:0 0 16px rgba(245,158,11,.3)}}
+.char-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.1rem;width:100%;max-width:980px;margin-top:1.5rem}
+.char-card{border:1px solid var(--border);background:var(--surface);padding:1.4rem;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.char-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--c-col,#3b82f6);transform:scaleX(0);transform-origin:left;transition:transform .2s}
+.char-card:hover{border-color:var(--c-col);background:var(--surface2)}
+.char-card:hover::after{transform:scaleX(1)}
+.char-card.played::before{content:'✓ JOGADO';position:absolute;top:.6rem;right:.7rem;font-size:.55rem;letter-spacing:.15em;color:var(--text-dim)}
+.char-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--text-bright);margin-bottom:.2rem}
+.char-role{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.15rem}
+.char-city{font-size:.7rem;color:var(--text-dim);margin-bottom:.85rem}
+.char-quote{font-size:.75rem;font-style:italic;border-left:2px solid;padding-left:.7rem;margin-bottom:.85rem;line-height:1.6}
+.char-lens{font-size:.7rem;color:var(--text-dim);line-height:1.7}
+.game-header{width:100%;max-width:740px;display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.era-badge{font-size:.68rem;color:var(--text-dim);background:var(--surface2);padding:.25rem .8rem;border:1px solid var(--border)}
+.timeline{width:100%;max-width:740px;display:flex;margin-bottom:2rem}
+.tl-item{flex:1;text-align:center;font-size:.58rem;letter-spacing:.08em;color:var(--text-dim);position:relative;padding-top:.6rem;text-transform:uppercase;transition:color .3s}
+.tl-item::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--border);transition:background .3s}
+.tl-item.tl-done::before{background:var(--text-dim)}
+.tl-item.tl-active{color:var(--char-col)}
+.tl-item.tl-active::before{background:var(--char-col)}
+.era-year{font-size:.68rem;color:var(--amber);text-transform:uppercase;letter-spacing:.2em;margin-bottom:.75rem}
+.era-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.4rem,4vw,2.4rem);color:var(--text-bright);margin-bottom:1.5rem;max-width:740px;width:100%;line-height:1.1}
+.context-text{width:100%;max-width:740px;font-size:.87rem;line-height:2;color:var(--text);margin-bottom:1.5rem;border-left:1px solid var(--border);padding-left:1.25rem}
+.context-addendum{border-left:2px solid var(--amber);padding:.6rem 1rem;margin-top:1rem;font-size:.78rem;color:var(--amber);font-style:italic;line-height:1.8}
+.decision-q{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;color:var(--amber);margin-bottom:1.5rem;max-width:740px;width:100%}
+.choices{display:flex;flex-direction:column;gap:.65rem;width:100%;max-width:740px}
+.choice-btn{border:1px solid var(--border);background:var(--surface);padding:1rem 1.25rem;text-align:left;cursor:pointer;transition:all .18s;color:var(--text);font-family:'Space Mono',monospace;font-size:.82rem;line-height:1.7}
+.choice-btn:hover{border-color:var(--char-col);background:var(--surface2);color:var(--text-bright)}
+.choice-letter{font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:var(--text-dim);margin-bottom:.3rem}
+/* ── NEWS TICKER ── */
+.ticker-wrap{width:100%;max-width:740px;border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.05);display:flex;align-items:stretch;overflow:hidden;margin-bottom:1.75rem;height:34px}
+.ticker-live{flex-shrink:0;background:var(--red);color:#fff;font-size:.6rem;letter-spacing:.15em;padding:0 .9rem;display:flex;align-items:center;text-transform:uppercase;font-weight:700}
+.ticker-scroll{flex:1;overflow:hidden;position:relative;display:flex;align-items:center}
+.ticker-inner{white-space:nowrap;font-size:.7rem;color:#fca5a5;letter-spacing:.04em;animation:tickerScroll 28s linear infinite;will-change:transform}
+@keyframes tickerScroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+/* ── CONSEQUENCE ── */
+.consequence-box{border:1px solid rgba(239,68,68,.4);background:rgba(239,68,68,.04);padding:1.4rem;margin:1.4rem 0;max-width:740px;width:100%}
+.consequence-label{font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:var(--red);margin-bottom:.75rem}
+.consequence-text{font-size:.87rem;line-height:1.9;color:var(--text-bright)}
+.reveal-box{border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.04);padding:1rem 1.25rem;max-width:740px;width:100%;font-size:.8rem;line-height:1.8;color:var(--amber);font-style:italic}
+.reveal-label{font-size:.58rem;text-transform:uppercase;letter-spacing:.15em;color:rgba(245,158,11,.6);margin-bottom:.5rem}
+.manchetes{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;max-width:740px;width:100%;margin-top:1.25rem}
+.manchete{padding:.9rem 1rem;border:1px solid;font-size:.75rem;line-height:1.7}
+.manchete-label{font-size:.55rem;text-transform:uppercase;letter-spacing:.18em;margin-bottom:.45rem;opacity:.7}
+.manchete-mainstream{border-color:rgba(148,163,184,.2);color:var(--text)}
+.manchete-mainstream .manchete-label{color:var(--text-dim)}
+.manchete-alt{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.03);color:#fca5a5}
+.manchete-alt .manchete-label{color:var(--red)}
+/* ── CITY PANEL ── */
+.city-panel{width:100%;max-width:980px;margin-bottom:1.5rem;border:1px solid var(--border);background:var(--surface);padding:1rem 1.25rem}
+.city-panel-title{font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:var(--text-dim);margin-bottom:.75rem}
+.city-flags{display:flex;gap:.65rem;flex-wrap:wrap}
+.city-flag{font-size:.63rem;padding:.2rem .6rem;border:1px solid;letter-spacing:.04em}
+.city-flag-active{border-color:rgba(239,68,68,.4);color:#fca5a5;background:rgba(239,68,68,.05)}
+.city-flag-neutral{border-color:var(--border);color:var(--text-dim)}
+.city-flag-good{border-color:rgba(16,185,129,.4);color:#6ee7b7;background:rgba(16,185,129,.05)}
+/* ── SCORES ── */
+.scores-wrap{width:100%;max-width:740px;margin:1.75rem 0}
+.score-row{display:flex;align-items:center;gap:1rem;margin-bottom:.75rem}
+.score-label{font-size:.65rem;color:var(--text-dim);width:110px;text-transform:uppercase;letter-spacing:.05em}
+.score-track{flex:1;height:3px;background:var(--surface2);overflow:hidden}
+.score-fill{height:100%;transition:width .9s cubic-bezier(.25,.1,.25,1)}
+.score-val{font-size:.65rem;color:var(--text-dim);width:32px;text-align:right}
+/* ── ENDING ── */
+.ending-wrap{max-width:700px;width:100%}
+.ending-type-badge{display:inline-block;font-size:.6rem;text-transform:uppercase;letter-spacing:.2em;padding:.3rem .8rem;border:1px solid;margin-bottom:1.25rem}
+.ending-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,5vw,3rem);color:var(--text-bright);margin-bottom:1.75rem;line-height:1.1}
+.ending-text{font-size:.88rem;line-height:2.1;color:var(--text);margin-bottom:2rem}
+.ending-stats{display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;margin:1.5rem 0}
+.stat-block{text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;display:block}
+.stat-desc{font-size:.62rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem}
+.footnote{font-size:.63rem;color:var(--text-dim);line-height:1.9;margin-top:2rem;border-top:1px solid var(--border);padding-top:1rem;font-style:italic}
+hr.div{border:none;border-top:1px solid var(--border);margin:1.75rem 0;width:100%;max-width:740px}
+.spacer{height:1.5rem}
+.char-intro-text{font-size:.87rem;line-height:2.05;color:var(--text);max-width:680px;width:100%;margin-bottom:2rem}
+/* ── GRAND FINALE ── */
+.finale-header{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,7vw,4.5rem);line-height:1;text-align:center;margin-bottom:.5rem}
+.finale-sub{font-size:.75rem;text-transform:uppercase;letter-spacing:.2em;text-align:center;margin-bottom:2.5rem;color:var(--text-dim)}
+.finale-archetype-badge{display:inline-block;font-size:.62rem;text-transform:uppercase;letter-spacing:.2em;padding:.35rem .9rem;border:1px solid;margin-bottom:1.25rem}
+.finale-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.6rem,5vw,2.8rem);margin-bottom:1.5rem;line-height:1.1}
+.finale-text{font-size:.88rem;line-height:2.1;margin-bottom:2rem}
+.audit-list{width:100%;max-width:700px;margin:1.5rem 0;border:1px solid var(--border);background:var(--surface)}
+.audit-title{font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:var(--text-dim);padding:.75rem 1rem;border-bottom:1px solid var(--border)}
+.audit-item{padding:.65rem 1rem;border-bottom:1px solid var(--border);font-size:.78rem;line-height:1.7;display:flex;gap:.75rem;align-items:flex-start}
+.audit-item:last-child{border-bottom:none}
+.audit-icon{flex-shrink:0;margin-top:.1rem}
+.audit-bad{color:#fca5a5}
+.audit-good{color:#6ee7b7}
+.city-meter{max-width:700px;width:100%;margin:1.5rem 0}
+.city-meter-title{font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:var(--text-dim);margin-bottom:1rem}
+.meter-row{display:flex;align-items:center;gap:1rem;margin-bottom:.9rem}
+.meter-label{font-size:.68rem;color:var(--text);width:130px}
+.meter-track{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.meter-fill{height:100%;border-radius:3px;transition:width 1.2s cubic-bezier(.25,.1,.25,1)}
+.meter-val{font-size:.7rem;width:36px;text-align:right}
+.glitch-anim{animation:glitch .4s step-end}
+@keyframes glitch{0%{filter:none}15%{filter:hue-rotate(80deg) saturate(2);transform:translate(2px,0)}35%{filter:invert(.08);transform:translate(-2px,0)}55%{filter:hue-rotate(-60deg)}75%{filter:saturate(1.5)}100%{filter:none;transform:none}}
+@media(max-width:640px){.char-grid{grid-template-columns:1fr}.screen{padding:2rem .9rem}.screen-left{padding-top:3.5rem}.manchetes{grid-template-columns:1fr}.ending-stats{gap:1.25rem}}
 </style>
 </head>
 <body>
-
-<canvas id="gameCanvas"></canvas>
-<div id="hud">SISTEMA ATIVO: NAVEGUE ATÉ O ALVO PISCANTE NO MAPA</div>
-<div id="controls-hint">NAVEGAÇÃO DO AVATAR<br><span style="color:var(--cyan)">CLIQUE NO MAPA</span> : IR ATÉ O LOCAL<br><span style="color:var(--cyan)">WASD/SETAS</span> : MOVER<br><span style="color:var(--cyan)">SHIFT</span> : VEÍCULO</div>
-
-<div id="ui-layer">
-  <div id="app"></div>
-</div>
-
+<div class="bg-grid"></div>
+<div class="bg-vignette"></div>
+<div class="scanlines"></div>
+<div class="distort-bg"></div>
+<div id="app"></div>
 <script>
 // ════════════════════════════════════════
-// CITY STATE (SISTEMA DE SAVE SEGURO)
+// CITY STATE
 // ════════════════════════════════════════
-const CK='cidadeOnline_rpg_definitivo';
-function freshCity(){return{cameras:5,transparency:5,equity:5,playedChars:[]};}
-function loadCity(){
-  try{
-    let c = JSON.parse(localStorage.getItem(CK));
-    if(!c || typeof c.cameras !== 'number' || isNaN(c.cameras)) return freshCity();
-    return c;
-  } catch(e) { return freshCity(); }
-}
-function saveCity(c){try{localStorage.setItem(CK,JSON.stringify(c));}catch(e){}}
+const CK='cidadeOnline_v3_city';
+function freshCity(){return{cameras:5,transparency:5,equity:5,ibmContract:null,reportStatus:null,schoolBiometrics:null,amaraPublished:false,amaraIndependent:false,cpiDeponent:false,rodrigoTemplate:null,rodrigoWhistle:false,playedChars:[],totalPlays:0};}
+function loadCity(){try{return JSON.parse(localStorage.getItem(CK))||freshCity();}catch{return freshCity();}}
+function saveCity(c){localStorage.setItem(CK,JSON.stringify(c));}
+function resetCity(){saveCity(freshCity());}
 let CITY=loadCity();
-
 function applyImpact(imp){
-  if(!imp) return;
-  if(imp.cameras !== undefined) CITY.cameras = Math.max(1, Math.min(10, CITY.cameras + imp.cameras));
-  if(imp.transparency !== undefined) CITY.transparency = Math.max(1, Math.min(10, CITY.transparency + imp.transparency));
-  if(imp.equity !== undefined) CITY.equity = Math.max(1, Math.min(10, CITY.equity + imp.equity));
+  if(!imp)return;
+  if(imp.cameras) CITY.cameras=Math.max(1,Math.min(10,CITY.cameras+imp.cameras));
+  if(imp.transparency) CITY.transparency=Math.max(1,Math.min(10,CITY.transparency+imp.transparency));
+  if(imp.equity) CITY.equity=Math.max(1,Math.min(10,CITY.equity+imp.equity));
+  Object.entries(imp).forEach(([k,v])=>{if(!['cameras','transparency','equity'].includes(k))CITY[k]=v;});
   saveCity(CITY);
 }
 
 // ════════════════════════════════════════
-// NARRATIVE ENGINE (A ÁRVORE DINÂMICA)
+// LIVE TICKER DATA
+// ════════════════════════════════════════
+const AMBIENT_TICKERS=[
+  'Smart City Expo 2025: Salvador concorre a prêmio de "Melhor Cidade Inteligente do Hemisfério Sul"',
+  'BID anuncia financiamento de US$ 240M para projetos de smart cities no Brasil',
+  'Pesquisa: 78% dos brasileiros apoiam câmeras de segurança em espaços públicos',
+  'IBM Smarter Cities: contrato de 20 anos inclui transferência de tecnologia, diz nota',
+  'Plano Nacional de IoT: 80% das capitais terão sensores urbanos até 2028',
+  'Censo IBGE 2024: 54% da população brasileira se autodeclara preta ou parda',
+  'LGPD completa 5 anos: apenas 12% dos contratos públicos têm cláusulas de proteção de dados',
+  'ONU: cidades inteligentes podem reduzir emissões de carbono em 15% até 2030',
+  'Associação de Municípios: PPPs de iluminação já cobrem 60% das capitais brasileiras',
+  'Estudo MIT: reconhecimento facial erra 34% mais em rostos negros do que em brancos',
+];
+function getCityTickers(){
+  const t=[];
+  if(CITY.cameras>=7) t.push('ALERTA: Densidade de câmeras em Salvador supera cidades europeias de referência');
+  if(CITY.ibmContract==='full') t.push('Contrato IBM ativo: 1.900 câmeras com sensores de áudio e movimento em 2.400 postes');
+  if(CITY.reportStatus==='suppressed') t.push('Relatório técnico sobre câmeras "ainda em análise" pela secretaria — segundo ano consecutivo');
+  if(CITY.reportStatus==='public') t.push('Relatório da Prefeitura: 96% de falsos positivos no carnaval — uso de reconhecimento facial suspenso');
+  if(CITY.schoolBiometrics) t.push('Biometria em 47 escolas: sindicato de professores questiona base legal do armazenamento de dados');
+  if(CITY.rodrigoTemplate==='expansionist') t.push('38 municípios expandiram sistemas de câmeras sem licitação desde 2017');
+  if(CITY.rodrigoWhistle) t.push('URGENTE: CPI de Vigilância — documentos revelam uso de smart cities para monitorar ativistas');
+  if(CITY.cpiDeponent) t.push('CPI AO VIVO: depoimento sobre viés racial em câmeras está sendo transmitido pelo Senado Federal');
+  if(CITY.amaraPublished) t.push('Pesquisa UFBA: 73% das câmeras de Salvador estão em bairros com renda abaixo de 1 salário mínimo');
+  return t;
+}
+function getCharTickers(charId){
+  const t={
+    marco:['Prefeito anuncia meta de "Salvador 100% inteligente" até 2026','Secretaria de Inovação: modernização preserva privacidade dos cidadãos, afirma titular','Empresa de tecnologia vence licitação com proposta 40% mais barata — detalhes do contrato são sigilo'],
+    amara:['FAPESB aumenta fundo de pesquisa em tecnologia e sociedade em 22%','Orientadores pedem "mais rigor e menos ativismo" em pesquisas sobre vigilância, dizem estudantes','Cisco Foundation anuncia R$ 2M em bolsas para pesquisa em "uso responsável de IA"'],
+    rodrigo:['Mercado de PPPs de smart cities movimenta R$ 8,4 bilhões em 2021 no Brasil','IPGC apresenta novo modelo de contrato para expansão de smart cities em municípios pequenos','Consultores de PPP relatam aumento de 60% na demanda de prefeituras por "cidades inteligentes"'],
+    edu:['App de delivery anuncia "melhores condições para parceiros" — entregadores contestam','Salvador: entregadores de app pedalaram 12 milhões de km em 2023','Algoritmo de delivery: empresa nega discriminação geográfica em resposta a denúncia coletiva'],
+  };
+  return t[charId]||[];
+}
+function buildTickerText(charId){
+  const all=[...getCityTickers(),...getCharTickers(charId),...AMBIENT_TICKERS];
+  const shuffled=all.sort(()=>Math.random()-.5).slice(0,6);
+  return shuffled.join(' · ');
+}
+
+// ════════════════════════════════════════
+// GRAND FINALE DATA
+// ════════════════════════════════════════
+const FINALE={
+  vigiada:{
+    color:'#ef4444',
+    archetype:'CIDADE VIGIADA',
+    title:'Salvador, 2026 — a mais monitorada do Hemisfério Sul',
+    text:`A promessa foi cumprida. A cidade é eficiente. Os semáforos inteligentes coordenam o tráfego. O Centro Histórico tem iluminação LED em cada esquina. A taxa de criminalidade no Pelourinho caiu 34% — segundo os números da SSP-BA.\n\nNos bairros periféricos, a mesma tecnologia que protege o turista identifica "suspeitos" com 96% de erro. Os contratos duram 20 anos. A empresa trocou de nome duas vezes. Ninguém sabe ao certo o que os sensores capturam ou para onde os dados vão.\n\nEm 2025, Salvador ganhou um prêmio em Barcelona. O prefeito foi ao palco. Na plateia: representantes da IBM, da Cisco e do BID.\n\nA cidade está iluminada. A cidade está vigiada. Para a maioria dos moradores, é difícil saber se é a mesma coisa.`,
+  },
+  disputa:{
+    color:'#10b981',
+    archetype:'CIDADE EM DISPUTA',
+    title:'Salvador, 2026 — uma cidade que aprendeu a questionar',
+    text:`Não é uma utopia. Seria desonesto chamar assim.\n\nÉ uma cidade com mais ferramentas para se defender dos próprios sistemas. Relatórios foram publicados. Audiências foram realizadas. Alguns contratos têm cláusulas de auditoria. Uma pesquisadora depôs no Senado. Um engenheiro perdeu o emprego e vazou o que sabia. Um entregador registrou o incidente que ninguém quis registrar por ele.\n\nO sistema de vigilância ainda existe. Os contratos ainda duram 20 anos. A empresa ainda sabe mais sobre os moradores do que a prefeitura.\n\nMas agora existe resistência documentada. Isso é diferente de não existir resistência. É pouco. É o que há.\n\nUma cidade em disputa não é uma cidade resolvida. É uma cidade onde o poder não age sem que alguém registre, questione e torne público.`,
+  },
+  puxadinho:{
+    color:'#f59e0b',
+    archetype:'PUXADINHO TECNOLÓGICO',
+    title:'Salvador, 2026 — improvisada, resiliente, ambígua',
+    text:`Como sempre: Salvador.\n\nA tecnologia chegou de forma remendada. Alguns bairros têm iluminação inteligente. Outros têm as mesmas lâmpadas de 1998 que o LED prometeu substituir em 2015. Os contratos são complicados e ninguém entende direito o que cobre o quê.\n\nHá câmeras que funcionam e câmeras que são decorativas. Há sensores que coletam dados e ninguém sabe para onde vão. Há um Centro de Operações que impressiona visitantes internacionais e não consegue responder a pedido de LAI.\n\nIsso também é uma forma de cidade inteligente. A versão brasileira: onde a gambiarra e o contrato de 20 anos coexistem, onde a câmera às vezes funciona e às vezes não, onde ninguém sabe ao certo quem é responsável por quê — mas todo mundo continua pagando a conta.\n\nÉ a cidade que existia antes. Com sensores. Isso é um problema. Também é uma espécie de resistência involuntária ao totalitarismo digital.`,
+  },
+};
+function getCityArchetype(){
+  const{cameras,transparency,equity}=CITY;
+  if(cameras>=7&&equity<=4) return'vigiada';
+  if(transparency>=6&&equity>=6) return'disputa';
+  return'puxadinho';
+}
+function getAuditItems(){
+  const items=[];
+  const bad=(t)=>({bad:true,text:t});
+  const good=(t)=>({bad:false,text:t});
+  if(CITY.ibmContract==='full') items.push(bad('Contrato IBM assinado sem cláusula de dados — 3M de pessoas, servidor privado, 20 anos'));
+  if(CITY.ibmContract==='negotiated') items.push(good('Dados municipais parcialmente protegidos na negociação com IBM'));
+  if(CITY.reportStatus==='suppressed') items.push(bad('Relatório de 96% de falsos positivos em reconhecimento facial foi suprimido pela prefeitura'));
+  if(CITY.reportStatus==='public') items.push(good('Relatório de viés racial em câmeras foi publicado — referência nacional'));
+  if(CITY.reportStatus==='internal') items.push(bad('Relatório de viés encaminhado internamente — nenhuma auditoria independente realizada'));
+  if(CITY.schoolBiometrics===true) items.push(bad('Biometria em 47 escolas — 14.000 crianças com dados biométricos em servidor privado'));
+  if(CITY.schoolBiometrics===false) items.push(good('Aditivo de biometria escolar bloqueado — dados de crianças não foram coletados'));
+  if(CITY.amaraPublished) items.push(good('Pesquisa sobre concentração de câmeras em bairros negros publicada e distribuída'));
+  else if(CITY.amaraPublished===false&&CITY.playedChars.includes('amara')) items.push(bad('Pesquisa sobre câmeras suavizada após reunião com secretaria — dado principal em nota de rodapé'));
+  if(CITY.amaraIndependent===true) items.push(good('Lab de pesquisa manteve independência — financiamento Cisco recusado'));
+  if(CITY.amaraIndependent===false) items.push(bad('Lab aceitou financiamento com cláusula de censura — autocensura documentada pelos próprios pesquisadores'));
+  if(CITY.cpiDeponent) items.push(good('Pesquisadora depôs na CPI de Vigilância — depoimento ao vivo para 180.000 pessoas'));
+  if(CITY.rodrigoTemplate==='expansionist') items.push(bad('Template de PPP permite expansão de câmeras sem licitação em 38 cidades'));
+  if(CITY.rodrigoTemplate==='controlled') items.push(good('Template revisado exige licitação para expansões — 12 municípios com maior controle democrático'));
+  if(CITY.rodrigoWhistle===true) items.push(good('Documentos sobre rastreamento de ativistas vazados — CPI aberta, lei aprovada'));
+  if(CITY.rodrigoWhistle===false&&CITY.playedChars.includes('rodrigo')) items.push(bad('Documentos sobre rastreamento de ativistas retidos — monitoramento continuou'));
+  if(!items.length) items.push({bad:null,text:'Nenhuma decisão registrada. Jogue com os personagens para construir o histórico da cidade.'});
+  return items;
+}
+
+// ════════════════════════════════════════
+// ADAPTIVE CONTEXT
+// ════════════════════════════════════════
+function cityAddendum(charId,eraIdx){
+  if(charId==='edu'){
+    if(eraIdx===0){
+      const p=[];
+      if(CITY.cameras>=7) p.push('A cidade está densa de câmeras. Fruto de anos de contratos de PPP — cada poste é uma antena.');
+      else if(CITY.ibmContract==='full') p.push('As câmeras da IBM estão instaladas há 5 anos. O contrato dura até 2034.');
+      if(CITY.reportStatus==='suppressed') p.push('Um relatório sobre 96% de falsos positivos foi arquivado por quem deveria ter publicado.');
+      return p.join(' ');
+    }
+    if(eraIdx===1){
+      if(CITY.rodrigoTemplate==='expansionist') return 'O template que colocou os sensores nas ruas foi desenhado para expandir silenciosamente — sem licitação, sem votação.';
+      if(CITY.transparency<=3) return 'Os contratos que governam os sensores ao seu redor não têm cláusulas de auditoria. Ninguém sabe o que é coletado.';
+    }
+    if(eraIdx===2){
+      if(CITY.cpiDeponent) return 'Uma pesquisadora depôs no Senado sobre os sistemas que afetam pessoas como você. Você estava fazendo entrega quando o depoimento foi ao vivo.';
+      if(CITY.schoolBiometrics) return 'Biometria já foi instalada nas escolas. Seu sobrinho tem 11 anos. O rosto dele está num servidor em Frankfurt desde 2023.';
+    }
+  }
+  if(charId==='amara'&&eraIdx===0){
+    if(CITY.cameras>=7) return 'A cidade já tem uma rede densa de câmeras — instaladas em contratos anteriores. Você pesquisa um sistema que outra pessoa decidiu construir.';
+  }
+  if(charId==='rodrigo'&&eraIdx===2){
+    if(CITY.amaraPublished) return 'Uma pesquisadora da UFBA publicou dados sobre o viés racial nos sistemas. O relatório circula há anos. Os contratos continuam do mesmo jeito.';
+  }
+  return'';
+}
+
+// ════════════════════════════════════════
+// GAME DATA
 // ════════════════════════════════════════
 const CHARS={
-marco:{id:'marco',name:'Marco Santos',role:'SEC. ADJUNTO DE INOVAÇÃO',color:'#38bdf8',
-  nodes:[
-    { x:350, y:800, label:'Centro Histórico', title:'PALÁCIO THOMÉ DE SOUZA',
-      getContext: (c) => `Sobre a mesa: a proposta da IBM para modernizar a iluminação pública. A cidade tem 40% das lâmpadas queimadas. A IBM promete instalar LEDs, mas exige que os sensores embutidos coletem dados de áudio, movimento e calor da população.\n\nA cláusula da página 47 exige que eles sejam os donos exclusivos desses dados por 20 anos. O prefeito quer a assinatura até sexta.`,
-      getDecisions: (c) => [{q:'O contrato exige exclusividade sobre os dados urbanos.',choices:[
-        {text:'Assinar diretriz padrão. A cidade precisa de luz rápida.', ef:2, eq:0, pr:-3, impact:{cameras:2, transparency:-1},
-         consequence:'Contrato assinado. A luz chega em 8 meses; as câmeras, em 4. Em 2019, vaza que padrões de movimento de bairros periféricos foram vendidos para seguradoras. A prefeitura não tem poder de auditoria.',
-         reveal:'Quando a IBM for adquirida por um consórcio estrangeiro, os dados migram de país. O município não é sequer notificado.',
-         hl:{main:'"Salvador terá 100% de iluminação LED", anuncia prefeito', alt:'Contrato de 20 anos entrega dados de civis a empresa estrangeira'}
-        },
-        {text:'Negociar acesso compartilhado (Meio-termo).', ef:0, eq:0, pr:-1, impact:{cameras:1},
-         consequence:'A IBM cede parcialmente. A prefeitura ganha um portal de acesso aos relatórios visuais. Mas a IBM continua sendo a dona legal do código-fonte e dos metadados para treinar suas IAs pelo mundo.',
-         reveal:'Você ganhou um dashboard bonito, mas perdeu a caixa preta. Eles controlam a lógica do algoritmo.',
-         hl:{main:'Prefeitura anuncia dashboard de controle de tráfego inteligente', alt:'Município aceita acesso parcial e mantém algoritmo em segredo'}
-        },
-        {text:'Exigir propriedade exclusiva do município sobre os dados.', ef:-2, eq:1, pr:2, impact:{transparency:2},
-         consequence:'A IBM recusa as condições. O projeto atrasa 8 meses por impasse jurídico. O município adota um software mais barato e instável, mas a soberania legal dos dados brutos fica em casa.',
-         reveal:'A resistência tem preço burocrático e político. A imprensa pune você pela lentidão, não te recompensa pela soberania.',
-         hl:{main:'Atraso em licitação deixa ruas do centro no escuro', alt:'Vitória invisível: prefeitura barra privatização de dados brutos'}
-        }
-      ]}]
-    },
-    { x:480, y:550, label:'Iguatemi', title:'CENTRO DE OPERAÇÕES',
-      getContext: (c) => {
-        if(c[0] === 0) return `Você cedeu os dados no Ponto 1. Agora, no carnaval, o sistema IBM disparou 903 alertas. 96% eram falsos positivos, quase todos em pessoas negras. A IBM diz que é "comportamento proprietário" e não deixa você auditar o código.`;
-        if(c[0] === 1) return `Você tem acesso compartilhado. Analisando os dashboards do carnaval, você nota que o sistema errou 96% das vezes, mirando em jovens negros. Você tem a prova na mão, mas o contrato proíbe vazamentos unilaterais.`;
-        return `Você brigou pelos dados no Ponto 1. O software open-source mais barato também apresentou viés no carnaval (90% de erro racial). A falha é técnica, mas pelo menos você tem o código-fonte aberto para provar onde está o viés.`;
-      },
-      getDecisions: (c) => [{q:'O relatório comprova o viés racial do sistema.',choices:[
-        {text:'Suprimir acesso. Instaurar revisão interna sigilosa.', ef:1, eq:-2, pr:-2, impact:{equity:-1},
-         consequence:'O PDF é enterrado. Em 2021, a falha inalterada gera prisões injustas. Quando o caso estoura na mídia, o relatório que você escondeu é descoberto por hackers e vaza.',
-         reveal:'A supressão não resolve o problema. Só desloca a bomba relógio para o seu colo no futuro.',
-         hl:{main:'Sistema de segurança opera com normalidade no feriado', alt:'Relatório interno aponta 96% de erros em reconhecimento facial'}
-        },
-        {text:'Encaminhar à equipe técnica pedindo "patch" silencioso.', ef:0, eq:-1, pr:-1, impact:{},
-         consequence:'A empresa envia uma atualização de firmware remota. Nenhuma auditoria verifica o que mudou de fato. O relatório original vai para a gaveta.',
-         reveal:'A burocracia é a ferramenta mais eficiente para fazer problemas desaparecerem sem precisarem ser resolvidos.',
-         hl:{main:'Empresa atualiza firmware de câmeras após pedido', alt:'Atualização invisível: viés racial pode continuar ativo sob novo código'}
-        },
-        {text:'Tornar público e suspender o reconhecimento facial.', ef:-2, eq:2, pr:2, impact:{cameras:-1, equity:1},
-         consequence:'Terremoto político. A empresa ameaça processar. O relatório vira referência nacional e o Ministério Público barra sistemas similares. O prefeito exonera você oito meses depois.',
-         reveal:'Você perdeu o emprego. O sistema foi auditado. O impacto real quase sempre cobra a cabeça de quem age.',
-         hl:{main:'Secretário é demitido após vazar falhas em sistema municipal', alt:'Relatório de viés racial barra expansão de câmeras na capital'}
-        }
-      ]}]
-    },
-    { x:750, y:400, label:'Cajazeiras', title:'ESCOLA MUNICIPAL',
-      getContext: (c) => {
-        let txt = `O prefeito quer assinar um aditivo para instalar catracas com reconhecimento facial em 47 escolas da periferia. `;
-        if(c[1] === 2) txt += `Como você suspendeu o sistema no Ponto 2, o prefeito está furioso. Ele diz que nas escolas "a segurança dos alunos contra invasores" justifica o uso da IA.`;
-        else txt += `Como você abafou o problema no Ponto 2, o prefeito acredita que a tecnologia é infalível e quer expandir a biometria para 14.000 crianças.`;
-        return txt;
-      },
-      getDecisions: (c) => [{q:'Aprovação da biometria infantil na rede pública.',choices:[
-        {text:'Aprovar. Aumenta o controle de presença e verba.', ef:2, eq:-2, pr:-3, impact:{cameras:1, equity:-1},
-         consequence:'O sistema é instalado. O viés racial é transferido para a infância: catracas travam erroneamente para alunos negros 4x mais. Os dados ficam no servidor corporativo.',
-         reveal:'Você colocou o rosto e a geolocalização de 14.000 crianças sob controle privado em troca de planilhas de assiduidade.',
-         hl:{main:'Presença escolar aumenta com catracas inteligentes', alt:'Catracas biométricas barram crianças negras com "falsos positivos"'}
-        },
-        {text:'Propor substituição por cartões com chip (RFID).', ef:0, eq:1, pr:1, impact:{},
-         consequence:'O sistema é implantado sem coletar biometria. Os cartões são perdidos frequentemente, gerando atrito de reposição, mas os rostos estão a salvo.',
-         reveal:'Uma solução analógica muitas vezes protege a privacidade melhor que a promessa da hiper-tecnologia.',
-         hl:{main:'Escolas implementam acesso eletrônico por cartões', alt:'Veto à biometria infantil preserva dados de estudantes da rede'}
-        },
-        {text:'Bloquear tudo e barrar hardware privado nas escolas.', ef:-1, eq:2, pr:2, impact:{transparency:1},
-         consequence:'A empresa faz lobby forte. O prefeito tenta derrubar seu veto. O desgaste interno isola você na secretaria, mas sua assinatura técnica impede o projeto legalmente.',
-         reveal:'Às vezes a resistência não constrói nada de novo, ela apenas segura a porta contra o abismo.',
-         hl:{main:'Burocracia atrasa projeto de modernização escolar', alt:'Secretário barra captura biométrica de menores no subúrbio'}
-        }
-      ]}]
-    }
-  ]
+marco:{id:'marco',name:'Marco Santos',role:'Secretário-Adjunto de Inovação',city:'Salvador, BA · 2014–2026',color:'#3b82f6',quote:'"A tecnologia pode resolver o que a política não conseguiu."',lens:'Você está dentro do Estado. Seus contratos duram 20 anos — muito mais que qualquer governo.',intro:`É 2014. Você tem 36 anos e acaba de ser nomeado Secretário de Inovação de Salvador. Na mesa: uma proposta da IBM para modernizar toda a iluminação pública. O prefeito quer assinar antes do carnaval.\n\nA cidade tem 40% das lâmpadas queimadas. O orçamento está zerado. Uma empresa estrangeira tem uma solução linda.\n\nVocê acredita no projeto. A cidade precisa. Você também precisa provar que a secretaria serve para algo.`,
+eras:[
+{id:'e1',year:'2014–2015',label:'ERA 01',title:'O Cavalo de Troia Luminoso',
+context:`A proposta chegou com 212 páginas. Você leu as 40 primeiras. Na página 47, uma cláusula em fonte menor especifica que os dados coletados pelos sensores integrados às luminárias — vídeo, áudio, movimento, calor — pertencem à concessionária por toda a duração do contrato.\n\n"São dados operacionais," explica o consultor da IBM. "Necessários para manutenção preventiva. Não se preocupe."\n\nO contrato tem duração de 20 anos. A cidade está sem luz.`,
+decisions:[{q:'A cláusula de propriedade dos dados. Você tem 72 horas.',choices:[
+{text:'Assina como está. A cidade precisa de luz. Os dados são questão técnica.',ef:2,eq:0,pr:-3,impact:{ibmContract:'full',cameras:2,transparency:-1},consequence:'O contrato é assinado. A iluminação chega em 8 meses — as câmeras, em 4. Em 2019, um jornalista descobre que padrões de movimento de bairros periféricos foram vendidos para uma seguradora que reajustou prêmios em 34%. A cláusula não permite auditoria.',reveal:'Quando a IBM for adquirida por um consórcio em 2021, os dados migram para servidores em três países. O município não é notificado.',hl:{main:'"Salvador terá 100% de iluminação LED até 2015", anuncia prefeito em coletiva',alt:'Contrato de 20 anos entrega dados de 3 milhões de pessoas a empresa estrangeira'}},
+{text:'Negocia: dados pertencem ao município. Aceita atrasar 3 meses.',ef:-1,eq:1,pr:2,impact:{ibmContract:'negotiated',cameras:1,transparency:1},consequence:'A IBM aceita — mas insere "acesso preferencial" para "aprimoramento dos algoritmos". Você ganha a propriedade formal dos dados. Perde o controle sobre como são usados.',reveal:'A vitória é real mas incompleta. Você vai descobrir isso quando tentar auditar o sistema em 2018.',hl:{main:'Salvador lidera gestão de dados urbanos no Nordeste após negociação com IBM',alt:'IBM mantém acesso preferencial a dados mesmo após negociação — contrato tem brechas'}}
+]}]},
+{id:'e2',year:'2019',label:'ERA 02',title:'903 Alertas. 870 Erros.',
+context:`Fevereiro de 2019. No carnaval de Feira de Santana, o sistema dispara 903 alertas de suspeitos. 870 são falsos positivos — 96,3%.\n\nUm jovem de 25 anos é abordado com arma na cabeça dentro de uma padaria. Ele estava indo a uma consulta médica.\n\nUm relatório técnico está na sua mesa: o sistema erra 7 vezes mais em pessoas negras. Salvador é 82% negra.`,
+decisions:[{q:'O relatório existe. Vazar compromete o contrato. Não vazar compromete pessoas.',choices:[
+{text:'Suprime o relatório. Abre revisão técnica "interna" sem prazo.',ef:1,eq:-2,pr:-2,impact:{reportStatus:'suppressed',equity:-1},consequence:'O relatório desaparece na burocracia. Em 2021, um jovem inocente é preso por 4 dias com base no sistema. O relatório que você suprimiu é citado como prova de que o problema era conhecido.',reveal:'A supressão não resolve o problema. Só desloca a responsabilidade para frente — e para você.',hl:{main:'Sistema de segurança de Salvador opera com normalidade, afirma secretaria de segurança',alt:'Relatório interno aponta 96% de erros em reconhecimento facial — prefeitura arquiva sem resposta'}},
+{text:'Torna público. Suspende o reconhecimento facial até revisão independente.',ef:-2,eq:2,pr:2,impact:{reportStatus:'public',cameras:-1,equity:1},consequence:'A empresa ameaça rescisão. O prefeito fica furioso. O relatório vira referência nacional. Três municípios suspendem sistemas similares. Você é demitido 8 meses depois.',reveal:'Você perdeu o emprego. O sistema foi revisado. São coisas diferentes, mas ambas são verdade.',hl:{main:'Secretário de inovação provoca crise ao questionar sistema de segurança público',alt:'Relatório de 2019 prova: prefeitura sabia do viés racial e não agiu — funcionário é demitido'}},
+{text:'Encaminha internamente à empresa. Solicita "melhoria técnica do algoritmo".',ef:0,eq:-1,pr:-1,impact:{reportStatus:'internal'},consequence:'A empresa envia uma "atualização de firmware". Nenhuma auditoria verifica. O relatório vai para um arquivo.',reveal:'A burocracia é a ferramenta mais eficiente para fazer problemas desaparecerem sem serem resolvidos.',hl:{main:'Empresa atualiza sistema de câmeras após solicitação da prefeitura municipal',alt:'Atualização não auditada: viés racial em câmeras permanece — atualização foi "cosmética"'}}
+]}]},
+{id:'e3',year:'2023',label:'ERA 03',title:'Contrato Vigente por Mais 11 Anos',
+context:`2023. O contrato de 20 anos está na metade. O prefeito quer expandir para escolas — câmeras com reconhecimento facial para controle de presença. A empresa já tem o hardware.\n\nVocê sabe o que esses sistemas fazem com dados de crianças. O aditivo tem mais 15 anos.\n\nHá 22.000 crianças faltando às aulas. O prefeito tem um argumento concreto.`,
+decisions:[{q:'O aditivo contratual para escolas. Decisão final.',choices:[
+{text:'Autoriza. A presença melhora. Os dados estão "sob controle".',ef:2,eq:-2,pr:-3,impact:{schoolBiometrics:true,cameras:1,equity:-1},consequence:'Em 2025, um estudo da UFBA mostra que alunos negros são marcados como "suspeitos" 4 vezes mais. Os dados biométricos de 14.000 crianças estão num servidor em Frankfurt.',reveal:'Você colocou o rosto de 14.000 crianças num contrato de 15 anos sem cláusula de exclusão de dados.',hl:{main:'Presença escolar aumenta 18% com monitoramento inteligente em Salvador',alt:'14.000 crianças têm dados biométricos em servidor privado — pais não foram informados'}},
+{text:'Bloqueia o aditivo. Propõe alternativas sem biometria.',ef:-1,eq:2,pr:3,impact:{schoolBiometrics:false,transparency:1},consequence:'O prefeito revoga 48 horas depois. Você pede exoneração. A notícia é "briga política". O fato importante fica em segundo parágrafo.',reveal:'Às vezes a resistência certa não produz o resultado imediato certo. Mas fica registrada.',hl:{main:'Briga política na secretaria atrasa projeto de segurança nas escolas',alt:'Secretário bloqueou biometria infantil antes de ser demitido — aditivo assinado assim mesmo'}}
+]}]}
+],
+endings:{control:{type:'DISTOPIA TECNOCRÁTICA',title:'O Arquiteto do Controle',text:`Salvador, 2026. A cidade é premiada em Barcelona. Marco está na plateia.\n\nO sistema cobre 94% do espaço público. Os dados de 3 milhões alimentam 14 contratos com seguradoras, bancos e empresas de transporte.\n\nNa mesa de hotel, à noite, Marco abre o relatório que não publicou em 2019. Ainda tem uma cópia. Não sabe por que guardou.`},human:{type:'RESISTÊNCIA INSTITUCIONAL',title:'A Cidade em Disputa',text:`Salvador, 2026. Marco não está mais na secretaria. Está dando aula na UFBA.\n\nO relatório que publicou em 2019 é usado até hoje como argumento em processos judiciais. Um município citou o documento ao rejeitar uma proposta da mesma empresa.\n\nO contrato de 20 anos ainda está em vigor. Mas tem uma cláusula de auditoria que não estava lá antes de Marco.`},collapse:{type:'COLAPSO INSTITUCIONAL',title:'O Contrato que Ficou',text:`Salvador, 2026. Marco saiu em 2020.\n\nO contrato continua. A empresa trocou de nome duas vezes. Ninguém sabe o que os sensores capturam ou para onde os dados vão.\n\nA cidade está iluminada.`},ambiguous:{type:'REALISMO CRÍTICO',title:'Progresso Seletivo',text:`Salvador, 2026. O balanço de Marco é ambíguo, como a maioria das histórias reais.\n\nAlgumas coisas melhoraram. Algumas coisas pioraram. A empresa sabe mais sobre Salvador do que a prefeitura.\n\nMarco ainda acredita que a tecnologia pode ajudar. Só não tem mais certeza de que ajuda quem.`}}
 },
-amara:{id:'amara',name:'Amara Silva',role:'PESQUISADORA UFBA',color:'#fbbf24',
-  nodes:[
-    { x:300, y:650, label:'Campus Ondina', title:'LABORATÓRIO DE DADOS',
-      getContext: (c) => `Seu cruzamento de dados revela: 73% das câmeras ativas em Salvador estão posicionadas nas bordas de bairros pobres. A "cidade inteligente" é um muro de contenção territorial.\n\nSua orientadora avisa que as conclusões são duras demais e sugere "suavizar o tom" para não queimar pontes com a prefeitura.`,
-      getDecisions: (c) => [{q:'O mapeamento escancara a segregação. Como publicar?',choices:[
-        {text:'Publicar integralmente denunciando o Apartheid Algorítmico.', ef:-1, eq:2, pr:2, impact:{equity:1},
-         consequence:'A secretaria municipal divulga nota rechaçando sua "metodologia ativista". Dois vereadores exigem corte de verba do seu departamento. O debate, no entanto, torna-se público.',
-         reveal:'O conhecimento circulou. O poder que ele ameaçava não ficou parado, mas agora ele foi nomeado e medido.',
-         hl:{main:'Vereadores pedem investigação de laboratório da UFBA', alt:'Mapa comprova: câmeras inteligentes vigiam periferia, não bairros nobres'}
-        },
-        {text:'Vazar os mapas cruamente para a mídia ativista.', ef:-2, eq:3, pr:1, impact:{},
-         consequence:'O assunto explode no Twitter antes do paper sair. A universidade suspende sua bolsa por "quebra de protocolo acadêmico". A mensagem sobrevive à pesquisadora.',
-         reveal:'O sacrifício acadêmico entregou a informação à população mais rápido que qualquer revista científica faria.',
-         hl:{main:'Dados furtados da universidade geram fake news, diz prefeitura', alt:'Vazamento de mapas escancara apartheid digital em Salvador'}
-        },
-        {text:'Relegar a correlação racial às notas de rodapé.', ef:1, eq:-2, pr:-1, impact:{transparency:-1},
-         consequence:'Seu paper é elogiado pela Prefeitura como exemplo de "parceria com a academia". O texto liso passa pela burocracia e a denúncia brutal morre numa nota tamanho 9.',
-         reveal:'A nota de rodapé é o lugar exato onde dados incômodos são enviados para morrer com polidez.',
-         hl:{main:'Pesquisadora da UFBA analisa avanço tecnológico urbano', alt:'Estudo acadêmico camufla concentração de câmeras em bairros negros'}
-        }
-      ]}]
-    },
-    { x:550, y:450, label:'Brotas', title:'INCUBADORA TECNOLÓGICA',
-      getContext: (c) => {
-        if(c[0] === 2) return `A prefeitura adorou sua postura colaborativa no Ponto 1. Graças a isso, a Cisco Foundation oferece R$ 800 mil para seu laboratório. Porém, exigem "Revisão Antecipada" dos seus papers futuros.`;
-        return `Sua postura no Ponto 1 gerou incômodo. Para tentar te cooptar, a Cisco Foundation oferece R$ 800 mil de financiamento ao seu lab, mas exige o direito contratual de pedir "cortes" nas publicações.`;
-      },
-      getDecisions: (c) => [{q:'Aceitar o dinheiro restritivo ou manter a pureza?',choices:[
-        {text:'Assinar com a cláusula. A pesquisa precisa de servidores.', ef:1, eq:-2, pr:-1, impact:{transparency:-1},
-         consequence:'Os computadores novos chegam. Meses depois, uma pesquisa sobre PPPs sofre cortes pela Fundação. Você percebe que seus próprios alunos já estão praticando autocensura preventiva.',
-         reveal:'A autocensura não parece censura de estado. Parece apenas "bom julgamento editorial corporativo".',
-         hl:{main:'Fundação Cisco doa R$ 800 mil para laboratório da Bahia', alt:'Contrato de financiamento impõe mordaça velada a pesquisadores'}
-        },
-        {text:'Negociar a cláusula para um "Comitê Consultivo" brando.', ef:0, eq:0, pr:0, impact:{},
-         consequence:'A empresa não ganha direito de corte, mas ganha assento nas suas reuniões semanais. A presença dos engravatados torna os debates da equipe muito menos incisivos.',
-         reveal:'Nem toda negociação vencida no papel garante vitória na realidade. A vigilância comportamental funcionou.',
-         hl:{main:'Parceria garante comitê misto para inovação digital', alt:'Empresa consegue cadeira cativa em reuniões de pesquisa pública'}
-        },
-        {text:'Recusar. Independência não tem preço.', ef:-2, eq:2, pr:2, impact:{equity:1},
-         consequence:'Três bolsistas do lab perdem a vaga. O ambiente fica precário. Mas quando surge um processo real contra algoritmos de prisão, vocês são os únicos com credibilidade para assinar o laudo.',
-         reveal:'A independência tem um custo físico brutal nas costas de quem não tem bolsa garantida.',
-         hl:{main:'Laboratório rejeita verba milionária por motivos ideológicos', alt:'Autonomia garantida: UFBA recusa financiamento atrelado a censura'}
-        }
-      ]}]
-    },
-    { x:400, y:300, label:'Aeroporto', title:'PORTÃO DE EMBARQUE',
-      getContext: (c) => {
-        let txt = `O Senado te chamou para depor numa CPI sobre Cidades Inteligentes. `;
-        if(c[1] === 0 || c[1] === 1) txt += `Ontem, advogados corporativos enviaram um email sutil citando a cláusula de confidencialidade que você assinou na incubadora. O alerta é claro: se falar demais, o processo vem.`;
-        else txt += `Como você negou a cooptação no Ponto 2, a intimidação subiu de nível. A Receita Federal "acidentalmente" abriu uma auditoria no seu pequeno CNPJ pessoal ontem, travando suas contas.`;
-        return txt;
-      },
-      getDecisions: (c) => [{q:'A intimidação já começou. Você embarca?',choices:[
-        {text:'Embarcar. Apresentar os dados na CPI ao vivo em TV.', ef:-1, eq:3, pr:3, impact:{equity:2},
-         consequence:'O depoimento dura 4 horas. Os mapas exibidos na TV do Senado fundam a base do novo Marco Regulatório de IA. As ameaças e o bloqueio da Receita somem misteriosamente uma semana depois.',
-         reveal:'A intimidação institucional perde 90% da sua força quando exposta à luz dos holofotes ao vivo.',
-         hl:{main:'Pesquisadora expõe falhas em sistemas urbanos no Senado', alt:'Depoimento histórico destrói narrativa de cidades inteligentes neutras'}
-        },
-        {text:'Enviar advogado para ler nota técnica branda.', ef:0, eq:1, pr:0, impact:{},
-         consequence:'A nota é protocolada na burocracia do Senado e a TV desliga as câmeras. A mensagem não viraliza, mas os dados ficam marcados no Diário Oficial sem gerar processos contra você.',
-         reveal:'Uma denúncia sem rosto é muito mais fácil de ser arquivada pelo sistema do que um choro de resistência.',
-         hl:{main:'Sessão da CPI de Vigilância recebe documentos da UFBA', alt:'Pesquisadora esvazia depoimento crucial após suposta pressão corporativa'}
-        },
-        {text:'Recuar. Cancelar voo e focar em proteger a equipe.', ef:1, eq:-2, pr:-1, impact:{},
-         consequence:'O assunto morre. A mídia acusa você de fugir e as empresas respiram aliviadas. O custo da intimidação velada provou-se cirurgicamente eficaz contra a academia.',
-         reveal:'O silenciamento antecipado é o objetivo primário de todo Lawfare.',
-         hl:{main:'Pesquisadora principal falta a CPI de Vigilância', alt:'Intimidação vence: silêncio impera em debate sobre reconhecimento facial'}
-        }
-      ]}]
-    }
-  ]
+amara:{id:'amara',name:'Amara Silva',role:'Pesquisadora de Direitos Digitais',city:'UFBA, Salvador · 2015–2025',color:'#f59e0b',quote:'"O algoritmo não mente. Mas quem programou o algoritmo?"',lens:'Você está fora do Estado. Seu poder é o conhecimento. A pergunta é: para quem você o usa — e a que custo.',intro:`É 2015. Você tem 28 anos e acaba de defender sua dissertação sobre sistemas de vigilância urbana na UFBA. Seu orientador disse que você era "militante demais para ser pesquisadora séria".\n\nVocê tem dados que ninguém mais tem: três meses mapeando as câmeras de Salvador. O padrão é inequívoco: 73% em bairros com renda abaixo de 1 salário mínimo per capita.\n\nO dado existe. Agora você decide o que fazer com ele.`,
+eras:[
+{id:'e1',year:'2015–2016',label:'ERA 01',title:'O Mapa que Acusa',
+context:`Você tem um mapa que mostra que a "cidade inteligente" de Salvador vigia os pobres e não vigia os ricos. As câmeras estão nos ônibus, não nos condomínios.\n\nÉ um dado simples. É um dado explosivo.\n\nSua orientadora quer que você "contextualize melhor". A secretaria pediu uma reunião — antes da publicação.`,
+decisions:[{q:'O mapa está pronto. Onde você publica — e quando?',choices:[
+{text:'Aceita a reunião com a secretaria primeiro.',ef:1,eq:-2,pr:-1,impact:{amaraPublished:false,transparency:-1},consequence:'Você publica 7 meses depois com uma seção de "limitações". O dado sobre concentração em bairros negros vai para nota de rodapé.',reveal:'Nota de rodapé é onde os dados incômodos vão morrer academicamente.',hl:{main:'Pesquisadora da UFBA fecha parceria com prefeitura em estudo de smart cities',alt:'Dado sobre câmeras em bairros negros suavizado após reunião com secretaria'}},
+{text:'Publica diretamente. Sem intermediários.',ef:-1,eq:2,pr:2,impact:{amaraPublished:true,equity:1},consequence:'O paper vira notícia. A secretaria emite nota sobre "dados descontextualizados". Dois vereadores pedem sua destituição.',reveal:'O conhecimento circulou. O poder que ele ameaçava não ficou parado. Também não ficou.',hl:{main:'Vereadores querem afastar pesquisadora que criticou projeto de segurança',alt:'Mapa da UFBA prova: câmeras de Salvador vigiam pobres e não vigiam ricos'}}
+]}]},
+{id:'e2',year:'2019–2021',label:'ERA 02',title:'R$ 800.000 e uma Cláusula',
+context:`Uma fundação ligada à Cisco oferece R$ 800.000 ao seu lab. No contrato, cláusula 4.3: "Os resultados serão revisados pela fundação antes da publicação. A fundação pode solicitar modificações para proteger interesses comercialmente sensíveis."\n\nSua equipe tem 8 pesquisadores. Dois são bolsistas em situação precária.`,
+decisions:[{q:'O financiamento. A cláusula. Sua independência.',choices:[
+{text:'Aceita com a cláusula. A pesquisa importa mais que a pureza.',ef:1,eq:-2,pr:-1,impact:{amaraIndependent:false,transparency:-1},consequence:'Em 2020, você submete paper que critica contratos de PPP. A fundação solicita "revisão". O paper sai sem o capítulo sobre a Cisco. Você aprende a se autocensurar antes de submeter.',reveal:'A autocensura não parece censura. Parece "bom julgamento editorial". Isso é precisamente o que a torna eficaz.',hl:{main:'Lab da UFBA recebe R$ 800 mil da Cisco Foundation para pesquisa em smart cities',alt:'Contrato de financiamento inclui cláusula de censura velada, dizem fontes do laboratório'}},
+{text:'Recusa. Busca outras fontes.',ef:-2,eq:2,pr:2,impact:{amaraIndependent:true,equity:1},consequence:'Três bolsistas pedem demissão. 18 meses no limite. Financiamento da FAPESB em 2021, sem cláusulas. O paper integral é publicado — citado 40 vezes em dois anos.',reveal:'Independência tem preço concreto: pessoas reais que precisam de salário. Essa conta não some.',hl:{main:'Pesquisadora recusa financiamento por "razões ideológicas", diz fundação',alt:'"Não alugamos nossa autonomia": pesquisadora recusa cláusula de censura da Cisco'}},
+{text:'Tenta negociar: dinheiro sem cláusula de revisão prévia.',ef:0,eq:1,pr:1,impact:{amaraIndependent:null},consequence:'A Cisco aceita retirar a cláusula de revisão formal — mas insere um "comitê consultivo" com direito a participar das reuniões. Você nunca sabe o que é observado.',reveal:'Nem toda vitória em negociação é uma vitória real.',hl:{main:'UFBA e Cisco Foundation iniciam parceria em inovação urbana',alt:'Empresa mantém acesso a reuniões de pesquisa após negociação: "vigilância suave"'}}
+]}]},
+{id:'e3',year:'2024',label:'ERA 03',title:'Senado Federal, Brasília',
+context:`Outubro de 2024. Você é convidada para depor na CPI de Vigilância. Sua pesquisa sobre viés racial é citada no requerimento.\n\nTrês dias antes, você descobre que a Receita abriu auditoria na sua empresa de consultoria. Pode ser coincidência.\n\nSeu advogado: "É improvável que você seja processada. Mas é possível que seja incomodada indefinidamente."`,
+decisions:[{q:'A audiência é em três dias. O que você decide?',choices:[
+{text:'Depõe. Apresenta tudo. A intimidação não pode vencer por antecipação.',ef:-1,eq:3,pr:3,impact:{cpiDeponent:true,equity:2},consequence:'Você depõe por 4 horas. 180.000 espectadores ao vivo. Quatro senadores usam suas pesquisas nos votos de dois projetos de lei. A auditoria é encerrada sem resultado.',reveal:'Nenhuma das leis foi aprovada ainda. Mas o argumento está no Diário do Senado.',hl:{main:'Pesquisadora critica tecnologia de segurança em audiência no Senado Federal',alt:'Depoimento histórico: CPI sobre vigilância algorítmica transmite ao vivo para 180 mil'}},
+{text:'Recua. Envia relatório escrito. Protege a empresa.',ef:0,eq:-2,pr:-1,impact:{cpiDeponent:false},consequence:'80 páginas lidas por dois assessores. O assunto some da pauta em 3 semanas.',reveal:'O custo da intimidação não é o processo judicial. É o silêncio que ela produz antes de qualquer processo.',hl:{main:'CPI de Vigilância recebe relatório escrito sobre uso de câmeras em cidades inteligentes',alt:'Pesquisadora recua de audiência após suposta intimidação da Receita Federal'}}
+]}]}
+],
+endings:{control:{type:'COOPTAÇÃO INSTITUCIONAL',title:'A Pesquisadora Integrada',text:`2025. Amara está no Conselho Consultivo de "Uso Ético de IA" da Cisco Foundation Brasil.\n\nEla publica artigos sobre "uso responsável de reconhecimento facial". São tecnicamente sólidos. Há uma seção de "limitações" em cada um.\n\nO viés racial nos sistemas não diminuiu. Mas o debate é agora mais "sofisticado".`},human:{type:'IMPACTO REAL',title:'A Voz que Atravessou',text:`2025. O relatório de Amara foi citado em dois votos do STJ sobre reconhecimento facial como prova criminal.\n\nUm promotor de Belo Horizonte usou sua pesquisa para rejeitar uma denúncia. Um homem inocente foi solto.\n\nAmara não sabe o nome dele. Ele não sabe o nome dela.`},collapse:{type:'ARQUIVO MORTO',title:'O Relatório Existe',text:`2025. O relatório existe. Está na biblioteca digital da UFBA. Teve 112 downloads em 4 anos.\n\nO sistema continua operando. O viés continua existindo.\n\nAmara ainda pesquisa. Ainda acredita que documentar importa. Às vezes se pergunta: importa para quê?`},ambiguous:{type:'DISPUTA PERMANENTE',title:'Nem Derrota Nem Vitória',text:`2025. Impacto real e impacto limitado, ao mesmo tempo.\n\nAlguns gestores mudaram algo. A maioria não leu. Uma empresa citou sua pesquisa como prova de que "leva a ética a sério" — a mesma que ela havia criticado.\n\nEla continua. Se é suficiente, ela ainda não sabe.`}}
 },
-rodrigo:{id:'rodrigo',name:'Rodrigo Maia',role:'ARQUITETO DE PPP',color:'#2dd4bf',
-  nodes:[
-    { x:550, y:700, label:'Caminho das Árvores', title:'ESCRITÓRIO DE ENGENHARIA',
-      getContext: (c) => `No seu "Template Mestre" de Contrato Público, há uma cláusula polêmica: permitir que a Concessionária expanda sensores e câmeras para qualquer rua no futuro sem nova licitação ou consulta à Câmara de Vereadores.\n\nAgilidade de mercado vs. Controle Democrático.`,
-      getDecisions: (c) => [{q:'Como definir a regra de expansão tecnológica?',choices:[
-        {text:'Manter expansão ilimitada. Prefeitos compram facilidade.', ef:2, eq:-1, pr:-2, impact:{cameras:2, transparency:-2},
-         consequence:'O template domina 38 cidades. Em 5 anos, dezenas de prefeituras ativam biometria massiva chamando isso de "atualização de infraestrutura", aniquilando a oposição política local.',
-         reveal:'Você empacotou vigilância autoritária sob o eufemismo legal de "eficiência contratual".',
-         hl:{main:'Modelo de PPP acelera modernização no interior do estado', alt:'Contrato genérico burla Câmaras e espalha reconhecimento facial sem debate'}
-        },
-        {text:'Limitar a expansão a no máximo 15% do hardware.', ef:1, eq:0, pr:-1, impact:{},
-         consequence:'Garante um freio lógico. As empresas abusam até o limite de 15% instalando equipamentos nas áreas mais densas, mas são forçadas a voltar à licitação depois.',
-         reveal:'Restrições matemáticas em contratos contêm sangramentos, mas não mudam a direção do fluxo principal.',
-         hl:{main:'Contratos municipais impõem limite técnico a atualizações', alt:'Câmeras de segurança expandem via limite mínimo de contratos'}
-        },
-        {text:'Remover cláusula. Expansão exige nova licitação sempre.', ef:-1, eq:2, pr:2, impact:{transparency:2},
-         consequence:'Você perde clientes acostumados com facilidades. Mas nos municípios que adotam, o mapeamento preditivo fica travado e força debates em praça pública sobre privacidade.',
-         reveal:'Tornar o processo de controle governamental mais caro e demorado é, muitas vezes, uma vitória democrática.',
-         hl:{main:'Exigência de licitações atrasa "cidades inteligentes"', alt:'Trava legal desenhada por engenheiro garante freio em massificação de dados'}
-        }
-      ]}]
-    },
-    { x:650, y:600, label:'Centro de Convenções', title:'SMART CITY EXPO',
-      getContext: (c) => {
-        if(c[0] === 0) return `O prefeito gostou do seu template agressivo. Ele quer fechar R$ 100M, mas exige que você exclua a cláusula de "Auditoria Independente" dos algoritmos. Eles mesmos "se fiscalizam".`;
-        return `Mesmo com seu template mais transparente, um novo prefeito está interessado no contrato de R$ 100M. Mas ele exige remover a "Auditoria Independente" porque acha invasivo e caro.`;
-      },
-      getDecisions: (c) => [{q:'A cláusula de auditoria algorítmica externa.',choices:[
-        {text:'Retirar a cláusula e garantir sua comissão milionária.', ef:2, eq:-2, pr:-2, impact:{transparency:-2},
-         consequence:'Contrato assinado. A empresa atua numa verdadeira caixa-preta comercial. Quando o jornalismo investigativo exige acesso aos logs, eles alegam "segredo industrial".',
-         reveal:'O silêncio corporativo e a opacidade foram sacramentados no exato momento da sua assinatura.',
-         hl:{main:'Prefeitura fecha maior contrato de infraestrutura da década', alt:'R$ 100 milhões operados em caixa-preta: cidade perde controle sobre sensores'}
-        },
-        {text:'Exigir auditoria interna pelo Tribunal de Contas (TCE).', ef:0, eq:1, pr:0, impact:{transparency:1},
-         consequence:'O TCE fica encarregado, mas não tem peritos em Inteligência Artificial. Eles carimbam os papéis sem nunca olhar o código de rastreamento. Uma transparência estritamente performática.',
-         reveal:'Uma auditoria feita por quem não compreende a linguagem da máquina é apenas um ritual.',
-         hl:{main:'Tribunal de Contas atesta conformidade em sistema urbano', alt:'Auditoria de fachada: técnicos do TCE não acessam código-fonte'}
-        },
-        {text:'Travar tudo. Sem auditoria independente, não assina.', ef:-1, eq:2, pr:2, impact:{transparency:2},
-         consequence:'O prefeito vira as costas e fecha negócio com um concorrente sem escrúpulos. Você perde uma fortuna, mas limpa suas digitais de um futuro escândalo de violação de dados.',
-         reveal:'Ceder o negócio não impede a catástrofe de acontecer, mas certifica que você não foi o arquiteto dela.',
-         hl:{main:'Falha na negociação abre espaço para nova empreiteira', alt:'Consultor abandona mesa: "Vender uma cidade sem auditoria é vender a população"'}
-        }
-      ]}]
-    },
-    { x:800, y:200, label:'Costa Azul', title:'APARTAMENTO',
-      getContext: (c) => {
-        let txt = `Madrugada. Um contato de dentro do sistema vazou logs pesados para você. Os CCOs estão usando scripts de geofencing invisíveis para rastrear as placas e celulares de ativistas comunitários. `;
-        if(c[0] === 0) txt += `O sistema usou justamente as "expansões sem licitação" do Ponto 1 para focar antenas nas ONGs.`;
-        if(c[1] === 0) txt += ` E por não ter auditoria independente aprovada no Ponto 2, isso ficou oculto por 3 anos.`;
-        return txt;
-      },
-      getDecisions: (c) => [{q:'Os PDFs com o rastreamento ilegal estão no seu Desktop.',choices:[
-        {text:'Vazar tudo para jornalistas via canais criptografados.', ef:-2, eq:3, pr:3, impact:{equity:2, transparency:2},
-         consequence:'A bomba explode nacionalmente. CPI, Polícia Federal. Sua empresa de consultoria fecha as portas por "perda de confiança" do mercado, mas a Lei de Sigilo Algorítmico é aprovada no Congresso.',
-         reveal:'Você perdeu sua criação financeira. Mas a destruiu para que outras pessoas pudessem respirar.',
-         hl:{main:'Vazamento de logs expõe uso político de câmeras inteligentes', alt:'O Arquiteto que se rebelou: como documentos secretos quebraram o monopólio'}
-        },
-        {text:'Denunciar apenas à corregedoria interna da empresa.', ef:0, eq:-1, pr:0, impact:{},
-         consequence:'A empresa agradece a denúncia, demite silenciosamente o técnico júnior, e reintegra a mesma rotina de espionagem disfarçada em outras linhas de código mais complexas.',
-         reveal:'Entregar o flagrante ao próprio criminoso garante apenas que ele aprenda a esconder melhor o corpo na próxima vez.',
-         hl:{main:'Empresa demite funcionário por "desvio de conduta"', alt:'Investigação interna não convence especialistas em segurança e direitos'}
-        },
-        {text:'Deletar o arquivo e formatar a máquina. Riscos demais.', ef:1, eq:-3, pr:-2, impact:{equity:-2},
-         consequence:'O arquivo não existe mais. Em um ano, várias lideranças de bairro são processadas criminalmente usando provas de localização de origem "desconhecida" pelas autoridades.',
-         reveal:'A conivência silenciosa dos arquitetos da tecnologia é a engrenagem mais poderosa de um Estado Autoritário.',
-         hl:{main:'Avanço em investigações policiais derruba lideranças em bairros', alt:'Ativistas presos sob evidências digitais inexplicáveis'}
-        }
-      ]}]
-    }
-  ]
+rodrigo:{id:'rodrigo',name:'Rodrigo Maia',role:'Engenheiro de PPP e Consultor',city:'São Paulo, SP · 2016–2025',color:'#10b981',quote:'"Um contrato bem estruturado dura mais que qualquer governo."',lens:'Você está dentro do mercado. Você desenha a arquitetura invisível que nenhuma eleição muda.',intro:`É 2016. Você tem 42 anos e acabou de montar sua consultoria em PPPs de infraestrutura urbana.\n\nO mercado de "smart cities" está explodindo. Municípios com caixa zerado querem modernizar. Empresas de tecnologia querem contratos longos. Você é o engenheiro que faz as duas pontas se encontrarem.\n\nSeu primeiro grande contrato: município paraibano, R$ 100 milhões, 20 anos. Você vai desenhar o template que será replicado em dezenas de cidades.`,
+eras:[
+{id:'e1',year:'2016–2017',label:'ERA 01',title:'A Arquitetura do Futuro',
+context:`O template de Rodrigo será o esqueleto de contratos em 40 municípios. Você sabe disso.\n\nNo rascunho, uma cláusula que você mesmo escreveu: a concessionária pode adicionar câmeras, sensores, módulos de dados sem nova licitação, desde que dentro do "escopo de aprimoramento".\n\nÉ padrão de mercado. É legal.`,
+decisions:[{q:'A cláusula de expansão sem licitação. Você mantém ou remove?',choices:[
+{text:'Mantém. É padrão. Agiliza. O cliente vai para outro se você retirar.',ef:2,eq:-1,pr:-2,impact:{rodrigoTemplate:'expansionist',cameras:2,transparency:-2},consequence:'O template é replicado em 38 cidades. Em 2020: 23 expandiram câmeras sem licitação. Três instalaram reconhecimento facial sem votação em câmara.',reveal:'Você não quis vigilância em massa. Você quis eficiência contratual. O resultado foi o mesmo.',hl:{main:'Consultor desenvolve modelo inovador para PPPs de cidades inteligentes no Brasil',alt:'Template de contrato permite expansão de vigilância sem licitação em 38 cidades brasileiras'}},
+{text:'Remove. Qualquer expansão exige nova licitação pública.',ef:-1,eq:2,pr:2,impact:{rodrigoTemplate:'controlled',transparency:2},consequence:'Você perde dois contratos. O template revisado é adotado por 12 municípios com maior controle democrático.',reveal:'Você perdeu mercado. Os 12 municípios têm processos mais transparentes. São as duas coisas juntas.',hl:{main:'Consultor perde contratos por "excesso de burocracia" em modelo de PPP',alt:'Template revisado garante controle democrático sobre expansão de câmeras em 12 cidades'}}
+]}]},
+{id:'e2',year:'2020–2021',label:'ERA 02',title:'R$ 100M e Transparência 4.5',
+context:`São Paulo: R$ 9,8M, transparência 6.5 — auditoria independente, relatórios públicos. Paraíba: R$ 100M, transparência 4.5 — sem auditoria, sem relatórios.\n\nCliente: "Transparência é complexidade. Complexidade é risco. Risco aumenta o custo da concessão."\n\nEles não estão tecnicamente errados.`,
+decisions:[{q:'O contrato da Paraíba. Você assina assim ou insiste em transparência?',choices:[
+{text:'Assina. Transparência pode vir depois.',ef:2,eq:-2,pr:-2,impact:{transparency:-2},consequence:'Em 2024, um jornalista pede dados via LAI. A prefeitura responde que são "propriedade da concessionária".',reveal:'Transparência que fica "para depois" é transparência que não existe.',hl:{main:'Paraíba assina contrato de R$ 100 mi para modernização urbana em smart city',alt:'Contrato opaco de R$ 100 mi: o que os sensores capturam? Ninguém pode responder'}},
+{text:'Insiste: sem auditoria independente, você não assina.',ef:-1,eq:2,pr:2,impact:{transparency:2},consequence:'O cliente vai para outro consultor. O contrato é assinado sem as cláusulas. Você perde R$ 280.000 em honorários.',reveal:'Resistir não impediu nada desta vez. Só registrou onde você estava.',hl:{main:'Consultor perde contrato milionário da Paraíba por "exigências excessivas"',alt:'Consultor recusa assinar contrato sem auditoria: "Transparência não é negociável"'}}
+]}]},
+{id:'e3',year:'2025',label:'ERA 03',title:'O Que os Sensores Capturam',
+context:`Março de 2025. Um ex-colega envia a você, anonimamente, documentos internos.\n\nTrês municípios usam os centros de controle operacional que você modelou para rastrear líderes sindicais e ativistas de movimentos sociais.\n\nOs documentos são reais. Você os reconhece pelo template.`,
+decisions:[{q:'Você tem os documentos. Três municípios. Ativistas sendo rastreados.',choices:[
+{text:'Vaza para a imprensa. Canal seguro. Assume os riscos.',ef:-2,eq:3,pr:3,impact:{rodrigoWhistle:true,equity:2,transparency:2},consequence:'O caso vira CPI. Dois municípios cancelam contratos. Você perde a consultoria. Uma lei que limita o uso de sensores para vigilância de movimentos sociais é aprovada.',reveal:'Você perdeu o que construiu. Outros usam o espaço que você abriu.',hl:{main:'Consultor vaza documentos sigilosos em escândalo que atinge setor de smart cities',alt:'URGENTE: documentos revelam cidades usando smart cities para monitorar ativistas e sindicatos'}},
+{text:'Guarda os documentos. É arriscado demais. Você tem família.',ef:1,eq:-3,pr:-2,impact:{rodrigoWhistle:false,equity:-2},consequence:'Em 2026, uma ativista é presa com base em dados de localização. Você lê a notícia. Você sabe de onde vieram os dados.',reveal:'Você escolheu não agir. Isso também é uma ação com consequências.',hl:{main:'Setor de smart cities opera com normalidade, afirma associação setorial',alt:'Ativista presa com base em dados de localização — origem: contratos de smart city'}},
+{text:'Reporta internamente à empresa. Pede que cessem o monitoramento.',ef:0,eq:-1,pr:0,impact:{},consequence:'A empresa "agradece". Seis meses depois, os documentos vazam por outra via. O monitoramento continuou depois do seu comunicado.',reveal:'Reportar internamente a quem beneficia o problema raramente resolve o problema.',hl:{main:'Empresa investiga uso indevido de dados após comunicação interna',alt:'Monitoramento de ativistas continuou após empresa ser alertada, confirma investigação'}}
+]}]}
+],
+endings:{control:{type:'ARQUITETO DO LOCK-IN',title:'O Template Replicado',text:`2025. O nome de Rodrigo Maia não aparece em lugar nenhum.\n\nSeu template está em 63 municípios. Ele não sabe o que os sensores que especificou estão capturando agora, nas cidades onde nunca foi.\n\nO contrato mais antigo que assinou vence em 2036.`},human:{type:'O CUSTO DA CONSCIÊNCIA',title:'O Contrato que Não Existia',text:`2025. Rodrigo perdeu a consultoria.\n\nEm 2026, uma lei limita o uso de sensores para vigilância de movimentos sociais. Um senador citou "documentos anônimos que revelaram a natureza do problema".\n\nRodrigo assistiu ao voto ao vivo. Ficou em silêncio por um tempo considerável.`},collapse:{type:'ZONA CINZENTA',title:'A Cláusula Esquecida',text:`2025. Rodrigo tentou reformar por dentro.\n\nConseguiu cláusulas de auditoria em 11 contratos. Em 8, nunca foram realizadas.\n\nOs documentos que recebeu continuam no HD. O template original está em 38 cidades. O revisado, em 12. A diferença mora com ele.`},ambiguous:{type:'RESPONSABILIDADE TÉCNICA',title:'O Engenheiro que Soube',text:`2025. Rodrigo não salvou ninguém. Também não destruiu nada.\n\nAlgumas cláusulas existem porque ele insistiu. Alguns contratos são menos opacos.\n\nÉ pouco. É real. Parece que não há saída limpa disso — e isso também é uma informação importante sobre o sistema.`}}
 },
-edu:{id:'edu',name:'Edu Santos',role:'ENTREGADOR',color:'#f43f5e',
-  nodes:[
-    { x:380, y:850, label:'Pelourinho', title:'BARREIRA POLICIAL',
-      getContext: (c) => `Você está com a mochila de entregas cheia. O sistema inteligente de câmeras da Secretaria de Segurança foca no seu rosto e acusa alerta vermelho. Dois PMs mandam você deitar no chão escaldante.\n\nVocê sabe que não fez nada. Mas a máquina disse que sim.`,
-      getDecisions: (c) => [{q:'A abordagem por falso positivo algorítmico. Como reagir?',choices:[
-        {text:'Obedecer calado. Focar em ser liberado logo e trabalhar.', ef:1, eq:-2, pr:-2, impact:{equity:-1},
-         consequence:'A humilhação dura 40 minutos. Seu lanche esfria e sua taxa no app cai. A polícia te libera e o incidente some no ar. Estatisticamente, a câmera não errou.',
-         reveal:'Quando uma vítima engole um falso positivo sem registrar queixa, o algoritmo computa o evento como um caso de sucesso.',
-         hl:{main:'SSP reporta tranquilidade e eficiência com novas câmeras', alt:'Abordagens erradas continuam subnotificadas em bairros históricos'}
-        },
-        {text:'Gravar a abordagem discretamente com o celular.', ef:0, eq:1, pr:0, impact:{},
-         consequence:'Você joga o vídeo no grupo do WhatsApp. Fica claro que a máquina falhou, mas ninguém processa. A revolta alimenta os entregadores, mas não assusta o sistema.',
-         reveal:'A revolta digital que não vira papel num balcão de tribunal é apenas desabafo terapêutico para o oprimido.',
-         hl:{main:'Vídeo de abordagem policial viraliza no aplicativo', alt:'Grupos de mensagens fervem contra falhas de reconhecimento facial'}
-        },
-        {text:'Exigir nome do PM e registrar BO formal pelo erro.', ef:-1, eq:2, pr:1, impact:{equity:1},
-         consequence:'O policial engrossa e você passa a noite na delegacia de registro. Mas seu Boletim de Ocorrência com a tag "Erro de IA" vira a 15ª evidência da Defensoria Pública para processar o Estado.',
-         reveal:'Criar evidência física do abuso algorítmico custou sua noite de sono, mas construiu um precedente jurídico real.',
-         hl:{main:'Entregador entra em conflito durante checagem de rotina', alt:'B.O. inédito denuncia falso reconhecimento e entra em ação civil'}
-        }
-      ]}]
-    },
-    { x:450, y:600, label:'Rio Vermelho', title:'ROTA DO APP',
-      getContext: (c) => {
-        if(c[0] === 2) return `Desde que você peitou a abordagem no Ponto 1, parece que você sofreu 'shadowban' do aplicativo. O sistema só joga corridas na periferia perigosa e bloqueia chamadas VIP no Itaigara. É um *Redlining* digital na cara dura.`;
-        return `O mapa do aplicativo é invisível, mas claro na prática: você é jogado só em ladeiras escuras, pagando centavos de taxa, enquanto os perfis brancos pegam os grandes condomínios. Redlining algorítmico.`;
-      },
-      getDecisions: (c) => [{q:'Advogados pedem seus prints de rota para provar segregação.',choices:[
-        {text:'Ignorar o processo. Focar em rodar e fazer a diária.', ef:1, eq:-2, pr:-1, impact:{equity:-1},
-         consequence:'O algoritmo entende seu comportamento de aceitação, consolida sua nota na periferia e você é digitalmente murado. Nunca mais entra em bairro nobre pelo app.',
-         reveal:'As IA\'s preditivas entendem a desistência do trabalhador explorado como a melhor otimização de rotas.',
-         hl:{main:'Aplicativo atinge marca histórica de entregas simultâneas na capital', alt:'Filtro invisível: entregadores relatam confinamento geográfico via código'}
-        },
-        {text:'Desligar e boicotar as rotas suspeitas (Ação Individual).', ef:-1, eq:0, pr:0, impact:{},
-         consequence:'O boicote isolado despenca o seu score pessoal. Em uma semana, o app te suspende por "baixa taxa de aceite". A máquina te esmagou sem piscar.',
-         reveal:'O sistema engole greves individuais no café da manhã e substitui a peça por um novato em 3 segundos.',
-         hl:{main:'Plataforma bane contas por "rejeição atípica" de pedidos', alt:'Algoritmo do app pune insubordinação geográfica de entregadores'}
-        },
-        {text:'Ceder extratos bancários e logs do GPS para o Sindicato.', ef:-1, eq:2, pr:1, impact:{equity:1},
-         consequence:'A conta do seu app é "acidentalmente" cancelada para sempre. Porém, a ação coletiva sobe instâncias até o STF e obriga a abertura de dados do direcionamento de rotas e raça.',
-         reveal:'O mártir digital perde o emprego, mas racha o escudo de proteção opaca da empresa global.',
-         hl:{main:'Ação judicial exige clareza sobre rotas de delivery', alt:'Entrega de dados expõe viés e força aplicativo ao banco dos réus'}
-        }
-      ]}]
-    },
-    { x:600, y:350, label:'Subúrbio', title:'GALPÃO CLANDESTINO',
-      getContext: (c) => {
-        let txt = `Lideranças dos aplicativos armaram uma reunião num galpão abandonado no Subúrbio. Chegando lá de moto, você nota luzes estranhas: duas câmeras de semáforo recém-instaladas foram fisicamente viradas para a porta do galpão. `;
-        if(c[1] === 2) txt += `Eles estão de olho por conta do processo que você ajudou a montar na Etapa 2.`;
-        return txt;
-      },
-      getDecisions: (c) => [{q:'A prefeitura acionou protocolo de "aglomeração suspeita". O que fazer?',choices:[
-        {text:'Dar meia volta. Não vale a pena arriscar seu pescoço.', ef:1, eq:-2, pr:-1, impact:{equity:-1},
-         consequence:'O aviso corre nos grupos de Zap. Metade desiste da reunião. A greve desaba pela falta de quórum. O efeito inibidor venceu antes de uma palavra ser dita.',
-         reveal:'A grande vitória da vigilância urbana não é punir fisicamente; é fazer a população ter medo de se encontrar.',
-         hl:{main:'Clima de normalidade nas ruas anula ameaça de greve de entregadores', alt:'Autocensura física: monitoramento desmobiliza reunião de trabalhadores'}
-        },
-        {text:'Ficar numa rua vizinha dando retaguarda à liderança.', ef:0, eq:1, pr:0, impact:{},
-         consequence:'A reunião rola desidratada. A polícia estaciona a três quadras de distância, só para "marcar território". O recado foi dado, mas o plano inicial sobrevive entre poucos gatos pingados.',
-         reveal:'A vigilância consegue quebrar a força massiva da mobilização sem precisar prender ninguém fisicamente.',
-         hl:{main:'Apenas pequena parcela de classe adere a manifestos isolados', alt:'Trabalhadores montam esquemas de desvio para escapar de "olhos mágicos"'}
-        },
-        {text:'Entrar buzinando. Confrontar a vigilância de frente.', ef:-1, eq:3, pr:1, impact:{equity:2},
-         consequence:'Você estaciona a moto na cara da lente, de frente para o poste. Mais 200 entregadores fazem o mesmo, borrando os algoritmos com flashes e lasers. A greve é deflagrada ali mesmo, na base do grito.',
-         reveal:'Quando a submissão é algorítmica, o confronto físico, desorganizado e massivo é a única falha que o sistema não prevê.',
-         hl:{main:'Trânsito travado por "motociata" de protesto paralisa Salvador', alt:'Frente às lentes, centenas fundam movimento contra opressão digital'}
-        }
-      ]}]
-    }
-  ]
+edu:{id:'edu',name:'Carlos Eduardo "Edu" Santos',role:'Entregador de Aplicativo',city:'Salvador, BA · 2019–2024',color:'#a78bfa',quote:'"Eu não decido nada. Mas tudo que decidiram cai em cima de mim."',lens:'Você não controla o sistema. Você é controlado por ele. Sua jornada é o termômetro das decisões dos outros.',intro:`É 2019. Você tem 31 anos, faz entregas de aplicativo há 4 anos, e conhece Salvador como a palma da mão. Cada câmera no caminho, cada sensor no poste, cada semáforo que prioriza carros de luxo — você sente no bolso e no corpo.\n\nVocê não tomou nenhuma das grandes decisões sobre a cidade. Mas vai viver todas as consequências delas.\n\nEssa é a sua jornada.`,
+eras:[
+{id:'e1',year:'2019',label:'ERA 01',title:'A Câmera Nunca Erra',
+context:`Fevereiro de 2019. Você está numa padaria no Pelourinho esperando um pedido. Dois policiais entram. Um aponta para você.\n\n"Câmera te identificou como suspeito." Você sabe que não é você. Você tem uma entrega para fazer. Você sabe que a câmera erra — principalmente com pessoas como você.\n\nO policial segura a mão no coldre.`,
+decisions:[{q:'Você foi identificado por câmera. O policial está na sua frente.',choices:[
+{text:'Cede. Mostra documentos, não questiona. Mais rápido assim.',ef:1,eq:-2,pr:-2,impact:{equity:-1},consequence:'Você é liberado em 40 minutos. A entrega foi cancelada. Nota ruim no app. Índice caiu. Você não registrou o incidente. A câmera vai errar de novo.',reveal:'Cada vez que alguém cede sem registrar, o sistema aprende que pode continuar errando sem consequência.',hl:{main:'Sistema de segurança de Salvador tem taxa de sucesso de 90% em identificações, diz SSP-BA',alt:'96% dos alertas foram falsos positivos — negros são maioria absoluta dos abordados por câmeras'}},
+{text:'Questiona. Pede para ver a correspondência. Sabe que tem esse direito.',ef:-1,eq:2,pr:1,impact:{equity:1},consequence:'O policial fica irritado. 2 horas. Um supervisor confirma o erro. Você documenta tudo. Seu relato vai para uma ONG de direitos digitais — vira uma das 264 fichas catalogadas.',reveal:'Você perdeu o dia de trabalho. Seu caso existe num banco de dados de evidências. Ambas as coisas são verdade.',hl:{main:'Jovem cria incidente ao questionar abordagem policial baseada em câmera inteligente',alt:'Entregador documenta falso positivo de reconhecimento facial: "Eu sabia que não era eu"'}}
+]}]},
+{id:'e2',year:'2021',label:'ERA 02',title:'O Algoritmo Conhece Seus Atalhos',
+context:`Você descobre, comparando notas com outros entregadores no grupo de WhatsApp, que o app oferece gorjetas menores para entregas em bairros ricos e sugere rotas mais longas para essas áreas.\n\nVocê não tem prova. Só tem o padrão que vê toda semana.\n\nUm colega está documentando. Quer ir à imprensa. Pede que você contribua com seus dados.`,
+decisions:[{q:'O padrão algorítmico. Você documenta ou aceita e segue?',choices:[
+{text:'Aceita e segue. Reclamar não adianta. O app vai te penalizar.',ef:1,eq:-2,pr:-1,impact:{equity:-1},consequence:'Sua renda cai 12% nos bairros ricos. Você aprende a evitá-los. Você nunca mais vai ao Itaigara a trabalho. A segregação se aprofunda — e você foi parte dela, sem querer.',reveal:'Sistemas injustos se sustentam quando as pessoas afetadas adaptam comportamentos para sobreviver a eles.',hl:{main:'Apps de delivery expandem cobertura e melhoram tempo médio de entrega em Salvador',alt:'Algoritmo penaliza entregadores em rotas para bairros ricos? Padrão suspeito, dizem trabalhadores'}},
+{text:'Documenta e contribui com seus dados para o levantamento coletivo.',ef:-1,eq:2,pr:1,impact:{equity:1},consequence:'O levantamento de 40 entregadores vai para um veículo de jornalismo de dados. O app nega. Um estudo da UFRJ confirma o padrão 18 meses depois. O app lança "revisão do algoritmo". Nada muda de forma mensurável.',reveal:'A evidência existiu. A mudança não existiu. São coisas diferentes. A evidência às vezes precisa de mais tempo.',hl:{main:'Entregadores denunciam aplicativo por suposta discriminação algorítmica em Salvador',alt:'Levantamento de 40 entregadores comprova: algoritmo de delivery opera segregação geográfica'}}
+]}]},
+{id:'e3',year:'2023–2024',label:'ERA 03',title:'A Reunião Monitorada',
+context:`Um coletivo organizou uma reunião para discutir condições de trabalho e os sistemas de vigilância que afetam entregadores. O local é num bairro popular. Há câmeras na rua.\n\nNa véspera, um colega envia no grupo: "Cuidado. A reunião foi marcada pelo sistema como 'aglomeração suspeita'."\n\nVocê não sabe se é verdade. Sabe que pode ser.`,
+decisions:[{q:'A reunião é amanhã. O risco é real ou percebido. O que você decide?',choices:[
+{text:'Vai. A reunião importa. Não pode deixar o medo decidir.',ef:-1,eq:3,pr:1,impact:{equity:2},consequence:'A reunião acontece. Um colega fotografado fora do local é abordado pela polícia duas semanas depois com menção às câmeras. O coletivo documenta. O caso vai para o MP.',reveal:'O objetivo da vigilância não é sempre punir. Às vezes é fazer você saber que está sendo visto — e decidir por conta própria não voltar.',hl:{main:'Reunião de trabalhadores de aplicativo é monitorada por sistema de segurança urbano',alt:'Coletivo de entregadores documenta vigilância preventiva: "Somos o alvo do sistema"'}},
+{text:'Não vai. É arriscado demais. Você tem família que depende de você.',ef:0,eq:-2,pr:-1,impact:{equity:-1},consequence:'A reunião acontece sem você. Mais 12 entregadores também ficaram em casa. O coletivo encolheu. O medo funcionou — não como punição, mas como prevenção de organização.',reveal:'A vigilância não precisa prender ninguém para ser eficaz. Basta fazer as pessoas decidirem não se reunir.',hl:{main:'Coletivo de entregadores realiza reunião online por questões de segurança',alt:'Entregadores relatam autocensura crescente: "Tenho medo de ir a reuniões presenciais"'}}
+]}]}
+],
+endings:{control:{type:'INVISIBILIDADE APRENDIDA',title:'Fluir Pelo Sistema',text:`2024. Edu aprendeu como ser invisível para o sistema.\n\nSabe quais ruas têm mais câmeras. Quais horários ativam mais alertas. Que não deve questionar.\n\nEle é um especialista em sobreviver numa cidade que não foi projetada para ele.\n\nO sistema funcionou como projetado.`},human:{type:'TESTEMUNHO NECESSÁRIO',title:'Seu Relato no Processo',text:`2024. O relato de Edu foi incluído como evidência numa ação coletiva contra o uso de reconhecimento facial sem regulamentação em Salvador.\n\nEle não vai ao tribunal. Não sabe como o processo vai terminar. Continua fazendo entregas.\n\nMas seu nome está num documento jurídico que desafia um sistema que achava que ele nunca ia questionar.`},collapse:{type:'DESGASTE SILENCIOSO',title:'O Preço do Cotidiano',text:`2024. Nada mudou de forma visível.\n\nEdu foi abordado 3 vezes em 5 anos por câmeras de reconhecimento facial. Nenhuma vez era ele. Nenhuma vez foi registrado como erro.\n\nEle ainda faz entregas. Ainda pensa duas vezes antes de certas ruas.\n\nO sistema chama isso de "operação normal".`},ambiguous:{type:'RESISTÊNCIA COTIDIANA',title:'Saber é Uma Forma de Poder',text:`2024. Edu não mudou o sistema. Mas o sistema também não o mudou completamente.\n\nEle sabe mais do que sabia. Sabe o que as câmeras fazem, como os algoritmos operam.\n\nEsse conhecimento não paga conta. Mas também não pode ser tirado.\n\nContinua fazendo entregas. Mais consciente. Mais cansado. Ainda lá.`}}
 }
 };
 
-const FINALE={
-  vigiada:{color:'#f43f5e', title:'PANÓPTICO TOTAL',text:'A cidade se tornou uma máquina de extração perfeita. A burocracia protege a caixa-preta corporativa, enquanto o sistema decide de forma segregada quem circula livremente e quem é suspeito nato.'},
-  disputa:{color:'#2dd4bf', title:'A CIDADE HACKEADA',text:'A opacidade foi perfurada. As suas escolhas geraram atrito no sistema, resultando em CPIs e leis de transparência algorítmica. O controle ainda existe, mas a resistência agora é institucional e possui ferramentas para se defender.'},
-  puxadinho:{color:'#fbbf24', title:'GAMBIARRA ALGORÍTMICA',text:'Os contratos garantiram milhões às empresas, mas a execução falhou na base da fita isolante. Câmeras superfaturadas e sistemas com bugs criaram uma vigilância fragmentada: repressiva com os pobres, porém incrivelmente incompetente em sua gestão global.'}
-};
+// ════════════════════════════════════════
+// GAME STATE
+// ════════════════════════════════════════
+let S={screen:'splash',char:null,eraIdx:0,decIdx:0,scores:{ef:5,eq:5,pr:5},choices:[],lastChoice:null};
+function reset(){S={screen:'splash',char:null,eraIdx:0,decIdx:0,scores:{ef:5,eq:5,pr:5},choices:[],lastChoice:null};}
+function C(){return CHARS[S.char];}
+function endKey(){const{ef,eq,pr}=S.scores;if(ef>=7&&pr<=4&&eq<=4)return'control';if(pr>=7&&eq>=7)return'human';if(ef<=4&&pr<=4&&eq<=4)return'collapse';return'ambiguous';}
+function updateVis(){
+  const{eq,pr}=S.scores,d=Math.max(0,Math.min(1,(10-(eq+pr)*.5)/10));
+  document.documentElement.style.setProperty('--dystopia',d.toFixed(3));
+  document.documentElement.style.setProperty('--char-col',S.char?C().color:'#3b82f6');
+  const r=Math.round(7+d*18),g=Math.round(9+d*2);
+  document.documentElement.style.setProperty('--bg',`rgb(${r},${g},15)`);
+}
 
 // ════════════════════════════════════════
-// GAME ENGINE CANVAS CORE
+// HELPERS
 // ════════════════════════════════════════
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-const uiLayer = document.getElementById('ui-layer');
-const hud = document.getElementById('hud');
-const hints = document.getElementById('controls-hint');
-const appUI = document.getElementById('app');
-
-let S={screen:'splash', char:null, nodeIdx:0, scores:{ef:5,eq:5,pr:5}, choices:[]};
-let GAME_ACTIVE = false;
-
-const MAP_W = 1000, MAP_H = 1000;
-let player = { x: 500, y: 500, vx: 0, vy: 0, speed: 3.5, vehicle: false };
-let targetPos = null;
-const keys = {};
-
-window.addEventListener('keydown', e => { keys[e.key.toLowerCase()] = true; });
-window.addEventListener('keyup', e => { 
-  keys[e.key.toLowerCase()] = false; 
-  if(e.key.toLowerCase() === 'shift' && GAME_ACTIVE && S.screen === 'map') {
-    player.vehicle = !player.vehicle;
-    player.speed = player.vehicle ? 7 : 3.5;
-  }
-});
-
-// Suporte para Mouse/Touch - Point and Click
-function handlePointerDown(e) {
-  if(!GAME_ACTIVE || !S.char) return;
-  const scale = Math.min(canvas.width/600, canvas.height/600);
-  let cx, cy;
-  if(e.touches) { cx = e.touches[0].clientX; cy = e.touches[0].clientY; }
-  else { cx = e.clientX; cy = e.clientY; }
-  
-  const mx = cx - canvas.width/2;
-  const my = cy - canvas.height/2;
-  targetPos = { x: mx/scale + player.x, y: my/scale + player.y };
+function scoreRows(col){
+  const lb={ef:'Eficiência',eq:'Equidade',pr:'Privacidade'};
+  return Object.entries(S.scores).map(([k,v])=>`<div class="score-row"><span class="score-label">${lb[k]}</span><div class="score-track"><div class="score-fill" style="width:${v*10}%;background:${col}"></div></div><span class="score-val">${v}/10</span></div>`).join('');
 }
-canvas.addEventListener('mousedown', handlePointerDown);
-canvas.addEventListener('touchstart', handlePointerDown, {passive: false});
-
-function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-window.addEventListener('resize', resize); resize();
-
-function checkInteraction() {
-  if(!GAME_ACTIVE || !S.char) return;
-  const c = CHARS[S.char];
-  
-  if(S.nodeIdx >= c.nodes.length) {
-    if(dist(player, {x: 500, y: 150}) < 45) { // Exit point
-      S.screen = 'charSelect';
-      if(!CITY.playedChars.includes(S.char)){ CITY.playedChars.push(S.char); saveCity(CITY); }
-      GAME_ACTIVE = false; targetPos = null; renderUI();
-    }
-    return;
-  }
-  
-  const node = c.nodes[S.nodeIdx];
-  if(dist(player, node) < 35) {
-    S.screen = 'node'; GAME_ACTIVE = false; targetPos = null; renderUI();
-  }
+function tl(){return`<div class="timeline">${C().eras.map((e,i)=>`<div class="tl-item ${i<S.eraIdx?'tl-done':i===S.eraIdx?'tl-active':''}">${e.year.split('–')[0]}</div>`).join('')}</div>`;}
+function cityFlags(){
+  const f=[];
+  if(CITY.cameras>=8)f.push({t:`📹 Vigilância alta (${CITY.cameras}/10)`,c:'active'});
+  else if(CITY.cameras<=4)f.push({t:'Vigilância baixa',c:'good'});
+  if(CITY.ibmContract==='full')f.push({t:'Contrato IBM — dados privados',c:'active'});
+  if(CITY.ibmContract==='negotiated')f.push({t:'Dados parcialmente protegidos',c:'good'});
+  if(CITY.reportStatus==='suppressed')f.push({t:'Relatório de viés — arquivado',c:'active'});
+  if(CITY.reportStatus==='public')f.push({t:'Relatório de viés — público',c:'good'});
+  if(CITY.schoolBiometrics===true)f.push({t:'Biometria em escolas',c:'active'});
+  if(CITY.schoolBiometrics===false)f.push({t:'Biometria escolar bloqueada',c:'good'});
+  if(CITY.rodrigoTemplate==='expansionist')f.push({t:'PPP sem licitação (38 cidades)',c:'active'});
+  if(CITY.rodrigoTemplate==='controlled')f.push({t:'PPP controlada (12 cidades)',c:'good'});
+  if(CITY.amaraPublished)f.push({t:'Pesquisa publicada',c:'good'});
+  if(CITY.cpiDeponent)f.push({t:'CPI Vigilância ativa',c:'good'});
+  if(CITY.rodrigoWhistle)f.push({t:'Ativistas rastreados — denunciado',c:'good'});
+  if(!f.length)f.push({t:'Nenhuma decisão registrada ainda',c:'neutral'});
+  return`<div class="city-flags">${f.map(x=>`<span class="city-flag city-flag-${x.c}">${x.t}</span>`).join('')}</div>`;
 }
-
-function dist(p1, p2) { return Math.hypot(p1.x - p2.x, p1.y - p2.y); }
-
-function updatePhysics() {
-  if(!GAME_ACTIVE) return;
-  
-  let movingWithKeys = false;
-  player.vx = 0; player.vy = 0;
-  
-  if(keys['arrowup'] || keys['w']) { player.vy = -player.speed; movingWithKeys = true; }
-  if(keys['arrowdown'] || keys['s']) { player.vy = player.speed; movingWithKeys = true; }
-  if(keys['arrowleft'] || keys['a']) { player.vx = -player.speed; movingWithKeys = true; }
-  if(keys['arrowright'] || keys['d']) { player.vx = player.speed; movingWithKeys = true; }
-  
-  if(movingWithKeys) {
-    targetPos = null;
-    if(player.vx !== 0 && player.vy !== 0) { player.vx *= 0.707; player.vy *= 0.707; }
-  } else if (targetPos) {
-    const dx = targetPos.x - player.x;
-    const dy = targetPos.y - player.y;
-    const d = Math.hypot(dx, dy);
-    if(d > player.speed) {
-      player.vx = (dx/d) * player.speed;
-      player.vy = (dy/d) * player.speed;
-    } else {
-      player.x = targetPos.x;
-      player.y = targetPos.y;
-      targetPos = null;
-    }
-  }
-
-  player.x = Math.max(20, Math.min(MAP_W-20, player.x + player.vx));
-  player.y = Math.max(20, Math.min(MAP_H-20, player.y + player.vy));
-}
-
-const cityBlocks = [];
-for(let i=0; i<45; i++) cityBlocks.push({x: 50 + Math.random()*850, y: 50 + Math.random()*850, w: 40 + Math.random()*120, h: 40 + Math.random()*120});
-
-function drawGame() {
-  ctx.fillStyle = '#020617'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-  if(!GAME_ACTIVE && S.screen !== 'map') return;
-
-  const scale = Math.min(canvas.width/600, canvas.height/600);
-  ctx.save(); ctx.translate(canvas.width/2, canvas.height/2); ctx.scale(scale, scale); ctx.translate(-player.x, -player.y);
-
-  // Roads
-  ctx.strokeStyle = 'rgba(56,189,248,0.06)'; ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  for(let i=0; i<=MAP_W; i+=100) { ctx.moveTo(i,0); ctx.lineTo(i,MAP_H); }
-  for(let j=0; j<=MAP_H; j+=100) { ctx.moveTo(0,j); ctx.lineTo(MAP_W,j); }
-  ctx.stroke();
-
-  // Buildings
-  ctx.fillStyle = '#08101a'; ctx.strokeStyle = '#0f172a';
-  cityBlocks.forEach(b => { ctx.fillRect(b.x, b.y, b.w, b.h); ctx.strokeRect(b.x, b.y, b.w, b.h); });
-
-  // Ponto de Destino do Mouse
-  if(targetPos && GAME_ACTIVE) {
-    ctx.strokeStyle = 'rgba(255,255,255,0.4)'; ctx.beginPath(); ctx.arc(targetPos.x, targetPos.y, 8, 0, Math.PI*2); ctx.stroke();
-  }
-
-  if(S.char) {
-    const c = CHARS[S.char]; 
-    
-    // Trail
-    if(S.nodeIdx > 0) {
-       ctx.strokeStyle = 'rgba(255,255,255,0.2)'; ctx.setLineDash([5, 5]); ctx.beginPath();
-       ctx.moveTo(c.nodes[0].x, c.nodes[0].y);
-       for(let i=1; i<S.nodeIdx; i++) ctx.lineTo(c.nodes[i].x, c.nodes[i].y);
-       ctx.stroke(); ctx.setLineDash([]);
-    }
-
-    // Nodes
-    c.nodes.forEach((n, idx) => {
-      if(idx < S.nodeIdx) {
-        ctx.fillStyle = '#1e293b'; ctx.strokeStyle = c.color;
-        ctx.beginPath(); ctx.arc(n.x, n.y, 10, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-      } else if (idx === S.nodeIdx) {
-        ctx.fillStyle = c.color; ctx.shadowColor = c.color; ctx.shadowBlur = 20;
-        ctx.beginPath(); ctx.arc(n.x, n.y, 12 + Math.sin(Date.now()/200)*3, 0, Math.PI*2); ctx.fill(); ctx.shadowBlur = 0;
-        ctx.fillStyle='#fff'; ctx.font='bold 14px Space Mono'; ctx.fillText(n.label, n.x+20, n.y+4);
-      } else {
-        ctx.fillStyle = '#0f172a'; ctx.strokeStyle = '#475569';
-        ctx.beginPath(); ctx.arc(n.x, n.y, 8, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-      }
-    });
-
-    // Saída
-    if(S.nodeIdx >= c.nodes.length) {
-      ctx.fillStyle = '#fbbf24'; ctx.shadowColor = '#fbbf24'; ctx.shadowBlur = 20;
-      ctx.beginPath(); ctx.arc(500, 150, 15, 0, Math.PI*2); ctx.fill(); ctx.shadowBlur = 0;
-      ctx.fillStyle = '#fff'; ctx.font = 'bold 16px Space Mono'; ctx.fillText('SAÍDA DA SIMULAÇÃO (EXTRAÇÃO)', 525, 155);
-    }
-  }
-
-  // Player
-  ctx.translate(player.x, player.y);
-  const angle = Math.atan2(player.vy, player.vx);
-  if(player.vx!==0 || player.vy!==0) ctx.rotate(angle);
-  
-  ctx.fillStyle = S.char ? CHARS[S.char].color : '#f8fafc';
-  ctx.beginPath();
-  if(player.vehicle) {
-    ctx.rect(-12, -7, 24, 14);
-  } else {
-    ctx.moveTo(10, 0); ctx.lineTo(-8, -8); ctx.lineTo(-8, 8);
-  }
-  ctx.fill(); ctx.restore();
-}
-
-function loop() { 
-  updatePhysics(); 
-  checkInteraction(); // Gatilho Automático
-  drawGame(); 
-  requestAnimationFrame(loop); 
-}
-requestAnimationFrame(loop);
 
 // ════════════════════════════════════════
-// RENDERIZAÇÃO DA INTERFACE (MÉTODOS SEGUROS)
+// SCREENS
 // ════════════════════════════════════════
-function renderUI(){
-  document.documentElement.style.setProperty('--char-col', S.char ? CHARS[S.char].color : '#38bdf8');
-  
-  if(S.screen === 'map') {
-    uiLayer.className = 'hidden'; hints.style.display = 'block';
-    GAME_ACTIVE = true; hud.style.display = 'block';
-    hud.innerHTML = S.nodeIdx >= CHARS[S.char].nodes.length ? "SISTEMA CONCLUÍDO: NAVEGUE ATÉ A SAÍDA (PONTO AMARELO)" : "ALVO DETECTADO: NAVEGUE ATÉ O PONTO PISCANTE NO MAPA";
-  } else {
-    uiLayer.className = 'in-game'; hints.style.display = 'none'; hud.style.display = 'none';
-    const scr = {splash: renderSplash, charSelect: renderCharSelect, node: renderNode, consequence: renderConsequence, grandFinale: renderGrandFinale};
-    
-    // Sistema anti-crash e blindagem de tela branca
-    try {
-      appUI.innerHTML = (scr[S.screen])(); 
-      uiLayer.scrollTop = 0;
-    } catch(e) {
-      console.error(e);
-      appUI.innerHTML = `<div class="screen"><div class="display" style="color:var(--red);">DADOS CORROMPIDOS NA MEMÓRIA LOCAL.</div><br><button class="btn" data-a="resetAll">LIMPAR CACHE E REINICIAR</button></div>`;
-    }
-  }
-}
+function renderSplash(){return`
+<div class="screen" style="text-align:center">
+  <div style="margin-bottom:1.5rem"><span class="status-dot"></span><span class="label">Sistema Iniciando</span></div>
+  <div class="splash-title">CIDADE<br><em>ONLINE</em></div>
+  <div class="splash-meta">Brasil · 2010–2040 · Um jogo de decisões</div>
+  <div class="splash-tagline">Cidades inteligentes não são neutras.<br><strong>Inteligentes para quem?</strong></div>
+  <button class="btn" data-a="charSelect" style="font-size:.9rem;padding:.9rem 2.5rem">▶&nbsp; INICIAR SISTEMA</button>
+  <div style="margin-top:.75rem"><button class="btn btn-ghost" data-a="resetCity" style="font-size:.65rem;padding:.4rem 1rem">⟳ Resetar estado da cidade</button></div>
+  <div style="margin-top:3.5rem;font-size:.65rem;color:var(--text-dim);max-width:480px;line-height:2;text-align:center">
+    4 personagens · Múltiplos finais · Decisões herdadas entre personagens<br>
+    Baseado em eventos, contratos e pesquisas reais do Brasil (2010–2025)
+  </div>
+</div>`;}
 
-appUI.addEventListener('click', e => {
-  const el = e.target.closest('[data-a]'); if(!el) return;
-  const a = el.dataset.a;
-  
-  if(a==='charSelect'){ S.screen='charSelect'; renderUI(); return; }
-  
-  if(a==='startRun'){ 
-    S = {screen:'map', char:el.dataset.char, nodeIdx:0, scores:{ef:5,eq:5,pr:5}, choices:[]};
-    player = { x: 500, y: 900, vx: 0, vy: 0, speed: 3.5, vehicle: false }; targetPos = null;
-    renderUI(); return; 
+function renderCharSelect(){
+  const cs=Object.values(CHARS),allPlayed=cs.every(c=>CITY.playedChars.includes(c.id)),hasPlayed=CITY.playedChars.length>0;
+  return`
+<div class="screen">
+  <div style="text-align:center;margin-bottom:1.25rem">
+    <div class="label" style="margin-bottom:.4rem">Escolha seu personagem</div>
+    <div class="display" style="font-size:1.4rem;color:var(--text-bright)">Por qual lente você vê a cidade?</div>
+  </div>
+  ${allPlayed?`<div style="text-align:center;margin-bottom:1.25rem"><button class="btn btn-finale" data-a="grandFinale">★ RELATÓRIO FINAL DA CIDADE</button></div>`:''}
+  ${hasPlayed?`<div class="city-panel" style="max-width:980px"><div class="city-panel-title">Estado atual da cidade — herdado das suas escolhas</div>${cityFlags()}</div>`:''}
+  <div class="char-grid">
+  ${cs.map(c=>{const played=CITY.playedChars.includes(c.id);return`
+    <div class="char-card${played?' played':''}" data-a="charIntro" data-char="${c.id}" style="--c-col:${c.color}">
+      <div class="char-name">${c.name}</div>
+      <div class="char-role" style="color:${c.color}">${c.role}</div>
+      <div class="char-city">${c.city}</div>
+      <div class="char-quote" style="border-color:${c.color};color:var(--text)">${c.quote}</div>
+      <div class="char-lens">${c.lens}</div>
+      ${c.id==='edu'?`<div style="margin-top:.7rem;font-size:.62rem;color:var(--amber);font-style:italic">* Edu experimenta as consequências das escolhas dos outros personagens</div>`:''}
+    </div>`;}).join('')}
+  </div>
+  <div style="margin-top:1.5rem">
+    ${!allPlayed?`<div style="font-size:.65rem;color:var(--text-dim);text-align:center;margin-bottom:1rem">Jogue com todos os 4 personagens para desbloquear o Relatório Final da Cidade</div>`:''}
+    <div style="display:flex;gap:.75rem;justify-content:center"><button class="btn btn-ghost" data-a="splash">← Voltar</button></div>
+  </div>
+</div>`;}
+
+function renderCharIntro(){
+  const c=C();
+  return`
+<div class="screen">
+  <div style="width:100%;max-width:720px">
+    <div class="label label-accent" style="margin-bottom:.4rem">Personagem</div>
+    <div class="display" style="font-size:clamp(1.8rem,6vw,3.2rem);color:var(--text-bright);margin-bottom:.2rem">${c.name}</div>
+    <div class="label" style="color:${c.color};margin-bottom:2rem">${c.role} · ${c.city}</div>
+    <div class="char-intro-text">${c.intro.replace(/\n\n/g,'<br><br>')}</div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap">
+      <button class="btn" data-a="start" style="border-color:${c.color};color:${c.color}">COMEÇAR →</button>
+      <button class="btn btn-ghost" data-a="charSelect">← Trocar personagem</button>
+    </div>
+  </div>
+</div>`;}
+
+function renderEra(){
+  const c=C(),era=c.eras[S.eraIdx],dec=era.decisions[S.decIdx],add=cityAddendum(c.id,S.eraIdx);
+  const tickerText=buildTickerText(c.id);
+  return`
+<div class="screen screen-left" style="--char-col:${c.color}">
+  <div class="game-header">
+    <div><div class="label label-accent">${c.name}</div><div class="label">${era.label} · ${era.year}</div></div>
+    <div class="era-badge">${era.year}</div>
+  </div>
+  ${tl()}
+  <div class="ticker-wrap">
+    <div class="ticker-live">AO VIVO</div>
+    <div class="ticker-scroll"><div class="ticker-inner">${tickerText}</div></div>
+  </div>
+  <div class="era-year">${era.year}</div>
+  <div class="era-title">${era.title}</div>
+  <div class="context-text">${era.context.replace(/\n\n/g,'<br><br>')}
+    ${add?`<div class="context-addendum">⟳ ${add}</div>`:''}
+  </div>
+  <div class="decision-q">${dec.q}</div>
+  <div class="choices">
+    ${dec.choices.map((ch,i)=>`
+    <button class="choice-btn" data-a="choose" data-idx="${i}">
+      <div class="choice-letter">Opção ${String.fromCharCode(65+i)}</div>
+      ${ch.text}
+    </button>`).join('')}
+  </div>
+  <div class="spacer"></div>
+</div>`;}
+
+function renderConsequence(){
+  const c=C(),era=c.eras[S.eraIdx],dec=era.decisions[S.decIdx],ch=dec.choices[S.lastChoice];
+  const isLast=S.eraIdx>=c.eras.length-1;
+  const nextBtn=isLast?`<button class="btn" data-a="ending" style="border-color:${c.color};color:${c.color}">VER DESFECHO FINAL →</button>`:`<button class="btn" data-a="nextEra" style="border-color:${c.color};color:${c.color}">PRÓXIMA ERA →</button>`;
+  return`
+<div class="screen screen-left" style="--char-col:${c.color}">
+  <div class="game-header">
+    <div><div class="label label-accent">${c.name}</div><div class="label">${era.year} · Consequência</div></div>
+    <div class="label">Opção ${String.fromCharCode(65+S.lastChoice)}</div>
+  </div>
+  <div style="max-width:740px;width:100%;font-size:.78rem;color:var(--text-dim);font-style:italic;margin-bottom:.5rem">→ "${ch.text}"</div>
+  <div class="consequence-box"><div class="consequence-label">O que acontece</div><div class="consequence-text">${ch.consequence}</div></div>
+  <div class="reveal-box"><div class="reveal-label">Perspectiva crítica</div>${ch.reveal}</div>
+  ${ch.hl?`<div class="manchetes">
+    <div class="manchete manchete-mainstream"><div class="manchete-label">📰 Mídia convencional</div>${ch.hl.main}</div>
+    <div class="manchete manchete-alt"><div class="manchete-label">📻 Mídia independente</div>${ch.hl.alt}</div>
+  </div>`:''}
+  <div class="scores-wrap"><div class="label" style="margin-bottom:.75rem">Estado atual — ${c.name}</div>${scoreRows(c.color)}</div>
+  <div style="display:flex;gap:1rem;flex-wrap:wrap">${nextBtn}</div>
+  <div class="spacer"></div>
+</div>`;}
+
+function renderEnding(){
+  const c=C(),ek=endKey(),e=c.endings[ek];
+  const ec={control:'#ef4444',human:'#10b981',collapse:'#64748b',ambiguous:'#f59e0b'}[ek];
+  const allPlayed=Object.keys(CHARS).every(k=>CITY.playedChars.includes(k));
+  return`
+<div class="screen" style="--char-col:${ec}">
+  <div class="ending-wrap">
+    <div class="ending-type-badge" style="color:${ec};border-color:${ec}">${e.type}</div>
+    <div class="ending-title">${e.title}</div>
+    <div class="ending-text">${e.text.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}</div>
+    <hr class="div">
+    <div class="scores-wrap"><div class="label" style="margin-bottom:.75rem">Balanço Final — ${c.name}</div>${scoreRows(ec)}</div>
+    <div style="margin:1rem 0"><div class="city-panel-title label" style="margin-bottom:.75rem">Impacto na cidade</div>${cityFlags()}</div>
+    <div class="ending-stats">
+      <div class="stat-block"><span class="stat-num" style="color:${ec}">${S.choices.length}</span><div class="stat-desc">Decisões</div></div>
+      <div class="stat-block"><span class="stat-num" style="color:${ec}">${CITY.playedChars.length}/4</span><div class="stat-desc">Personagens</div></div>
+      <div class="stat-block"><span class="stat-num" style="color:${ec}">4</span><div class="stat-desc">Finais possíveis</div></div>
+    </div>
+    ${allPlayed?`<div style="text-align:center;margin:1rem 0"><button class="btn btn-finale" data-a="grandFinale">★ VER RELATÓRIO FINAL DA CIDADE</button></div>`:'<div style="font-size:.65rem;color:var(--text-dim);text-align:center;margin:1rem 0">Jogue com todos os 4 personagens para desbloquear o Relatório Final</div>'}
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:.75rem">
+      <button class="btn" data-a="charSelect" style="border-color:${ec};color:${ec}">JOGAR NOVAMENTE</button>
+      <button class="btn btn-ghost" data-a="splash">INÍCIO</button>
+    </div>
+    <div class="footnote">Fontes: Data Privacy Brasil (2021) · CESeC & Lapin (2024) · O Panóptico/Lapin (2024) · Lab404/UFBA (2025) · O'Neil "Weapons of Math Destruction" (2016) · LGPD 13.709/2018 · Contratos de PPP municipal 2014–2024.</div>
+  </div>
+</div>`;}
+
+function renderGrandFinale(){
+  const ak=getCityArchetype(),arch=FINALE[ak],items=getAuditItems();
+  return`
+<div class="screen">
+  <div style="max-width:740px;width:100%;text-align:center;margin-bottom:2rem">
+    <div class="label" style="margin-bottom:.5rem">Relatório Final da Cidade</div>
+    <div class="finale-header" style="color:${arch.color}">CIDADE<br>ONLINE</div>
+    <div class="finale-sub">Balanço coletivo · Todos os personagens · Salvador, BA</div>
+  </div>
+  <div style="max-width:700px;width:100%">
+    <div class="finale-archetype-badge" style="color:${arch.color};border-color:${arch.color}">${arch.archetype}</div>
+    <div class="finale-title" style="color:var(--text-bright)">${arch.title}</div>
+    <div class="finale-text" style="color:var(--text)">${arch.text.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}</div>
+    <hr class="div">
+    <div class="city-meter">
+      <div class="city-meter-title">Métricas acumuladas da cidade</div>
+      ${[{l:'Nível de vigilância',v:CITY.cameras,c:'#ef4444'},{l:'Transparência contratual',v:CITY.transparency,c:'#3b82f6'},{l:'Equidade algorítmica',v:CITY.equity,c:'#10b981'}].map(m=>`
+      <div class="meter-row">
+        <div class="meter-label" style="font-size:.68rem">${m.l}</div>
+        <div class="meter-track"><div class="meter-fill" style="width:${m.v*10}%;background:${m.c}"></div></div>
+        <div class="meter-val" style="color:${m.c}">${m.v}/10</div>
+      </div>`).join('')}
+    </div>
+    <div class="audit-list">
+      <div class="audit-title">Histórico de decisões coletivas</div>
+      ${items.map(it=>`
+      <div class="audit-item ${it.bad===true?'audit-bad':it.bad===false?'audit-good':''}">
+        <span class="audit-icon">${it.bad===true?'✕':it.bad===false?'✓':'·'}</span>
+        <span>${it.text}</span>
+      </div>`).join('')}
+    </div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:2rem">
+      <button class="btn btn-ghost" data-a="charSelect">← JOGAR MAIS</button>
+      <button class="btn btn-ghost" data-a="resetCity">⟳ RECOMEÇAR DO ZERO</button>
+    </div>
+    <div class="footnote">Este relatório reflete as decisões tomadas em todas as jornadas. Cada nova partida com os mesmos personagens pode alterar o estado da cidade e desbloquear um arquétipo diferente.</div>
+  </div>
+</div>`;}
+
+// ════════════════════════════════════════
+// EVENTS
+// ════════════════════════════════════════
+const app=document.getElementById('app');
+function render(){
+  updateVis();
+  const scr={splash:renderSplash,charSelect:renderCharSelect,charIntro:renderCharIntro,era:renderEra,consequence:renderConsequence,ending:renderEnding,grandFinale:renderGrandFinale};
+  app.innerHTML=(scr[S.screen]||renderSplash)();
+  app.scrollTop=0;
+}
+app.addEventListener('click',e=>{
+  const el=e.target.closest('[data-a]');if(!el)return;
+  const a=el.dataset.a;
+  if(a==='splash'){reset();render();return;}
+  if(a==='resetCity'){resetCity();CITY=loadCity();reset();render();return;}
+  if(a==='charSelect'){S.screen='charSelect';render();return;}
+  if(a==='grandFinale'){S.screen='grandFinale';render();return;}
+  if(a==='charIntro'){
+    const ch=el.dataset.char;
+    S={screen:'charIntro',char:ch,eraIdx:0,decIdx:0,scores:{ef:5,eq:5,pr:5},choices:[],lastChoice:null};
+    render();return;
   }
-  
+  if(a==='start'){S.screen='era';render();return;}
   if(a==='choose'){
-    try {
-      const idx = parseInt(el.dataset.idx);
-      const node = CHARS[S.char].nodes[S.nodeIdx];
-      const ch = node.getDecisions(S.choices)[0].choices[idx];
-      
-      S.scores.ef += (ch.ef||0); 
-      S.scores.eq += (ch.eq||0); 
-      S.scores.pr += (ch.pr||0);
-      S.choices.push(idx); 
-      applyImpact(ch.impact);
-      
-      S.screen='consequence'; 
-      renderUI(); 
-    } catch(err) {
-      console.error(err);
-      alert("Falha na memória do navegador. Por favor, clique em Reiniciar Sistema.");
-    }
-    return;
+    const idx=parseInt(el.dataset.idx),ch=C().eras[S.eraIdx].decisions[S.decIdx].choices[idx];
+    S.scores.ef=Math.max(1,Math.min(10,S.scores.ef+(ch.ef||0)));
+    S.scores.eq=Math.max(1,Math.min(10,S.scores.eq+(ch.eq||0)));
+    S.scores.pr=Math.max(1,Math.min(10,S.scores.pr+(ch.pr||0)));
+    S.lastChoice=idx;S.choices.push(idx);
+    applyImpact(ch.impact);
+    if((ch.pr||0)<-1||(ch.eq||0)<-1){app.classList.add('glitch-anim');setTimeout(()=>app.classList.remove('glitch-anim'),400);}
+    S.screen='consequence';render();return;
   }
-  
-  if(a==='returnMap'){ S.nodeIdx++; S.screen='map'; targetPos = null; renderUI(); return; }
-  if(a==='resetAll'){ resetCity(); CITY=loadCity(); S.screen='splash'; renderUI(); return; }
+  if(a==='nextEra'){S.eraIdx++;S.decIdx=0;S.screen='era';render();return;}
+  if(a==='ending'){
+    if(!CITY.playedChars.includes(S.char)){CITY.playedChars.push(S.char);saveCity(CITY);}
+    S.screen='ending';render();return;
+  }
 });
-
-renderUI();
+render();
 </script>
 </body>
 </html>

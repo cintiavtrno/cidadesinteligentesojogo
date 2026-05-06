@@ -80,16 +80,34 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Space 
 
 <script>
 // ════════════════════════════════════════
-// CITY STATE
+// CITY STATE (COM AUTO-CURA)
 // ════════════════════════════════════════
-const CK='cidadeOnline_rpg_v5_final';
+const CK='cidadeOnline_rpg_v6';
 function freshCity(){return{cameras:5,transparency:5,equity:5,playedChars:[]};}
-function loadCity(){try{return JSON.parse(localStorage.getItem(CK))||freshCity();}catch{return freshCity();}}
+function loadCity(){
+  try{
+    let c = JSON.parse(localStorage.getItem(CK));
+    // Se estiver corrompido de versões anteriores, recria do zero
+    if(!c || typeof c.cameras !== 'number' || isNaN(c.cameras)) return freshCity();
+    return c;
+  } catch(e) { return freshCity(); }
+}
 function saveCity(c){try{localStorage.setItem(CK,JSON.stringify(c));}catch(e){}}
 let CITY=loadCity();
 
+function applyImpact(imp){
+  if(!imp) return;
+  if(imp.cameras !== undefined) CITY.cameras = Math.max(1, Math.min(10, CITY.cameras + imp.cameras));
+  if(imp.transparency !== undefined) CITY.transparency = Math.max(1, Math.min(10, CITY.transparency + imp.transparency));
+  if(imp.equity !== undefined) CITY.equity = Math.max(1, Math.min(10, CITY.equity + imp.equity));
+  Object.entries(imp).forEach(([k,v])=>{
+    if(!['cameras','transparency','equity'].includes(k)) CITY[k]=v;
+  });
+  saveCity(CITY);
+}
+
 // ════════════════════════════════════════
-// NARRATIVE ENGINE (COM CONSEQUÊNCIAS TEXTUAIS E IMPACTO)
+// NARRATIVE ENGINE
 // ════════════════════════════════════════
 const CHARS={
 marco:{id:'marco',name:'Marco Santos',role:'SEC. ADJUNTO DE INOVAÇÃO',color:'#38bdf8',quote:'"A tecnologia resolve o que a política trava."',
@@ -240,7 +258,7 @@ amara:{id:'amara',name:'Amara Silva',role:'PESQUISADORA UFBA',color:'#fbbf24',qu
 rodrigo:{id:'rodrigo',name:'Rodrigo Maia',role:'ARQUITETO DE PPP',color:'#2dd4bf',quote:'"O código dita o software; o contrato dita a cidade."',
   nodes:[
     { x:550, y:700, label:'Caminho das Árvores', title:'ESCRITÓRIO DE ENGENHARIA',
-      getContext: (c) => `No seu "Template Mestre" de Contrato Público, há uma cláusula polêmica: permitir que a Concessionária expanda sensores e câmeras para qualquer rua no futuro sem nova licitação ou consulta à Câmara de Vereadores.`,
+      getContext: (c) => `No seu "Template Mestre" de Contrato Público, há uma cláusula polêmica: permitir que a Concessionária expanda sensores e câmeras para qualquer rua no futuro sem nova licitação ou consulta à Câmara de Vereadores.\n\nAgilidade de mercado vs. Controle Democrático.`,
       getDecisions: (c) => [{q:'Como definir a regra de expansão tecnológica?',choices:[
         {text:'Manter expansão ilimitada. Prefeitos compram facilidade.', ef:2, eq:-1, pr:-2, impact:{rodrigoTemplate:'expansionist', cameras:2, transparency:-2},
          consequence:'O template domina 38 cidades. Em 5 anos, dezenas de prefeituras ativam biometria massiva chamando isso de "atualização de infraestrutura", burlando o debate na Câmara.',
@@ -266,19 +284,19 @@ rodrigo:{id:'rodrigo',name:'Rodrigo Maia',role:'ARQUITETO DE PPP',color:'#2dd4bf
       },
       getDecisions: (c) => [{q:'A cláusula de auditoria algorítmica externa.',choices:[
         {text:'Retirar a cláusula e garantir sua comissão milionária.', ef:2, eq:-2, pr:-2, impact:{transparency:-2},
-         consequence:'Contrato assinado. A empresa atua numa verdadeira caixa-preta comercial. Quando o jornalismo exige acesso aos logs, eles alegam "segredo industrial".',
+         consequence:'Contrato assinado. A empresa atua numa verdadeira caixa-preta comercial. Quando o jornalismo exige acesso aos logs de geolocalização, eles alegam "segredo industrial".',
          reveal:'O silêncio corporativo foi sacramentado no exato momento da sua assinatura.',
-         hl:{main:'Prefeitura fecha maior contrato de infraestrutura da década', alt:'R$ 100 milhões operados em caixa-preta: cidade perde controle de dados'}
+         hl:{main:'Prefeitura fecha maior contrato de infraestrutura da década', alt:'R$ 100 milhões operados em caixa-preta: cidade perde controle sobre sensores'}
         },
         {text:'Exigir auditoria interna pelo Tribunal de Contas (TCE).', ef:0, eq:1, pr:0, impact:{transparency:1},
-         consequence:'O TCE fica encarregado, mas não tem peritos em Inteligência Artificial. Eles carimbam os papéis sem olhar o código-fonte. Uma transparência estritamente performática.',
+         consequence:'O TCE fica encarregado, mas não tem peritos em Inteligência Artificial. Eles carimbam os papéis sem nunca olhar o código. Uma transparência estritamente performática.',
          reveal:'Uma auditoria feita por quem não compreende a linguagem da máquina é apenas um ritual.',
-         hl:{main:'Tribunal de Contas atesta conformidade em sistema urbano', alt:'Auditoria de fachada: técnicos não acessam código dos sensores'}
+         hl:{main:'Tribunal de Contas atesta conformidade em sistema urbano', alt:'Auditoria de fachada: técnicos do TCE não acessam código-fonte'}
         },
         {text:'Travar tudo. Sem auditoria independente, não assina.', ef:-1, eq:2, pr:2, impact:{transparency:2},
-         consequence:'O prefeito vira as costas e fecha negócio com um concorrente sem escrúpulos. Você perde uma fortuna, mas limpa suas digitais de um futuro escândalo de violação.',
+         consequence:'O prefeito vira as costas e fecha negócio com um concorrente sem escrúpulos. Você perde uma fortuna, mas limpa suas digitais de um futuro escândalo de violação de dados.',
          reveal:'Ceder o negócio não impede a catástrofe de acontecer, mas certifica que você não foi o arquiteto dela.',
-         hl:{main:'Falha na negociação abre espaço para nova empreiteira', alt:'Consultor abandona mesa: "Vender uma cidade sem auditoria é crime"'}
+         hl:{main:'Falha na negociação abre espaço para nova empreiteira', alt:'Consultor abandona mesa: "Vender uma cidade sem auditoria é vender a população"'}
         }
       ]}]
     },
@@ -286,7 +304,7 @@ rodrigo:{id:'rodrigo',name:'Rodrigo Maia',role:'ARQUITETO DE PPP',color:'#2dd4bf
       getContext: (c) => {
         let txt = `Madrugada. Um contato de dentro do sistema vazou logs pesados para você. Os CCOs estão usando scripts de geofencing invisíveis para rastrear as placas e celulares de ativistas comunitários. `;
         if(c[0] === 0) txt += `O sistema usou justamente as "expansões sem licitação" do Ponto 1 para focar antenas nas ONGs.`;
-        if(c[1] === 0) txt += ` E por não ter auditoria independente (Ponto 2), isso ficou oculto por anos.`;
+        if(c[1] === 0) txt += ` E por não ter auditoria independente aprovada no Ponto 2, isso ficou oculto por 3 anos.`;
         return txt;
       },
       getDecisions: (c) => [{q:'Os PDFs com o rastreamento ilegal estão no seu Desktop.',choices:[
@@ -366,12 +384,12 @@ edu:{id:'edu',name:'Edu Santos',role:'ENTREGADOR',color:'#f43f5e',quote:'"O algo
          reveal:'A grande vitória da vigilância urbana não é punir; é fazer a população ter medo de se encontrar livremente.',
          hl:{main:'Clima de normalidade nas ruas anula ameaça de greve', alt:'Autocensura física: monitoramento desmobiliza reunião de trabalhadores'}
         },
-        {text:'Ficar numa rua vizinha dando retaguarda à liderança.', ef:0, eq:1, pr:0, impact:{equity:0},
+        {text:'Ficar de vigia escondido, avisando a galera pelo rádio.', ef:0, eq:1, pr:0, impact:{equity:0},
          consequence:'A reunião rola desidratada. A polícia estaciona longe só para "marcar território". O recado foi dado, mas o plano inicial sobrevive entre poucos gatos pingados.',
          reveal:'A vigilância consegue quebrar a força massiva da mobilização sem precisar prender ninguém fisicamente.',
          hl:{main:'Apenas pequena parcela de classe adere a manifestos', alt:'Trabalhadores montam esquemas de desvio para escapar de câmeras'}
         },
-        {text:'Entrar buzinando. Confrontar a vigilância de frente.', ef:-1, eq:3, pr:1, impact:{equity:2},
+        {text:'Entrar e confrontar. A reunião tem que acontecer.', ef:-1, eq:3, pr:1, impact:{equity:2},
          consequence:'Você estaciona a moto na cara da lente, de frente. Mais 200 entregadores fazem o mesmo, borrando os algoritmos. A greve é deflagrada ali mesmo, com raiva.',
          reveal:'Quando a submissão é algorítmica, o confronto físico, desorganizado e massivo é a única falha que o sistema não prevê.',
          hl:{main:'Trânsito travado por "motociata" de protesto paralisa Salvador', alt:'Frente às lentes, centenas fundam movimento contra opressão digital'}
@@ -571,7 +589,7 @@ function loop() {
 requestAnimationFrame(loop);
 
 // ════════════════════════════════════════
-// UI RENDERING HTML 
+// UI RENDERING HTML E TRATAMENTO DE ERROS
 // ════════════════════════════════════════
 function renderUI(){
   document.documentElement.style.setProperty('--char-col', S.char ? CHARS[S.char].color : '#38bdf8');
@@ -579,11 +597,18 @@ function renderUI(){
   if(S.screen === 'map') {
     uiLayer.className = 'hidden'; hints.style.display = 'block';
     GAME_ACTIVE = true; hud.style.display = 'block';
-    hud.innerHTML = S.nodeIdx >= CHARS[S.char].nodes.length ? "SISTEMA CONCLUÍDO: NAVEGUE ATÉ A SAÍDA (PONTO AMARELO)" : "ALVO DETECTADO: NAVEGUE ATÉ O PONTO PISCANTE PARA INTERAGIR";
+    hud.innerHTML = S.nodeIdx >= CHARS[S.char].nodes.length ? "SISTEMA CONCLUÍDO: NAVEGUE ATÉ A SAÍDA (PONTO AMARELO)" : "ALVO DETECTADO: NAVEGUE ATÉ O PONTO PISCANTE";
   } else {
     uiLayer.className = 'in-game'; hints.style.display = 'none'; hud.style.display = 'none';
     const scr = {splash: renderSplash, charSelect: renderCharSelect, node: renderNode, consequence: renderConsequence, grandFinale: renderGrandFinale};
-    appUI.innerHTML = (scr[S.screen])(); uiLayer.scrollTop = 0;
+    
+    try {
+      appUI.innerHTML = (scr[S.screen])(); 
+      uiLayer.scrollTop = 0;
+    } catch(e) {
+      console.error("Falha ao renderizar a tela:", e);
+      appUI.innerHTML = `<div class="screen"><div class="display" style="color:var(--red);">ERRO CRÍTICO NO SISTEMA.</div><br><button class="btn" data-a="resetAll">REINICIAR</button></div>`;
+    }
   }
 }
 
@@ -592,19 +617,38 @@ appUI.addEventListener('click', e => {
   const a = el.dataset.a;
   
   if(a==='charSelect'){ S.screen='charSelect'; renderUI(); return; }
+  
   if(a==='startRun'){ 
     S = {screen:'map', char:el.dataset.char, nodeIdx:0, scores:{ef:5,eq:5,pr:5}, choices:[]};
     player = { x: 500, y: 900, vx: 0, vy: 0, speed: 3.5, vehicle: false }; targetPos = null;
     renderUI(); return; 
   }
+  
   if(a==='choose'){
-    const idx = parseInt(el.dataset.idx);
-    const ch = CHARS[S.char].nodes[S.nodeIdx].getDecisions(S.choices)[0].choices[idx];
-    S.scores.ef += (ch.ef||0); S.scores.eq += (ch.eq||0); S.scores.pr += (ch.pr||0);
-    S.choices.push(idx); applyImpact(ch.impact);
-    appUI.classList.add('glitch-anim'); setTimeout(()=>appUI.classList.remove('glitch-anim'),300);
-    S.screen='consequence'; renderUI(); return;
+    try {
+      const idx = parseInt(el.dataset.idx);
+      const node = CHARS[S.char].nodes[S.nodeIdx];
+      const ch = node.getDecisions(S.choices)[0].choices[idx];
+      
+      S.scores.ef += (ch.ef||0); 
+      S.scores.eq += (ch.eq||0); 
+      S.scores.pr += (ch.pr||0);
+      S.choices.push(idx); 
+      applyImpact(ch.impact);
+      
+      appUI.classList.remove('glitch-anim');
+      void appUI.offsetWidth; // Força o reflow do navegador
+      appUI.classList.add('glitch-anim'); 
+      
+      S.screen='consequence'; 
+      renderUI(); 
+    } catch(err) {
+      console.error(err);
+      alert("Falha ao processar escolha. Limpe o cache do navegador ou clique em Reiniciar.");
+    }
+    return;
   }
+  
   if(a==='returnMap'){ S.nodeIdx++; S.screen='map'; targetPos = null; renderUI(); return; }
   if(a==='resetAll'){ resetCity(); CITY=loadCity(); S.screen='splash'; renderUI(); return; }
 });

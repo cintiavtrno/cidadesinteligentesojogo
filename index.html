@@ -1,3 +1,4 @@
+cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -167,7 +168,7 @@ rodrigo:{id:'rodrigo',name:'Rodrigo Maia',role:'ARQUITETO DE PPP',color:'#2dd4bf
       {text:'Travar a negociação. Sem auditoria, sem assinatura.',ef:-1,eq:2,pr:2,impact:{transparency:2},consequence:'O prefeito se levanta e fecha com um concorrente menos rigoroso. Você perde uma comissão pesada, mas seu nome não assina a infraestrutura opaca que vai dominar aquela região.'}
     ]}]},
     {id:'n3', x:80, y:20, label:'Costa Azul', title:'APARTAMENTO (MADRUGADA)',
-    context:`2:14 da manhã. A luz azul do monitor ilumina a sala vazia.\n\nUm contato interno vazou logs do Centro de Operações. Os sistemas que você ajudou a desenhar não estão apenas otimizando semáforos. Eles estão rodando scripts de geofencing nas sedes de sindicatos e movimentos de bairro, rastreando as placas dos carros de ativistas.\n\nO PDF está no seu desktop. A imprensa está a um clique de distância.`,
+    context:`2:14 da manhã. A luz azul do monitor ilumina a sala vazia.\n\nUm contato interno vazou logs do Centro de Operações. Os sistemas que você ajudou a desenhar não estão apenas otimizando semáforos. Eles estão rodando scripts de geofencing nas sedes de sindicatos e movimentos de bairro, rast বহুমing as placas dos carros de ativistas.\n\nO PDF está no seu desktop. A imprensa está a um clique de distância.`,
     decisions:[{q:'O vazamento de dados de rastreamento de civis.',choices:[
       {text:'Disparar para jornalista investigativo (Protocolo Seguro).',ef:-2,eq:3,pr:3,impact:{rodrigoWhistle:true,equity:2,transparency:2},consequence:'A notícia explode. Uma CPI é instaurada. Sua consultoria sofre auditoria e quebra, mas a denúncia cria o primeiro precedente legal proibindo uso de PPPs para espionagem política no país.'},
       {text:'Deletar o arquivo. O risco corporativo e pessoal é insano.',ef:1,eq:-3,pr:-2,impact:{rodrigoWhistle:false,equity:-2},consequence:'O silêncio vence. Em dois anos, prisões e processos "coincidentes" sufocam a liderança comunitária nos bairros monitorados. A máquina continua operando exatamente como foi desenhada.'}
@@ -178,7 +179,7 @@ edu:{id:'edu',name:'Edu Santos',role:'ENTREGADOR / O ALVO',color:'#f43f5e',quote
   nodes:[
     {id:'n1', x:38, y:85, label:'Pelourinho', title:'BARREIRA POLICIAL',
     context:`Você encosta a moto para retirar um pedido de restaurante no Centro Histórico. O sol está rachando.\n\nUma viatura fecha a rua. Dois policiais saltam com as mãos nas armas, olhando para um tablet e depois para o seu rosto. O software de reconhecimento facial de um poste próximo gerou um Alerta Vermelho.\n\nVocê sabe que não deve nada. Você sabe que o sistema não liga para a sua inocência.`,
-    decisions:[{q:'A abordagem por "falso positivo" algorítmico.',choices:[
+    decisions:[{q:'A abordagem por "falso positivo" algirlihmico.',choices:[
       {text:'Acordar com os policiais. Ficar em silêncio e entregar os documentos.',ef:1,eq:-2,pr:-2,impact:{equity:-1},consequence:'Você perde 45 minutos. O lanche esfria, o app reduz sua taxa. O incidente não é registrado oficialmente. Para as estatísticas da cidade, o sistema operou "normalmente".'},
       {text:'Exigir o registro da falha. Acionar os direitos e documentar no celular.',ef:-1,eq:2,pr:1,impact:{equity:1},consequence:'O clima esquenta. Você perde horas na delegacia de registro. Porém, seu boletim de ocorrência cruza a mesa da Defensoria Pública, virando evidência material na ação contra a prefeitura.'}
     ]}]},
@@ -429,3 +430,4 @@ render();
 </script>
 </body>
 </html>
+HTMLEOF

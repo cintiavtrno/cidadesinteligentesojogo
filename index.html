@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CIDADE ONLINE — A Complexidade da Vigilância</title>
+<title>CIDADE ONLINE — O Labirinto Burocrático</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&family=Courier+Prime&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -11,54 +11,43 @@
   --bg:#07090f;--surface:#0c1018;--surface2:#111827;
   --border:rgba(148,163,184,.15);--text:#94a3b8;
   --text-bright:#e2e8f0;--text-dim:#475569;
-  --red:#ef4444;--amber:#f59e0b;--blue:#3b82f6;--green:#10b981;
-  --char-col:#3b82f6;--dystopia:0;
+  --red:#ef4444;--amber:#f59e0b;--blue:#3b82f6;
+  --char-col:#3b82f6;
 }
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Space Mono',monospace;font-size:14px;line-height:1.7;transition:background .7s;overflow-x:hidden}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Space Mono',monospace;font-size:14px;line-height:1.7;overflow-x:hidden}
 #app{position:relative;z-index:10;min-height:100vh}
 .bg-vignette{position:fixed;inset:0;background:radial-gradient(ellipse at center,transparent 20%,rgba(7,9,15,.95) 100%);pointer-events:none;z-index:1}
 .scanlines{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.05) 3px,rgba(0,0,0,.05) 4px);pointer-events:none;z-index:999;animation:scanmove 12s linear infinite}
 @keyframes scanmove{0%{background-position:0 0}100%{background-position:0 200vh}}
 .screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 1.5rem;animation:fadeIn .5s ease}
-.screen-left{align-items:flex-start;justify-content:flex-start;max-width:800px;margin:0 auto}
+.screen-left{align-items:flex-start;justify-content:flex-start;max-width:850px;margin:0 auto}
 @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
 .label{font-size:.65rem;text-transform:uppercase;letter-spacing:.2em;color:var(--text-dim)}
-.label-accent{color:var(--char-col)}
-.display{font-family:'Syne',sans-serif;font-weight:800;line-height:1.05}
-.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.8rem;border:1px solid var(--char-col);color:var(--char-col);background:transparent;font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:.08em;cursor:pointer;transition:all .2s;text-transform:uppercase}
-.btn:hover{background:var(--char-col);color:var(--bg)}
-.btn-ghost{border-color:var(--border);color:var(--text-dim)}
-.btn-ghost:hover{border-color:var(--text-dim);color:var(--text-bright);background:var(--surface2)}
-.btn-doc{border-color:var(--amber);color:var(--amber);background:rgba(245,158,11,.05);animation:pulseDoc 2s infinite}
-.btn-doc:hover{background:var(--amber);color:var(--bg)}
-@keyframes pulseDoc{0%,100%{box-shadow:0 0 0 rgba(245,158,11,0)}50%{box-shadow:0 0 10px rgba(245,158,11,.2)}}
-.char-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.25rem;width:100%;max-width:900px;margin-top:2rem}
-.char-card{border:1px solid var(--border);background:var(--surface);padding:1.5rem;cursor:pointer;transition:all .2s;position:relative}
-.char-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--c-col);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
-.char-card:hover{border-color:var(--c-col);background:var(--surface2)}
-.char-card:hover::after{transform:scaleX(1)}
-.char-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--text-bright);margin-bottom:.3rem}
-.char-role{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem}
-.char-lens{font-size:.75rem;color:var(--text-dim);line-height:1.7;border-top:1px solid var(--border);padding-top:1rem;margin-top:1rem}
 .era-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.5rem,4vw,2.5rem);color:var(--text-bright);margin:1rem 0 1.5rem;line-height:1.1}
-.context-text{font-size:.9rem;line-height:1.9;color:var(--text);margin-bottom:1.5rem;border-left:2px solid var(--border);padding-left:1.5rem}
-.concept-box{background:rgba(59,130,246,.05);border:1px solid rgba(59,130,246,.2);padding:1rem;margin:1rem 0;font-size:.8rem;color:var(--text-bright);border-left:3px solid var(--blue)}
-.concept-title{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:.5rem;font-weight:bold}
+.context-text{font-size:.95rem;line-height:1.9;color:var(--text);margin-bottom:1.5rem;border-left:2px solid var(--border);padding-left:1.5rem}
+.concept-box{background:rgba(59,130,246,.05);border:1px solid rgba(59,130,246,.2);padding:1.25rem;margin:1.5rem 0;font-size:.85rem;color:var(--text-bright);border-left:4px solid var(--blue)}
+.concept-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:.5rem;font-weight:bold}
 .choices{display:flex;flex-direction:column;gap:.8rem;width:100%;margin-top:2rem}
 .choice-btn{border:1px solid var(--border);background:var(--surface);padding:1.25rem;text-align:left;cursor:pointer;transition:all .2s;color:var(--text);font-family:'Space Mono',monospace;font-size:.85rem;line-height:1.6}
 .choice-btn:hover{border-color:var(--char-col);background:var(--surface2);color:var(--text-bright)}
 .consequence-box{border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.05);padding:1.5rem;margin:2rem 0;font-size:.9rem;line-height:1.8}
 .reveal-box{border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.05);padding:1.5rem;font-size:.85rem;line-height:1.8;color:var(--amber)}
+.btn{display:inline-flex;align-items:center;padding:.8rem 1.8rem;border:1px solid var(--char-col);color:var(--char-col);background:transparent;font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:.08em;cursor:pointer;transition:all .2s;text-transform:uppercase}
+.btn:hover{background:var(--char-col);color:var(--bg)}
+.btn-doc{border-color:var(--amber);color:var(--amber);background:rgba(245,158,11,.05);animation:pulseDoc 2s infinite}
+.btn-doc:hover{background:var(--amber);color:var(--bg)}
+@keyframes pulseDoc{0%,100%{box-shadow:0 0 0 rgba(245,158,11,0)}50%{box-shadow:0 0 12px rgba(245,158,11,.25)}}
+
 /* MODAL / LORE SYSTEM */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(4px);z-index:2000;display:none;align-items:center;justify-content:center;padding:1.5rem;opacity:0;transition:opacity .3s}
 .modal-overlay.active{display:flex;opacity:1}
-.doc-paper{background:#f8fafc;color:#0f172a;max-width:650px;width:100%;padding:2.5rem;font-family:'Courier Prime',monospace;box-shadow:0 10px 40px rgba(0,0,0,.5);position:relative;max-height:85vh;overflow-y:auto}
+.doc-paper{background:#f8fafc;color:#0f172a;max-width:700px;width:100%;padding:3rem;font-family:'Courier Prime',monospace;box-shadow:0 10px 40px rgba(0,0,0,.5);position:relative;max-height:85vh;overflow-y:auto}
 .doc-header{border-bottom:2px solid #cbd5e1;padding-bottom:1rem;margin-bottom:1.5rem}
-.doc-meta{font-size:.7rem;text-transform:uppercase;color:#64748b;letter-spacing:.1em}
-.doc-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:#0f172a;margin-top:.5rem}
-.doc-body{font-size:.9rem;line-height:1.8;white-space:pre-wrap}
+.doc-meta{font-size:.75rem;text-transform:uppercase;color:#64748b;letter-spacing:.1em;font-weight:bold}
+.doc-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;color:#0f172a;margin-top:.5rem}
+.doc-body{font-size:.95rem;line-height:1.8;white-space:pre-wrap}
 .doc-redact{background:#0f172a;color:#0f172a;user-select:none;padding:0 .2rem}
-.close-doc{position:absolute;top:1rem;right:1rem;background:transparent;border:1px solid #cbd5e1;cursor:pointer;font-family:monospace;padding:.3rem .8rem;font-weight:bold}
+.close-doc{position:absolute;top:1rem;right:1rem;background:transparent;border:1px solid #cbd5e1;cursor:pointer;font-family:monospace;padding:.4rem 1rem;font-weight:bold;color:#0f172a}
 .close-doc:hover{background:#e2e8f0}
 </style>
 </head>
@@ -70,10 +59,10 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Space 
 <!-- DOCUMENT MODAL -->
 <div class="modal-overlay" id="docModal">
   <div class="doc-paper">
-    <button class="close-doc" onclick="closeDoc()">[X] FECHAR</button>
+    <button class="close-doc" onclick="closeDoc()">[X] FECHAR ARQUIVO</button>
     <div class="doc-header">
-      <div class="doc-meta" id="docMeta">CONFIDENCIAL</div>
-      <div class="doc-title" id="docTitle">Documento</div>
+      <div class="doc-meta" id="docMeta">TIPO DE DOCUMENTO</div>
+      <div class="doc-title" id="docTitle">Título</div>
     </div>
     <div class="doc-body" id="docBody">Conteúdo...</div>
   </div>
@@ -81,15 +70,10 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Space 
 
 <script>
 // ════════════════════════════════════════
-// CITY STATE
+// ESTADO GLOBAL DO JOGO
 // ════════════════════════════════════════
-const CK='cidade_v6_deep';
-function freshCity(){return{ibmContract:null, reportStatus:null, amaraPublished:null, rodrigoTemplate:null, playedChars:[]};}
-function loadCity(){try{return JSON.parse(localStorage.getItem(CK))||freshCity();}catch{return freshCity();}}
-function saveCity(c){localStorage.setItem(CK,JSON.stringify(c));}
-let CITY=loadCity();
+let S = { screen: 'splash', char: null, eraId: null, playedChars: [] };
 
-// MODAL LOGIC
 function openDoc(meta, title, body) {
   document.getElementById('docMeta').innerText = meta;
   document.getElementById('docTitle').innerText = title;
@@ -101,333 +85,551 @@ function closeDoc() {
 }
 
 // ════════════════════════════════════════
-// GAME DATA - COMPLEX BRANCHING & LORE
+// BANCO DE DADOS DOS PERSONAGENS (ÁRVORES COMPLEXAS)
 // ════════════════════════════════════════
-const CHARS={
-// -----------------------------------------
-// MARCO - O ARQUITETO DO ESTADO
-// -----------------------------------------
-marco:{
-  id:'marco',name:'Marco Santos',role:'Secretário de Inovação',color:'#3b82f6',
-  lens:'Você assina as Parcerias Público-Privadas (PPPs). Suas decisões criam o "lock-in" tecnológico (quando a cidade fica refém de uma única empresa).',
-  eras: {
-    'e1_inicio': {
-      year:'2014', label:'ERA 01', title:'O Cavalo de Troia Luminoso',
-      context:`A cidade quer modernizar 80 mil pontos de luz. Uma Big Tech oferece trocar tudo por LED "de graça", contanto que ganhe a concessão por 20 anos. O pulo do gato está nos sensores acoplados aos postes.\n\nEles querem instalar microfones, câmeras e sensores de Wi-Fi, alegando que é para "otimização de tráfego". O contrato de PPP exige que os *metadados* (quem passa, a que horas, com quem) fiquem em servidores privados da empresa na nuvem, sem auditoria da prefeitura.`,
-      doc: { meta:'MINUTA CONTRATUAL - PPP ILUMINAÇÃO', title:'Cláusula 4.1.2 - Propriedade de Dados', body:`4.1.2. Fica estabelecido que a Concessionária deterá os direitos de exploração comercial dos Metadados Urbanos (incluindo, mas não se limitando a: volumetria de tráfego, heatmaps de fluxo de pedestres, e rastreamento de MAC Addresses via Wi-Fi) gerados pela infraestrutura durante a vigência de 20 (vinte) anos deste instrumento.\n\nParágrafo Único: O Município terá acesso apenas a dashboards resumidos, abdicando do acesso aos dados brutos alegados como Segredo Industrial da Concessionária.`},
-      concept: { title: 'Lock-in Tecnológico', text: 'Quando o governo adota uma tecnologia fechada (proprietária), tornando-se dependente daquela empresa. Se a prefeitura quiser mudar o sistema no futuro, o custo de romper o contrato e trocar os cabos/servidores é tão alto que ela fica "trancada".' },
-      decisions:[{q:'Você aceita a privatização invisível dos dados em troca de infraestrutura rápida?', choices:[
-        {
-          text:'Assina o contrato integral. A cidade precisa de LED e segurança agora. Os dados são o preço do progresso.', 
-          nextEraId: 'e2_caminho_cego', impact:{ibmContract:'full'},
-          consequence:'O contrato é assinado com festa. A cidade fica iluminada. Nos bastidores, a empresa começa a criar perfis de comportamento da população. A prefeitura não sabe o que o algoritmo faz, apenas recebe relatórios mastigados.',
-          reveal:'Cidades Inteligentes muitas vezes operam como "extrativistas de dados": oferecem infraestrutura física em troca da extração predatória e sem consentimento da vida nas ruas.'
-        },
-        {
-          text:'Exige um aditivo: A prefeitura deve ser a dona soberana dos dados brutos e o código deve ser auditável.', 
-          nextEraId: 'e2_caminho_negociado', impact:{ibmContract:'negotiated'},
-          consequence:'A negociação trava. A empresa ameaça desistir. Após meses, eles cedem o controle dos dados ao município, mas removem as câmeras avançadas do pacote. O prefeito te odeia pelo atraso político.',
-          reveal:'Soberania digital custa capital político. Você evitou a privatização da vigilância, mas pagou o preço do atraso.'
-        }
-      ]}]
-    },
-    'e2_caminho_cego': {
-      year:'2019', label:'ERA 02 (O Desastre do Viés)', title:'Falsos Positivos',
-      context:`O sistema que você comprou de "caixa preta" foi atualizado para fazer Reconhecimento Facial no Carnaval. No terceiro dia de festa, a Polícia Militar deteve 14 pessoas. 13 eram inocentes. Todas eram jovens negros.\n\nOs engenheiros da prefeitura conseguiram analisar uma brecha no sistema e geraram um relatório confidencial provando que o algoritmo tem 96% de erro quando analisa rostos não-brancos (viés algorítmico). A empresa ameaça processar a prefeitura se o relatório vazar, citando "Quebra de Segredo Industrial".`,
-      doc: { meta:'RELATÓRIO TÉCNICO INTERNO', title:'Análise de Viés - Sistema Câmeras', body:`Amostragem: 120.000 capturas faciais durante o evento.\n\nTaxa de Confiança (Falsos Positivos):\n- Homens Brancos: 1.4% de erro\n- Mulheres Brancas: 3.2% de erro\n- Homens Negros: <span class="doc-redact">96.8% de erro</span>\n- Mulheres Negras: <span class="doc-redact">98.1% de erro</span>\n\nConclusão: O dataset de treinamento da Concessionária foi alimentado predominantemente com rostos caucasianos europeus. O uso do sistema no Brasil resulta em hiper-criminalização sistêmica.`},
-      concept: { title: 'Viés Algorítmico (Racismo Algorítmico)', text: 'Sistemas de IA aprendem com bancos de imagens. Se a empresa gringa treinou a IA com fotos de pessoas brancas, o sistema tem extrema dificuldade em ler os traços de pessoas negras, confundindo rostos inocentes com fotos de procurados.' },
-      decisions:[{q:'O que você faz com o relatório interno?', choices:[
-        {
-          text:'Engaveta como "Documento Sigiloso". Suspende o uso discretamente, sem alarde, para não ser processado.', 
-          nextEraId: null, impact:{reportStatus:'suppressed'},
-          consequence:'O escândalo não estoura, o contrato segue firme. O sistema continua operando silenciosamente nas periferias. Pessoas continuam sendo paradas injustamente, mas sem gerar manchetes.',
-          reveal:'A conveniência burocrática transforma racismo estrutural em "erro de software tolerável". Você escolheu proteger a máquina.'
-        },
-        {
-          text:'Vaza o relatório anonimamente para a pesquisadora Amara Silva da Universidade Federal.', 
-          nextEraId: null, impact:{reportStatus:'public'},
-          consequence:'O vazamento causa pânico nacional. O Ministério Público intervém e suspende a PPP. A prefeitura paga uma multa rescisória astronômica. Você perde o cargo, mas o sistema é desligado.',
-          reveal:'A transparência forçada quebrou o sistema. Você agiu como um "Whistleblower" (denunciante) dentro da máquina do Estado.'
-        }
-      ]}]
-    },
-    'e2_caminho_negociado': {
-      year:'2019', label:'ERA 02 (A Guerra dos Servidores)', title:'O Blefe',
-      context:`Como a prefeitura tem os dados sob seu controle, a Big Tech está perdendo dinheiro (ela queria vender esses dados para seguradoras). A empresa decide "descontinuar" a manutenção do software na véspera do Carnaval, exigindo que você assine um aditivo devolvendo a propriedade dos dados a eles.`,
-      decisions:[{q:'Como você reage à chantagem da empresa?', choices:[
-        {
-          text:'Cede. Assina o aditivo entregando os dados. A cidade não pode ficar sem câmeras no Carnaval.', 
-          nextEraId: null, impact:{ibmContract:'full', reportStatus:'suppressed'},
-          consequence:'Eles vencem pelo cansaço. A cidade tem um Carnaval seguro, mas os dados dos cidadãos viram mercadoria corporativa novamente.',
-          reveal:'O Estado moderno frequentemente capitula diante do monopólio tecnológico porque tem medo de voltar ao analógico.'
-        },
-        {
-          text:'Rescinde o contrato. Usa o código aberto para religar as câmeras com servidores da própria prefeitura.', 
-          nextEraId: null, impact:{ibmContract:'negotiated'},
-          consequence:'A prefeitura cria sua própria nuvem pública. O sistema é tosco, cai de vez em quando, mas não extrai dados e obedece à Lei Geral de Proteção de Dados (LGPD).',
-          reveal:'Tecnologia pública não precisa ser perfeita, precisa ser auditável e democrática.'
-        }
-      ]}]
-    }
-  }
-},
-
-// -----------------------------------------
-// AMARA - A CIÊNCIA COMO RESISTÊNCIA
-// -----------------------------------------
-amara:{
-  id:'amara',name:'Amara Silva',role:'Pesquisadora e Ativista',color:'#f59e0b',
-  lens:'Você investiga os impactos sociais da tecnologia. Seu desafio é provar para a sociedade que a "cidade inteligente" muitas vezes reproduz a desigualdade física no meio digital.',
-  eras: {
-    'inicio': {
-      year:'2021', label:'ERA ÚNICA', title:'O Confronto Acadêmico',
-      context:(c) => {
-        let base = `Você lidera um laboratório na Universidade focado em governança digital. `;
-        if (c.reportStatus === 'suppressed') {
-           base += `\n\nVocê desconfia profundamente do sistema de câmeras da Prefeitura. Você sabe que ele erra, mas o Secretário Marco engavetou todas as provas. O prefeito acabou de anunciar a "expansão" do sistema para a periferia.`;
-        } else if (c.reportStatus === 'public') {
-           base += `\n\nVocê acabou de receber, via e-mail anônimo criptografado, o **RELATÓRIO EXPLOSIVO** da prefeitura vazado pelo ex-secretário Marco! As provas do racismo algorítmico estão na sua mão.`;
-        } else {
-           base += `\n\nA prefeitura instalou sensores pela cidade, mas se recusa a informar os critérios de implementação.`;
-        }
-        return base;
+const CHARS = {
+  // =========================================================
+  // PERSONAGEM 1: MARCO (O Arquiteto do Estado - PARTE 1)
+  // =========================================================
+  marco: {
+    id: 'marco', name: 'Marco Santos', role: 'Secretário de Inovação', color: '#3b82f6',
+    lens: 'A visão de dentro do Estado. Suas assinaturas criam a infraestrutura e o Lock-in Tecnológico.',
+    eras: {
+      'e1_inicio': {
+        year: '2014', label: 'ERA 01', title: 'A Arquitetura do Invisível',
+        context: `A Big Tech oferece modernizar 80 mil pontos de luz. O pulo do gato: eles querem o monopólio dos metadados (quem passa, a que horas) gerados pelos sensores dos postes por 20 anos em servidores na Califórnia.`,
+        doc: { meta: 'MINUTA DE PPP', title: 'Cláusula de Dados', body: `A Concessionária deterá os direitos comerciais sobre os METADADOS URBANOS... O Município abdica do acesso aos dados brutos alegados como Segredo Industrial.` },
+        concept: { title: 'Extrativismo de Dados', text: 'Oferecer infraestrutura básica (LED) em troca da extração maciça de dados da população para vender no mercado.' },
+        decisions: [{
+          q: 'O prefeito quer assinar amanhã. O que você faz?',
+          choices: [
+            { text: 'Assinar o contrato integral. Os dados são o preço da luz.', nextEraId: 'e2_caminho_cego', consequence: 'A cidade vira um canteiro de obras futurista. A empresa mapeia o pulso da cidade secretamente.', reveal: 'O sucesso político custou a soberania do futuro.' },
+            { text: 'Bloquear e exigir posse municipal dos dados.', nextEraId: 'e2_caminho_negociado', consequence: 'Guerra jurídica de 8 meses. A empresa remove as câmeras do pacote. A luz atrasa, o prefeito te odeia.', reveal: 'Soberania digital é um ato solitário e ingrato.' }
+          ]
+        }]
       },
-      doc: (c) => c.reportStatus === 'public' 
-        ? { meta:'EMAIL CRIPTOGRAFADO (PROTONMAIL)', title:'Fwd: Relatório de Viés - URGENTE', body:`Dra. Amara,\n\nEles tentaram apagar isso. O sistema errou em 96% dos casos com jovens negros no último Carnaval. O modelo estatístico que eles usam é criminoso. Estou te mandando os logs em anexo. \n\nFaça o que tem que ser feito.\n\n- M.`}
-        : null,
-      concept: { title: 'Auditoria Cidadã', text: 'Quando entidades civis ou universidades utilizam ciência de dados reversa para analisar, expor e processar as decisões tomadas por algoritmos opacos de governos e grandes empresas.' },
-      decisions:[{q:'Qual a estratégia do seu laboratório para este ano?', choices:[
-        {
-          showIf: (c) => c.reportStatus === 'public',
-          text:'Publicar o documento vazado em uma revista científica internacional e ir ao Ministério Público exigir a prisão dos gestores.', 
-          nextEraId: null, impact:{amaraPublished:true},
-          consequence:'O estudo "A Máquina de Prender" vira referência mundial. A prefeitura é alvo da Polícia Federal. Você consegue banir o reconhecimento facial na Bahia.',
-          reveal:'Dados bem documentados têm o poder de derrubar impérios tecnológicos.'
+      'e2_caminho_cego': {
+        year: '2019', label: 'ERA 02 (RAMO A)', title: 'O Viés da Máquina',
+        context: `O sistema de Reconhecimento Facial apontou 14 suspeitos no Carnaval. 13 eram trabalhadores inocentes, negros. Engenheiros vazaram para você que o algoritmo tem 96% de erro com rostos não-brancos.`,
+        decisions: [{
+          q: 'O relatório prova o racismo algorítmico. O que faz?',
+          choices: [
+            { text: 'Engavetar. Desligar o módulo discretamente.', nextEraId: 'e3A_distopia', consequence: 'O silêncio protege o contrato. Pessoas foram presas injustamente, mas a máquina governamental segue intacta.', reveal: 'A burocracia dilui a culpa.' },
+            { text: 'Vazar anonimamente para a UFBA e a mídia.', nextEraId: 'e3A_escandalo', consequence: 'Escândalo nacional. Multa astronômica. Você perde o cargo.', reveal: 'A ética forçou a destruição do seu próprio projeto.' }
+          ]
+        }]
+      },
+      'e2_caminho_negociado': {
+        year: '2019', label: 'ERA 02 (RAMO B)', title: 'A Chantagem do Código',
+        context: `Sem os dados da população, a empresa quer forçar um aditivo. Eles ameaçam parar a atualização dos semáforos, causando caos no trânsito, a menos que você devolva os dados para eles.`,
+        decisions: [{
+          q: 'Eles estão te chantageando. Qual a saída?',
+          choices: [
+            { text: 'Assinar o aditivo e ceder os dados. A cidade não pode parar.', nextEraId: 'e3A_distopia', consequence: 'O capital vence pelo cansaço. O extrativismo se instaura.', reveal: 'O Estado moderno cede ao monopólio por medo.' },
+            { text: 'Acionar a universidade pública para hackear e assumir os semáforos.', nextEraId: 'e3B_soberania', consequence: 'Caos por duas semanas, mas a cidade passa a rodar em Software Livre.', reveal: 'Independência tecnológica é suja e traumática.' }
+          ]
+        }]
+      },
+      'e3A_distopia': {
+        year: '2024', label: 'ERA 03 (FIM)', title: 'O Panóptico Escolar',
+        context: `A empresa oferece catracas com biometria facial para 400 escolas. Eles ficarão com os rostos de 140.000 crianças.`,
+        decisions: [{
+          q: 'Assina ou bloqueia?',
+          choices: [
+            { text: 'Assina.', nextEraId: null, consequence: 'A cidade vira a mais vigiada do país. O ciclo fechou.', reveal: 'O totalitarismo chega disfarçado de SMS para os pais.' },
+            { text: 'Bloqueia no MP.', nextEraId: null, consequence: 'Você é exonerado. O projeto passa com seu substituto.', reveal: 'A máquina ficou grande demais.' }
+          ]
+        }]
+      },
+      'e3A_escandalo': {
+        year: '2024', label: 'ERA 03 (FIM)', title: 'A CPI',
+        context: `Uma CPI em Brasília te convocou após seu vazamento.`,
+        decisions: [{
+          q: 'Você depõe e se incrimina civilmente ou fica calado?',
+          choices: [
+            { text: 'Depõe tudo.', nextEraId: null, consequence: 'Você vai à falência por processos da empresa, mas a lei federal muda.', reveal: 'A coragem individual quebrou a assimetria jurídica.' },
+            { text: 'Fica calado.', nextEraId: null, consequence: 'A CPI acaba em pizza. O sistema é "atualizado".', reveal: 'O silêncio do Estado é o oxigênio da corporação.' }
+          ]
+        }]
+      },
+      'e3B_soberania': {
+        year: '2024', label: 'ERA 03 (FIM)', title: 'O Preço da Liberdade',
+        context: `A cidade roda em código livre, mas a TV cobra "tecnologia gringa" após uma onda de assaltos no bairro nobre.`,
+        decisions: [{
+          q: 'A pressão para re-privatizar é imensa.',
+          choices: [
+            { text: 'Manter sistema público.', nextEraId: null, consequence: 'A mídia te tritura, mas Salvador vira case global de Soberania Digital.', reveal: 'Inovar é construir com as próprias mãos.' },
+            { text: 'Concessão híbrida.', nextEraId: null, consequence: 'Em 3 anos, o sistema privado engole o público de novo.', reveal: 'O controle de dados é como ferrugem, devora tudo.' }
+          ]
+        }]
+      }
+    }
+  },
+
+  // =========================================================
+  // PERSONAGEM 2: AMARA (A Ciência como Resistência - PARTE 2)
+  // =========================================================
+  amara: {
+    id: 'amara', name: 'Amara Silva', role: 'Pesquisadora UFBA', color: '#f59e0b',
+    lens: 'A visão crítica e emocional. Você prova com dados o que a ponta sofre na carne, navegando entre o ativismo e a política universitária.',
+    eras: {
+      'e1_inicio': {
+        year: '2019', label: 'ERA 01', title: 'O Estômago e o PDI',
+        context: `Seu irmão mais novo, Lucas, trabalha como entregador de aplicativo. Ontem à noite, ele chegou em casa com o supercílio cortado. Ele foi jogado no chão pela PM na Avenida Paralela porque a "câmera inteligente" recém-instalada pela Secretaria de Inovação apontou 98% de compatibilidade dele com um assaltante de banco.\n\nNa mesma semana, você terminou de rodar os dados no supercomputador do seu laboratório. Sua tese prova, matematicamente, que o algoritmo de reconhecimento facial da Prefeitura falha sistematicamente em rostos negros.\n\nMas há um problema: O Reitor da sua universidade enviou um e-mail. A Big Tech dona das câmeras quer investir R$ 2 milhões no novo laboratório de IA da faculdade para cumprir as metas do PDI (Plano de Desenvolvimento Institucional). O reitor pede "cautela" com a sua tese.`,
+        doc: { 
+          meta: 'NOTIFICAÇÃO WHATSAPP - 23:14', 
+          title: 'Chat: Lucas (Irmão)', 
+          body: `<div style="background:#e2e8f0; padding:15px; border-radius:8px; color:#1e293b; font-family:sans-serif; font-size:0.9rem;">
+<strong>Lucas:</strong> 📷 <em>[Imagem_Rosto_Sangrando.jpg]</em><br>
+<strong>Lucas:</strong> Os cara me pararam de novo, véi. Disseram q o poste apitou lá no centro de operações. Jogaram minha bag no chão.<br>
+<strong>Amara:</strong> Meu Deus, Lucas! Vc tá bem? Indo pro hospital agr!<br>
+<strong>Lucas:</strong> To bem, já me liberaram. Mas perdi as corrida tudo. Amara, q porra de câmera é essa q a prefeitura botou? O policial nem quis ver minha CNH primeiro. Acreditaram mais na máquina.
+</div>` 
         },
-        {
-          text:'Fazer uma pesquisa cartográfica própria, mapeando as câmeras pelas ruas a pé (crowdsourcing).', 
-          nextEraId: null, impact:{amaraPublished:true},
-          consequence:'Seus alunos passam meses mapeando os postes. Vocês descobrem que bairros ricos têm "sensores de chuva", enquanto bairros pobres só têm "câmeras de segurança direcionadas a pontos de ônibus".',
-          reveal:'A tecnologia urbana não é neutra. Ela mapeia o território com base nos preconceitos de quem assinou o cheque.'
+        concept: { 
+          title: 'Assimetria de Autoridade (Automation Bias)', 
+          text: 'A tendência psicológica humana de confiar mais na decisão de um sistema automatizado do que no próprio julgamento ou em evidências contrárias (ex: o policial acredita no alerta vermelho da tela, ignorando que o motoboy não se parece nada com o suspeito real).' 
         },
-        {
-          text:'Aceitar um patrocínio da mesma Big Tech que instalou as câmeras para investigar "ética em IA", assinando NDA (Acordo de Confidencialidade).', 
-          nextEraId: null, impact:{amaraPublished:false},
-          consequence:'O laboratório fica rico, compra computadores novos. A Big Tech usa sua universidade para fazer "Ethics Washing" (lavagem ética), abafando críticas enquanto diz que apoia a ciência.',
-          reveal:'A cooptação acadêmica é uma das estratégias de Relações Públicas mais antigas das corporações.'
-        }
-      ]}]
+        decisions: [{
+          q: 'Seu irmão apanhou. O Reitor quer silêncio. O que você faz com a sua tese?',
+          choices: [
+            {
+              text: 'Publicar a pesquisa na íntegra de forma agressiva, denunciando a prefeitura e a Big Tech, e organizar um protesto com o sindicato dos motoboys.',
+              nextEraId: 'e2_caminho_rebelde', 
+              consequence: 'A publicação cai como uma bomba. Jornais independentes estampam a manchete. Os motoboys fecham o Centro da cidade usando seus dados como bandeira. A Big Tech cancela a doação de R$ 2 milhões para a universidade. O Reitor abre uma sindicância interna contra você.',
+              reveal: 'A ciência que não incomoda o poder é apenas relações públicas. Mas o poder sempre revida.'
+            },
+            {
+              text: 'Suavizar o resumo executivo. Focar no termo "oportunidades de melhoria técnica" em vez de "racismo algorítmico". Garantir a grana do PDI e tentar mudar o sistema por dentro.',
+              nextEraId: 'e2_caminho_cooptado',
+              consequence: 'A universidade recebe os R$ 2 milhões. Seu laboratório vira referência, com ar-condicionado novo e bolsistas pagos. A prefeitura te convida para um "Comitê de Ética em IA" que só serve para tirar foto. Enquanto isso, Lucas e outros continuam sendo parados nas ruas.',
+              reveal: 'A cooptação acadêmica funciona porque ela se disfarça de pragmatismo e responsabilidade institucional.'
+            }
+          ]
+        }]
+      },
+
+      // UNIVERSO A: AMARA REBELDE (SEM GRANA, COM ALVO NAS COSTAS)
+      'e2_caminho_rebelde': {
+        year: '2021', label: 'ERA 02 (RAMO A)', title: 'O Alvo em Movimento',
+        context: `Você virou a inimiga número um do "progresso" na cidade. Você ganhou um prêmio de Direitos Humanos da Anistia Internacional, mas na sua vida material, tudo é um inferno.\n\nVocê tem recebido e-mails anônimos com ameaças de morte contendo seu endereço e o CPF do Lucas. Além disso, a Reitoria encontrou uma brecha burocrática para confiscar os servidores do seu laboratório, alegando "desvio de finalidade".\n\nUm jornalista investigativo de São Paulo entra em contato: ele conseguiu hackear os e-mails da Reitoria e tem provas de que membros do Conselho Universitário receberam consultorias fantasmas da Big Tech para te destruir.`,
+        doc: {
+          meta: 'E-MAIL INTERNO VAZADO (REITORIA)',
+          title: 'Enc: Estratégia de Contenção - Profa. Amara',
+          body: `De: Gabinete da Reitoria\nPara: Relações Institucionais (BigTech Brasil)\n\nPrezados, confirmamos o recebimento dos fundos de "Apoio à Inovação". \nSobre o incidente com a pesquisadora Amara Silva: informo que a mesma já está respondendo a Processo Administrativo Disciplinar (PAD). Estamos cortando as senhas de acesso dela ao cluster de processamento de dados sob a justificativa de economia de energia.\n\nA narrativa na imprensa deve ser de que ela é "ideológica" e contra a segurança pública. A universidade se mantém parceira da tecnologia.`
+        },
+        concept: {
+          title: 'Lawfare Acadêmico e Institucional',
+          text: 'O uso de burocracia, auditorias surpresa, cortes de verba e processos administrativos (PADs) para exaurir psicologicamente, isolar e calar pesquisadores ou ativistas que ameaçam interesses financeiros e políticos.'
+        },
+        decisions: [{
+          q: 'Você tem as provas da corrupção na universidade. Como usar essa munição?',
+          choices: [
+            {
+              text: 'Entregar os e-mails hackeados ao jornalista. Destruir a Reitoria publicamente.',
+              nextEraId: 'e3A_exilio', 
+              consequence: 'O Ministério da Educação intervém na universidade. O Reitor cai. Porém, você é expulsa da instituição por ter sido a fonte de "dados obtidos ilegalmente". Você perde sua carreira acadêmica no Brasil.',
+              reveal: 'Você ganhou a guerra moral, mas o sistema tem mecanismos de auto-defesa que eliminam seus anticorpos.'
+            },
+            {
+              text: 'Chantagear a Reitoria. "Devolvam meus servidores e encerrem o processo, ou eu vazo isso".',
+              nextEraId: 'e3A_refem',
+              consequence: 'O Reitor entra em pânico e cede. O PAD é arquivado, seu laboratório volta a funcionar. Mas você se torna cúmplice do segredo deles. Agora, você opera nas sombras de uma instituição apodrecida.',
+              reveal: 'Sobreviver dentro de um sistema corrupto muitas vezes exige usar as armas sujas que você jurou combater.'
+            }
+          ]
+        }]
+      },
+
+      // UNIVERSO B: AMARA COOPTADA (COM GRANA, MAS COM CULPA)
+      'e2_caminho_cooptado': {
+        year: '2021', label: 'ERA 02 (RAMO B)', title: 'A Gaiola de Ouro',
+        context: `Seu laboratório tem o maior financiamento do Norte-Nordeste. Você dá palestras na Europa sobre "IA e Sociedade". Mas o gosto é amargo. \n\nOntem, o Lucas sofreu um acidente de moto fugindo de uma viatura que foi despachada automaticamente pelo algoritmo que você aceitou suavizar nas suas críticas. Ele quebrou a perna e não vai poder trabalhar por meses. A culpa não te deixa dormir.\n\nPor causa da parceria com a Big Tech, você agora tem a "Chave Mestra" (API Root) de acesso aos servidores deles para "fins de pesquisa". Você percebe que pode logar no sistema central da Prefeitura, no meio da madrugada, e fazer um estrago.`,
+        doc: {
+          meta: 'DOCUMENTAÇÃO API (ACESSO ROOT)',
+          title: 'Admin Console - Big Tech Gov Solutions',
+          body: `Endpoint: /api/v4/facial_recognition/database/live\nStatus: CONNECTED (Admin: Amara_Silva)\n\nWARNING: Este painel possui privilégios de ESCRITA E EXCLUSÃO. \nComandos disponíveis:\n> UPDATE_DATASET (Treinar nova matriz com novas fotos)\n> PURGE_RECORDS (Apagar banco de dados histórico)\n\nAviso de Auditoria: Todas as sessões root são gravadas, mas logs levam 48h para sincronizar com a matriz na Califórnia.`
+        },
+        concept: {
+          title: 'Ethics Washing (Lavagem Ética)',
+          text: 'Ato de empresas contratarem pesquisadores críticos e patrocinarem painéis de "diversidade e ética em tecnologia" apenas para criar uma cortina de fumaça, enquanto o produto base da empresa continua operando de forma discriminatória e extrativista nas ruas.'
+        },
+        decisions: [{
+          q: 'Acesso total garantido. O Lucas tá com a perna quebrada no hospital. É hora de agir.',
+          choices: [
+            {
+              text: 'Cometer um cibercrime. Executar o comando PURGE_RECORDS e apagar todo o banco de dados facial e os históricos criminais falsos da prefeitura.',
+              nextEraId: 'e3B_ciberataque', 
+              consequence: 'Você digita o código. Milhões de dados viram poeira digital. A polícia amanhece cega. A prefeitura entra em colapso logístico. Em 48 horas, a Big Tech descobre pelo log que o IP veio do seu laboratório.',
+              reveal: 'A desobediência civil no século XXI envolve corromper as bases de dados que nos oprimem.'
+            },
+            {
+              text: 'Usar a chave para injetar 5 milhões de fotos de pessoas negras e pardas no banco de dados para treinar o algoritmo a não errar mais.',
+              nextEraId: 'e3B_engenheira',
+              consequence: 'Você conserta a precisão do algoritmo. A máquina deixa de ser racista por viés técnico. O erro cai para 0%. A prefeitura te dá uma medalha secreta.',
+              reveal: 'Você curou a doença técnica, mas agravou a doença social.'
+            }
+          ]
+        }]
+      },
+
+      // FINAIS DA AMARA (ERA 3)
+      'e3A_exilio': {
+        year: '2024', label: 'ERA 03 (FIM)', title: 'O Exílio Digital',
+        context: `Você mora em Berlim agora, trabalhando para uma ONG internacional de proteção de dados. No Brasil, você é vista como uma lenda entre os estudantes, e como uma "terrorista da informação" pelos governadores.\n\nVocê recebe uma foto no WhatsApp. É o Lucas, sorrindo, do lado da moto dele no Farol da Barra. Ele te diz que o reconhecimento facial da Bahia foi permanentemente banido pelo STF graças aos documentos que você vazou antes de fugir.`,
+        decisions: [{
+          q: 'Sua jornada terminou.',
+          choices: [
+            { text: 'Ler o epílogo.', nextEraId: null, consequence: 'Você perdeu o país e o título acadêmico, mas salvou o irmão e freou o sistema de vigilância. Um sacrifício material por uma vitória estrutural.', reveal: 'O sistema raramente perdoa quem revela seus códigos.' }
+          ]
+        }]
+      },
+      'e3A_refem': {
+        year: '2024', label: 'ERA 03 (FIM)', title: 'A Bruxa do Conselho',
+        context: `Você se tornou a Reitora da Universidade. Com as provas de chantagem nas mãos, você domina os bastidores políticos da Bahia.\n\nVocê protegeu seu laboratório, mas a cidade continua cheia de câmeras. O Lucas mudou de profissão e trabalha no setor de TI da Reitoria, nomeado por você.`,
+        decisions: [{
+          q: 'Sua jornada terminou.',
+          choices: [
+            { text: 'Ler o epílogo.', nextEraId: null, consequence: 'Você virou exatamente o monstro político que você combatia no começo. Mas os seus estão seguros e o seu laboratório é inquestionável.', reveal: 'O maquiavelismo acadêmico cobrou a sua alma, mas entregou os resultados.' }
+          ]
+        }]
+      },
+      'e3B_ciberataque': {
+        year: '2024', label: 'ERA 03 (FIM)', title: 'A Cela e o Vírus',
+        context: `Você foi condenada a 6 anos por sabotagem da infraestrutura crítica nacional. Você cumpre pena em regime semi-aberto.\n\nNo entanto, o código que você deletou causou um prejuízo de R$ 3 bilhões à Big Tech, forçando-os a abandonar o mercado de vigilância na América Latina. Nas ruas, pichações dizem: "Amara Vive".`,
+        decisions: [{
+          q: 'Sua jornada terminou.',
+          choices: [
+            { text: 'Ler o epílogo.', nextEraId: null, consequence: 'Você não é mais uma acadêmica, você é uma mártir do ativismo hacker. A ação direta resolveu o que os artigos acadêmicos não conseguiram.', reveal: 'Às vezes, é preciso quebrar a ferramenta do mestre para desarmar a casa do mestre.' }
+          ]
+        }]
+      },
+      'e3B_engenheira': {
+        year: '2024', label: 'ERA 03 (FIM)', title: 'A Arquitetura da Opressão Justa',
+        context: `Seu ajuste no código funcionou perfeitamente. O reconhecimento facial agora não erra. \n\nNo entanto, a polícia militar baiana usa a "precisão perfeita" do sistema para justificar um estado policial implacável na periferia. Como a máquina não comete mais falsos positivos, ninguém pode processar o Estado. Você criou o sistema de vigilância carcerária mais infalível e incontestável do mundo. A pobreza agora é monitorada em 4K sem margem de erro jurídico.`,
+        decisions: [{
+          q: 'Sua jornada terminou.',
+          choices: [
+            { text: 'Ler o epílogo.', nextEraId: null, consequence: 'Você resolveu o viés estatístico do racismo algorítmico. Em troca, você aperfeiçoou a máquina de oprimir, tornando-a blindada contra críticas.', reveal: 'Uma tecnologia de vigilância não se torna justa só porque passa a reconhecer rostos negros com exatidão. Uma opressão mais precisa continua sendo opressão.' }
+          ]
+        }]
+      }
     }
   }
-},
-
-// -----------------------------------------
-// EDU - O TERCEIRO IMPACTO (DINÂMICO)
-// -----------------------------------------
-edu:{
-  id:'edu',name:'Edu Santos',role:'Entregador de App',color:'#a78bfa',
-  lens:'Você vive as consequências. As decisões contratuais do Marco e as pesquisas da Amara moldam a sua rotina, o seu dinheiro e a sua segurança.',
-  eras: {
-    'inicio': {
-      year:'2022', label:'ERA ÚNICA', title:'A Rua Pesa',
-      context: (c) => {
-        let txt = `Você trabalha 12 horas por dia com a sua moto. E hoje, o cenário da cidade está estranho.\n\n`;
-        
-        // REAÇÃO À DECISÃO DO MARCO
-        if (c.ibmContract === 'full') {
-          txt += `As ruas estão entupidas das câmeras da PPP que a prefeitura assinou. Os semáforos são integrados.\n`;
-          if (c.reportStatus === 'suppressed') {
-            txt += `De repente, uma viatura te fecha no Pelourinho. A câmera do poste cruzou seu rosto de forma errada (o tal viés que ninguém corrigiu). Eles sacam a arma. "Desce da moto, o sistema apitou!"\n\n`;
+,
+  rodrigo: {
+    id: 'rodrigo', name: 'Rodrigo Maia', role: 'Consultor de PPPs', color: '#10b981',
+    lens: 'Você desenha o modelo jurídico das cidades. Sua família depende do seu sucesso, mas seu nome está em cada contrato que pode virar uma ditadura digital.',
+    eras: {
+      'e1_inicio': {
+        year: '2016', label: 'ERA 01', title: 'O Template de Ouro',
+        context: `Você é o diretor da maior consultoria de infraestrutura do país. 38 prefeituras esperam o seu "Template de PPP" para comprar sistemas de vigilância.\n\nSua esposa, Helena, te mandou uma mensagem preocupada com o aumento da escola da filha. Ao mesmo tempo, um lobista de uma Big Tech ofereceu um "bônus" de R$ 300 mil se você incluir uma cláusula de expansão automática: a prefeitura poderia dobrar o número de câmeras sem precisar de nova licitação.`,
+        doc: { 
+          meta: 'WHATSAPP - HELENA - 09:42', 
+          title: 'Chat: Helena (Esposa)', 
+          body: `<div style="background:#dcf8c6; padding:15px; border-radius:8px; color:#1e293b; font-family:sans-serif; font-size:0.9rem;">
+<strong>Helena:</strong> Rô, vc viu o boleto da escola? 20% de aumento é sacanagem. <br>
+<strong>Helena:</strong> O bônus daquela consultoria da Bahia sai este mês? Precisamos fechar isso.<br>
+<strong>Rodrigo:</strong> To resolvendo a cláusula de expansão agora. É polêmico, mas garante o bônus.<br>
+<strong>Helena:</strong> Pensa na nossa segurança, amor. Esse sistema de câmeras vai ser bom pra todo mundo.
+</div>` 
+        },
+        concept: { title: 'A Porta Giratória', text: 'Quando técnicos circulam entre cargos públicos e as empresas privadas que eles deveriam regular, criando conflitos de interesse onde as leis são desenhadas para beneficiar futuros empregadores.' },
+        decisions: [{
+          q: 'Você aceita o bônus e cria o "atalho" para a empresa ou mantém o contrato rígido?',
+          choices: [
+            {
+              text: 'Incluir a cláusula de expansão automática. Garante o futuro da sua família.',
+              nextEraId: 'e2_caminho_agil', 
+              consequence: 'O bônus cai na conta. O template é replicado em 38 cidades. Prefeitos espalham câmeras sem votação na Câmara.',
+              reveal: 'Você criou um vírus jurídico que permite vigilância infinita sem controle popular.'
+            },
+            {
+              text: 'Remover a cláusula. Exigir licitação. Perder o bônus.',
+              nextEraId: 'e2_caminho_rigido',
+              consequence: 'A empresa retira o apoio. Você perde o contrato de Salvador para um concorrente "flexível".',
+              reveal: 'A ética no mercado de PPPs tem um custo financeiro imediato. Você pagou com seu padrão de vida.'
+            }
+          ]
+        }]
+      },
+      'e2_caminho_agil': {
+        year: '2021', label: 'ERA 02 (RAMO A)', title: 'O Monstro que Criamos',
+        context: `Seu contrato virou um desastre social. O Governador usa o sistema para rastrear líderes sindicais ilegalmente via Wi-Fi.\n\nUm ex-colega do Ministério Público pede o acesso que você deixou como "backdoor" para derrubar o esquema. A empresa descobre e te oferece uma vice-presidência na Califórnia se você ficar calado.`,
+        doc: {
+          meta: 'MEMORANDO CONFIDENCIAL',
+          title: 'Uso de Infraestrutura para Fins Políticos',
+          body: `CONTRATANTE: [REDIGIDO]<br>ALVO: Lideranças do Movimento de Entregadores.<br><br>METODOLOGIA: Rastreamento de MAC Addresses via Wi-Fi das Cidades Inteligentes. Dados cruzados via API desenhada pela Maia & Associados.`
+        },
+        decisions: [{
+          q: 'Califórnia ou ser o informante do MP?',
+          choices: [
+            { text: 'Aceitar a vice-presidência na Califórnia. Você não tem culpa do mau uso.', nextEraId: null, consequence: 'Você se muda. No Brasil, o sistema ajuda a prender 40 ativistas.', reveal: 'O engenheiro omisso é o cúmplice mais eficiente da tirania.' },
+            { text: 'Entregar o acesso ao MP. Expor a falha.', nextEraId: null, consequence: 'Sua empresa quebra, você é banido do setor. Mas o esquema cai.', reveal: 'Destruir a própria criação é o único ato de redenção.' }
+          ]
+        }]
+      },
+      'e2_caminho_rigido': {
+        year: '2021', label: 'ERA 02 (RAMO B)', title: 'A Nova Lei',
+        context: `Você é visto como "caro". Mas o Governo Federal te chama para desenhar a Nova Lei Nacional de Cidades Inteligentes. Eles querem uma brecha para a ABIN acessar dados sem ordem judicial.`,
+        concept: { title: 'Assimetria Jurídica', text: 'Quando o governo ou corporações têm orçamentos infinitos para exaurir oponentes em tribunais (Lawfare).' },
+        decisions: [{
+          q: 'Mantém a integridade ou aceita a exceção para voltar ao topo?',
+          choices: [
+            { text: 'Rejeitar a brecha da ABIN.', nextEraId: null, consequence: 'O projeto trava. Você é escanteado, mas vira herói para a sociedade civil.', reveal: 'A integridade técnica é uma forma de resistência passiva.' },
+            { text: 'Aceitar a exceção.', nextEraId: null, consequence: 'A lei passa. Dois anos depois, o governo usa sua lei para mapear opositores.', reveal: 'O poder é um vício que se justifica por "concessões necessárias".' }
+          ]
+        }]
+      }
+    }
+  }
+,
+  // =========================================================
+  // PERSONAGEM 4: EDU SANTOS (O Sensor Humano - FINAL)
+  // =========================================================
+  edu: {
+    id: 'edu', name: 'Edu Santos', role: 'Entregador de App', color: '#a78bfa',
+    lens: 'Você não assina contratos nem publica teses. Você é o alvo. Sua jornada é o resultado das decisões dos outros três personagens.',
+    eras: {
+      'e1_inicio': {
+        year: '2022', label: 'ERA ÚNICA', title: 'O Algoritmo na Pele',
+        context: (c) => {
+          let txt = `Você está parado no sinal da Avenida Sete. Sua perna ainda dói da última abordagem. `;
+          
+          // REAÇÃO AO MARCO/RODRIGO (Contrato e Expansão)
+          if (c.ibmContract === 'full') {
+            txt += `A cidade está saturada de câmeras. `;
+            if (c.reportStatus === 'suppressed') {
+              txt += `O sistema de IA da prefeitura, aquele que o Marco engavetou o erro, acaba de te marcar como "atitude suspeita" no tablet da viatura ao lado. O policial já desce com a mão no coldre. `;
+            }
           } else {
-            txt += `O policiamento é ostensivo, mas como o sistema facial foi desligado após os escândalos, eles apenas fiscalizam os documentos da sua moto.\n\n`;
+            txt += `As luzes de LED são fracas e faltam câmeras em alguns becos, o que te dá medo de assalto, mas pelo menos a polícia não te para a cada esquina por erro de software. `;
           }
-        } else {
-          txt += `A prefeitura atrasou a infraestrutura tecnológica. Os postes são antigos. A escuridão te força a recusar corridas para áreas de risco à noite, diminuindo sua renda, mas você dirige sem o peso de mil olhos mecânicos nas costas.\n\n`;
-        }
 
-        // REAÇÃO À DECISÃO DA AMARA
-        if (c.amaraPublished === true) {
-          txt += `No grupo do WhatsApp do movimento de motoboys, o pessoal está compartilhando um estudo da UFBA provando como os algoritmos da cidade perseguem a periferia. O clima é de revolta e organização. Vocês marcaram uma greve.`;
-        } else {
-          txt += `A classe está desunida. Ninguém entende bem por que algumas rotas pagam menos e por que as abordagens estão mais frequentes. Sem informação, vocês acham que o problema é "azar".`;
-        }
-        return txt;
-      },
-      decisions:[{q:'A realidade se impõe. O que o Edu faz hoje?', choices:[
-        {
-          showIf: (c) => c.ibmContract === 'full' && c.reportStatus === 'suppressed',
-          text:'[Sob a mira da polícia] Deitar no chão, não reagir e deixar a injustiça algorítmica rolar. Tentar sair vivo.', 
-          nextEraId: null, impact:{},
-          consequence:'Você perde o dia de trabalho, a moto é apreendida preventivamente. O sistema computa o "sucesso" da abordagem. O ciclo se perpetua.',
-          reveal:'Quando o erro do algoritmo atinge o trabalhador precário, a culpa recai sobre o corpo dele, nunca sobre o código.'
+          // REAÇÃO À AMARA (Consciência)
+          if (c.amaraPublished) {
+            txt += `No rádio, você ouve a Dra. Amara falando sobre o "Racismo Algorítmico". Você e os outros motoboys agora têm um nome para o que sofrem. Isso te dá força para encarar o policial nos olhos.`;
+          } else {
+            txt += `Você se sente sozinho. Acha que é azar. Acha que o problema é o seu rosto, e não o código da empresa.`;
+          }
+          return txt;
         },
-        {
-          showIf: (c) => c.amaraPublished === true,
-          text:'[Com a pesquisa em mãos] Liderar a paralisação em frente ao Centro de Operações da prefeitura, usando os dados acadêmicos para exigir respostas do app de delivery e do governo.', 
-          nextEraId: null, impact:{},
-          consequence:'A tropa de choque é chamada, mas a imprensa cobre o evento citando o "racismo algorítmico". Vocês ganham tração. A rua aprendeu a falar a língua da tecnologia.',
-          reveal:'A luta de classes contemporânea exige que os trabalhadores entendam o código que os explora.'
+        doc: (c) => {
+          if (c.reportStatus === 'public' || c.amaraPublished) {
+             return { meta: 'PANTALHA DO SMARTPHONE', title: 'Notificação: Jornal A Tarde', body: `URGENTE: Justiça suspende uso de reconhecimento facial em Salvador após denúncias de viés racial. "A máquina erra e o povo paga", diz líder de entregadores.` };
+          }
+          return null;
         },
-        {
-          text:'Desligar o aplicativo e voltar para casa. A cidade está hostil demais, seja pelos buracos ou pelas câmeras.', 
-          nextEraId: null, impact:{},
-          consequence:'Você não ganha dinheiro hoje. As contas atrasam.',
-          reveal:'A abstenção não é uma falha moral; às vezes é a única estratégia de sobrevivência.'
-        }
-      ]}]
+        concept: { title: 'Vigilância Preditiva', text: 'Quando a polícia usa algoritmos para "adivinhar" onde o crime vai acontecer. Na prática, isso costuma resultar em policiais sendo enviados repetidamente para os mesmos bairros pobres, criando um ciclo de policiamento agressivo baseado em estatísticas viciadas.' },
+        decisions: [{
+          q: 'O policial está vindo. O sistema "apitou". Como você reage a essa cidade?',
+          choices: [
+            {
+              text: 'Abaixar a cabeça. Aceitar que na "Cidade Inteligente", o seu corpo é um erro de processamento. Tentar não morrer.',
+              nextEraId: null,
+              consequence: 'Você é revistado, perde duas horas de trabalho e sua nota no app cai. A cidade segue "inteligente" para quem está no ar-condicionado.',
+              reveal: 'A tecnologia de ponta, quando aplicada sem ética, é apenas uma forma mais sofisticada de opressão antiga.'
+            },
+            {
+              text: 'Filmar a abordagem. Citar a pesquisa da Amara e exigir seus direitos como cidadão, não como metadado.',
+              nextEraId: null,
+              consequence: 'O policial hesita. Ele sabe que o sistema está sob escrutínio público agora. Você é liberado mais rápido, mas fica marcado no banco de dados como "elemento questionador".',
+              reveal: 'A única contra-vigilância eficiente é a consciência política e a câmera do celular apontada de volta.'
+            }
+          ]
+        }]
+      }
     }
   }
-}
-};
+}; // FIM DA VARIÁVEL CHARS
 
 // ════════════════════════════════════════
-// GAME ENGINE
+// MOTOR DE RELATÓRIO FINAL (COMBINAÇÕES)
 // ════════════════════════════════════════
-let S={screen:'splash',char:null,eraId:null};
 
-function reset(){S={screen:'splash',char:null,eraId:null};}
+function getFinaleReport(c) {
+  let report = { title: "", text: "", status: "" };
 
-function getFinaleContent(c) {
-  let title = "Salvador: O Código Fonte";
-  let text = "";
+  // COMBINAÇÃO 1: A DISTOPIA PERFEITA
+  if (c.ibmContract === 'full' && c.reportStatus === 'suppressed' && c.rodrigoTemplate === 'agile') {
+    report.title = "Salvador: O Panóptico Perfeito";
+    report.status = "CRÍTICO / DISTÓPICO";
+    report.text = "As decisões de Marco e Rodrigo entregaram a cidade às corporações. Sem a transparência que Amara buscava, Salvador se tornou um laboratório de extrativismo de dados. O controle é absoluto, invisível e racista. O cidadão é apenas um ponto de lucro ou um alvo policial.";
+  }
+  // COMBINAÇÃO 2: A RESISTÊNCIA DEMOCRÁTICA
+  else if (c.ibmContract === 'negotiated' && c.reportStatus === 'public' && c.amaraPublished) {
+    report.title = "Salvador: A Cidade em Disputa";
+    report.status = "ESTÁVEL / DEMOCRÁTICO";
+    report.text = "A soberania digital foi preservada. Graças à coragem de vazar os dados e à força da pesquisa científica, o sistema de vigilância foi freado. A cidade é tecnologicamente mais lenta, mas humanamente mais justa. O povo sabe como o código funciona.";
+  }
+  // COMBINAÇÃO 3: O CAOS INSTITUCIONAL (O "Puxadinho")
+  else if (c.ibmContract === 'full' && c.reportStatus === 'public') {
+    report.title = "Salvador: O Grande Imbróglio";
+    report.status = "INSTÁVEL / JUDICIALIZADO";
+    report.text = "A prefeitura comprou o sistema errado e agora está presa em processos judiciais bilionários. A tecnologia está instalada, mas desligada por ordem judicial. Bilhões de reais foram jogados no lixo enquanto as ruas continuam sem infraestrutura básica.";
+  }
+  // PADRÃO: O FUTURO AMBÍGUO
+  else {
+    report.title = "Salvador: Futuro Indeterminado";
+    report.status = "EM PROCESSAMENTO";
+    report.text = "A cidade está num impasse. Algumas áreas são vigiadas por algoritmos opacos, enquanto outras lutam por transparência. O destino da democracia digital baiana ainda não foi decidido. A luta continua nas redes e nas ruas.";
+  }
   
-  if (c.ibmContract === 'full' && c.reportStatus === 'suppressed' && !c.amaraPublished) {
-    title = "Distopia de Vigilância Máxima";
-    text = "A cidade se tornou uma eficiente máquina de extrativismo de dados. O contrato de 20 anos firmado por Marco cimentou um sistema de caixas-pretas corporativas. Como Amara foi cooptada e o viés do algoritmo foi abafado, a vigilância opera de forma silenciosa e letal nas periferias. Trabalhadores como Edu sofrem abordagens diárias validadas por IA. O solucionismo venceu, a democracia perdeu.";
-  } else if (c.ibmContract === 'full' && c.reportStatus === 'public' && c.amaraPublished) {
-    title = "O Choque do Vazamento";
-    text = "O sistema foi instalado, mas a blindagem falhou. O vazamento do relatório por Marco e a validação científica por Amara criaram uma tempestade perfeita. A prefeitura enfrenta CPIs e processos bilionários. Trabalhadores usaram esses dados para organizar greves históricas. A tecnologia de controle encontrou um freio na transparência radical.";
-  } else if (c.ibmContract === 'negotiated' && c.amaraPublished) {
-    title = "Soberania e Resistência";
-    text = "Marco atrasou a infraestrutura, mas garantiu a posse dos dados. Amara expôs as falhas lógicas da governança urbana. A cidade é mais lenta e menos iluminada do que os panfletos de marketing prometiam, mas é dona do próprio destino. A tecnologia pública, mesmo imperfeita, provou ser o único caminho para não criminalizar a pobreza.";
+  return report;
+}
+
+// ATUALIZE A FUNÇÃO nav() NO SEU CÓDIGO PARA INCLUIR O FINAL:
+function nav(screenId) {
+  S.screen = screenId;
+  if(screenId === 'splash') renderSplash();
+  if(screenId === 'select') renderSelect();
+  if(screenId === 'finale') renderFinale();
+  window.scrollTo(0,0);
+}
+
+function renderFinale() {
+  const f = getFinaleReport(CITY);
+  app.innerHTML = `
+    <div class="screen screen-left">
+      <div class="label" style="color:var(--amber)">DIAGNÓSTICO FINAL DA CIDADE</div>
+      <div class="era-title" style="font-size:3rem; color:var(--text-bright)">${f.title}</div>
+      <div class="concept-box" style="border-color:var(--amber)">
+        <div class="concept-title" style="color:var(--amber)">STATUS DO SISTEMA</div>
+        ${f.status}
+      </div>
+      <div class="context-text" style="font-size:1.1rem; border-color:var(--amber)">
+        ${f.text}
+      </div>
+      <div style="margin-top:3rem; display:flex; gap:1rem;">
+        <button class="btn" onclick="resetGame()">ENCERRAR SIMULAÇÃO E APAGAR LOGS</button>
+      </div>
+    </div>
+  `;
+}
+
+// ════════════════════════════════════════
+// MOTOR DE NAVEGAÇÃO E INTERFACE (NÃO ALTERAR)
+// ════════════════════════════════════════
+const app = document.getElementById('app');
+
+function renderSplash() {
+  app.innerHTML = `
+    <div class="screen" style="text-align:center">
+      <div class="label" style="margin-bottom:1.5rem">SIMULADOR ESTRUTURAL</div>
+      <div class="era-title" style="font-size:clamp(3.5rem,8vw,5.5rem);margin-bottom:0">CIDADE<br><em style="color:var(--amber);font-style:normal">ONLINE</em></div>
+      <div style="font-size:.85rem;color:var(--text);margin:2rem auto;max-width:550px">Câmeras, contratos e culpa.<br>Uma rede de decisões ramificadas sobre vigilância e justiça.</div>
+      <button class="btn" onclick="nav('select')">▶ ACESSAR MÓDULO DE PERSONAGENS</button>
+    </div>
+  `;
+}
+
+function renderSelect() {
+  const cs = Object.values(CHARS);
+  app.innerHTML = `
+    <div class="screen screen-left">
+      <div class="label" style="margin-bottom:1rem">ARQUIVOS DE MEMÓRIA</div>
+      <div class="era-title" style="font-size:2rem;color:var(--text-bright)">Por qual perspectiva você cruzará a cidade?</div>
+      
+      <div class="char-grid">
+      ${cs.map(c => `
+        <div class="char-card" style="--c-col:${c.color}; ${S.playedChars.includes(c.id) ? 'opacity:0.6' : ''}" onclick="startNode('${c.id}')">
+          <div class="char-name">${c.name}</div>
+          <div style="font-size:.7rem; color:${c.color}; text-transform:uppercase; letter-spacing:0.1em">${c.role}</div>
+          <div style="font-size:.75rem; margin-top:1rem; color:var(--text-dim); border-top:1px solid var(--border); padding-top:1rem">${c.lens}</div>
+        </div>
+      `).join('')}
+      </div>
+      <div style="margin-top:2rem"><button class="btn btn-ghost" onclick="nav('splash')">← VOLTAR</button></div>
+    </div>
+  `;
+}
+
+function nav(screenId) {
+  S.screen = screenId;
+  if(screenId === 'splash') renderSplash();
+  if(screenId === 'select') renderSelect();
+  window.scrollTo(0,0);
+}
+
+function startNode(charId) {
+  S.char = charId;
+  S.eraId = Object.keys(CHARS[charId].eras)[0]; // Pega a raiz da árvore
+  renderEra();
+}
+
+function renderEra() {
+  const c = CHARS[S.char];
+  const era = c.eras[S.eraId];
+  
+  let docBtn = '';
+  if (era.doc) {
+    docBtn = `<button class="btn btn-doc" style="margin-bottom:1.5rem" onclick="openDoc('${era.doc.meta}', '${era.doc.title}', \`${era.doc.body}\`)">📄 ABRIR ANEXO/PROVA DIGITAL</button>`;
+  }
+
+  let conceptHtml = '';
+  if (era.concept) {
+    conceptHtml = `<div class="concept-box"><div class="concept-title">${era.concept.title}</div>${era.concept.text}</div>`;
+  }
+
+  app.innerHTML = `
+    <div class="screen screen-left" style="--char-col:${c.color}">
+      <div class="label" style="color:${c.color}">${c.name} · ${era.year}</div>
+      <div class="era-title">${era.title}</div>
+      ${docBtn}
+      <div class="context-text">${era.context.replace(/\n\n/g, '<br><br>')}</div>
+      ${conceptHtml}
+      <div style="font-family:'Syne',sans-serif;color:var(--amber);margin-top:2rem;font-weight:700;font-size:1.1rem">${era.decisions[0].q}</div>
+      <div class="choices">
+        ${era.decisions[0].choices.map((ch, idx) => `
+          <button class="choice-btn" onclick="makeChoice(${idx})">
+            <span style="font-size:.65rem;color:var(--text-dim);display:block;margin-bottom:.3rem">DECISÃO ${String.fromCharCode(65+idx)}</span>
+            ${ch.text}
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  window.scrollTo(0,0);
+}
+
+function makeChoice(idx) {
+  const c = CHARS[S.char];
+  const ch = c.eras[S.eraId].decisions[0].choices[idx];
+  
+  const isFinalNode = !ch.nextEraId;
+  
+  let nextBtn = '';
+  if (!isFinalNode) {
+    nextBtn = `<button class="btn" style="border-color:${c.color};color:${c.color}" onclick="S.eraId='${ch.nextEraId}'; renderEra();">AVANÇAR NA LINHA DO TEMPO →</button>`;
   } else {
-    title = "O Puxadinho Tecnológico";
-    text = "A governança urbana brasileira clássica: ambígua e remendada. Contratos assinados às pressas, resistências acadêmicas pontuais e trabalhadores tentando sobreviver no meio do caos. Algumas câmeras funcionam, outras estão quebradas. O futuro cyberpunk chegou, mas está mal distribuído e cheio de gambiarras institucionais.";
+    nextBtn = `<button class="btn" style="border-color:var(--amber);color:var(--amber)" onclick="endChar()">FINALIZAR ARQUIVO DESTE PERSONAGEM ⟳</button>`;
   }
-  return {title, text};
-}
 
-function renderSplash(){return`
-<div class="screen" style="text-align:center">
-  <div style="margin-bottom:1.5rem"><span class="label">Simulação Operacional</span></div>
-  <div class="display" style="font-size:clamp(3rem,10vw,6rem);color:var(--text-bright);line-height:1">CIDADE<br><em style="color:var(--char-col);font-style:normal">ONLINE</em></div>
-  <div style="font-size:.8rem;color:var(--amber);margin:2rem auto;max-width:500px">Um simulador focado na complexidade da governança digital, extrativismo de dados e justiça social.</div>
-  <button class="btn" onclick="nav('select')">▶ INICIAR SISTEMA</button>
-  <div style="margin-top:1.5rem"><button class="btn btn-ghost" style="font-size:.65rem;border:none" onclick="resetGame()">⟳ ZERAR SAVE STATE</button></div>
-</div>`;}
-
-function renderSelect(){
-  const cs=Object.values(CHARS);
-  const playedEdu=CITY.playedChars.includes('edu');
-  
-  return`
-<div class="screen screen-left">
-  <div class="label" style="margin-bottom:1rem">MÓDULO DE PERSPECTIVAS</div>
-  <div class="display" style="font-size:2rem;color:var(--text-bright)">Por qual lente você lerá a cidade?</div>
-  <div style="margin-bottom:2rem;font-size:.8rem;color:var(--text-dim)">Jogue com todos para gerar o relatório de impacto consolidado.</div>
-  
-  <div class="char-grid">
-  ${cs.map(c=>{
-    const p=CITY.playedChars.includes(c.id);
-    return`
-    <div class="char-card" style="--c-col:${c.color}; ${p?'opacity:0.6':''}" onclick="startChar('${c.id}')">
-      <div class="char-name">${c.name}</div>
-      <div class="char-role" style="color:${c.color}">${c.role}</div>
-      <div style="font-size:.8rem;color:var(--text)">${p?'[DADOS JÁ COLETADOS]':'[INICIAR CADEIA DE DECISÕES]'}</div>
-      <div class="char-lens">${c.lens}</div>
-    </div>`;
-  }).join('')}
-  </div>
-  
-  ${CITY.playedChars.length>=3 ? `
-  <div style="margin-top:3rem;width:100%;text-align:center">
-    <button class="btn btn-doc" onclick="nav('finale')">★ ABRIR RELATÓRIO TÉCNICO DA CIDADE (GRAN FINALE)</button>
-  </div>` : ''}
-</div>`;}
-
-function renderEra(){
-  const c=CHARS[S.char], era=c.eras[S.eraId];
-  let ctx=typeof era.context==='function'?era.context(CITY):era.context;
-  
-  let docHtml='';
-  if(era.doc){
-    const d=typeof era.doc==='function'?era.doc(CITY):era.doc;
-    if(d) docHtml=`<button class="btn btn-doc" style="margin-bottom:1.5rem" onclick="openDoc('${d.meta}', '${d.title}', \`${d.body}\`)">📄 ABRIR DOCUMENTO SECRETO: ${d.meta}</button>`;
-  }
-  
-  let conceptHtml='';
-  if(era.concept) conceptHtml=`<div class="concept-box"><div class="concept-title">${era.concept.title}</div>${era.concept.text}</div>`;
-
-  const choices=era.decisions[0].choices.filter(ch=>!ch.showIf || ch.showIf(CITY));
-
-  return`
-<div class="screen screen-left" style="--char-col:${c.color}">
-  <div class="label" style="color:${c.color}">${c.name} · ${era.year}</div>
-  <div class="era-title">${era.title}</div>
-  
-  ${docHtml}
-  <div class="context-text">${ctx.replace(/\n\n/g,'<br><br>')}</div>
-  ${conceptHtml}
-  
-  <div style="font-family:'Syne',sans-serif;color:var(--amber);margin-top:2rem;font-weight:700">${era.decisions[0].q}</div>
-  <div class="choices">
-    ${choices.map((ch,i)=>`<button class="choice-btn" onclick="makeChoice(${i})">${ch.text}</button>`).join('')}
-  </div>
-</div>`;}
-
-function renderConseq(ch){
-  const c=CHARS[S.char];
-  const nextBtn=ch.nextEraId
-    ? `<button class="btn" style="border-color:${c.color};color:${c.color}" onclick="S.eraId='${ch.nextEraId}'; update();">AVANÇAR PARA A PRÓXIMA FASE →</button>`
-    : `<button class="btn" style="border-color:${c.color};color:${c.color}" onclick="endChar()">FINALIZAR EXPEDIENTE →</button>`;
-    
-  return`
-<div class="screen screen-left" style="--char-col:${c.color}">
-  <div class="label" style="color:${c.color}">CONSEQUÊNCIA DA AÇÃO</div>
-  <div class="consequence-box"><strong>O que aconteceu materialmente:</strong><br><br>${ch.consequence}</div>
-  <div class="reveal-box"><strong>Análise Crítica:</strong><br><br>${ch.reveal}</div>
-  <div style="margin-top:2rem">${nextBtn}</div>
-</div>`;}
-
-function renderFinale(){
-  const f=getFinaleContent(CITY);
-  return`
-<div class="screen screen-left">
-  <div class="label">DIAGNÓSTICO ALGORÍTMICO MUNICIPAL</div>
-  <div class="era-title" style="font-size:3rem;color:var(--amber)">${f.title}</div>
-  <div class="context-text" style="font-size:1.1rem">${f.text}</div>
-  <div style="margin-top:3rem"><button class="btn btn-ghost" onclick="resetGame()">ENCERRAR E APAGAR DADOS</button></div>
-</div>`;}
-
-// NAV ENGINE
-const app=document.getElementById('app');
-function update(){
-  if(S.screen==='splash') app.innerHTML=renderSplash();
-  if(S.screen==='select') app.innerHTML=renderSelect();
-  if(S.screen==='era') app.innerHTML=renderEra();
-  if(S.screen==='finale') app.innerHTML=renderFinale();
+  app.innerHTML = `
+    <div class="screen screen-left" style="--char-col:${c.color}">
+      <div class="label" style="color:var(--red)">O PESO DA ESCOLHA</div>
+      <div class="era-title" style="font-size:2rem">Análise de Impacto</div>
+      <div class="consequence-box">
+        <strong style="color:var(--text-bright)">O que aconteceu materialmente:</strong><br><br>${ch.consequence}
+      </div>
+      <div class="reveal-box">
+        <strong style="color:var(--amber)">A Lição Sistêmica:</strong><br><br>${ch.reveal}
+      </div>
+      <div style="margin-top:2rem">${nextBtn}</div>
+    </div>
+  `;
   window.scrollTo(0,0);
 }
-function nav(sc){S.screen=sc;update();}
-function startChar(id){
-  S.char=id; S.eraId=Object.keys(CHARS[id].eras)[0]; nav('era');
-}
-function makeChoice(idx){
-  const c=CHARS[S.char], ch=c.eras[S.eraId].decisions[0].choices.filter(x=>!x.showIf || x.showIf(CITY))[idx];
-  if(ch.impact) Object.assign(CITY, ch.impact);
-  app.innerHTML=renderConseq(ch);
-  window.scrollTo(0,0);
-}
-function endChar(){
-  if(!CITY.playedChars.includes(S.char)) CITY.playedChars.push(S.char);
-  saveCity(CITY);
+
+function endChar() {
+  if (!S.playedChars.includes(S.char)) {
+    S.playedChars.push(S.char);
+  }
   nav('select');
 }
-function resetGame(){
-  localStorage.removeItem(CK); CITY=freshCity(); reset(); update();
-}
 
-update();
+// INICIAR O APP
+renderSplash();
 </script>
 </body>
 </html>

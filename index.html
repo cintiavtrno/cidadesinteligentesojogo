@@ -1,5 +1,3 @@
-bash
-cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -155,7 +153,13 @@ hr.div{border:none;border-top:1px solid var(--border);margin:1.75rem 0;width:100
 const CK='cidadeOnline_v3_city';
 function freshCity(){return{cameras:5,transparency:5,equity:5,ibmContract:null,reportStatus:null,schoolBiometrics:null,amaraPublished:false,amaraIndependent:false,cpiDeponent:false,rodrigoTemplate:null,rodrigoWhistle:false,playedChars:[],totalPlays:0};}
 function loadCity(){try{return JSON.parse(localStorage.getItem(CK))||freshCity();}catch{return freshCity();}}
-function saveCity(c){localStorage.setItem(CK,JSON.stringify(c));}
+function saveCity(c){
+  try{
+    localStorage.setItem(CK,JSON.stringify(c));
+  } catch(e){
+    console.warn("Armazenamento local bloqueado. O progresso não será salvo.", e);
+  }
+}
 function resetCity(){saveCity(freshCity());}
 let CITY=loadCity();
 function applyImpact(imp){
@@ -166,7 +170,7 @@ function applyImpact(imp){
   Object.entries(imp).forEach(([k,v])=>{if(!['cameras','transparency','equity'].includes(k))CITY[k]=v;});
   saveCity(CITY);
 }
-
+ 
 // ════════════════════════════════════════
 // LIVE TICKER DATA
 // ════════════════════════════════════════
@@ -209,7 +213,7 @@ function buildTickerText(charId){
   const shuffled=all.sort(()=>Math.random()-.5).slice(0,6);
   return shuffled.join(' · ');
 }
-
+ 
 // ════════════════════════════════════════
 // GRAND FINALE DATA
 // ════════════════════════════════════════
@@ -262,7 +266,7 @@ function getAuditItems(){
   if(!items.length) items.push({bad:null,text:'Nenhuma decisão registrada. Jogue com os personagens para construir o histórico da cidade.'});
   return items;
 }
-
+ 
 // ════════════════════════════════════════
 // ADAPTIVE CONTEXT
 // ════════════════════════════════════════
@@ -292,7 +296,7 @@ function cityAddendum(charId,eraIdx){
   }
   return'';
 }
-
+ 
 // ════════════════════════════════════════
 // GAME DATA
 // ════════════════════════════════════════
@@ -348,7 +352,7 @@ endings:{control:{type:'COOPTAÇÃO INSTITUCIONAL',title:'A Pesquisadora Integra
 rodrigo:{id:'rodrigo',name:'Rodrigo Maia',role:'Engenheiro de PPP e Consultor',city:'São Paulo, SP · 2016–2025',color:'#10b981',quote:'"Um contrato bem estruturado dura mais que qualquer governo."',lens:'Você está dentro do mercado. Você desenha a arquitetura invisível que nenhuma eleição muda.',intro:`É 2016. Você tem 42 anos e acabou de montar sua consultoria em PPPs de infraestrutura urbana.\n\nO mercado de "smart cities" está explodindo. Municípios com caixa zerado querem modernizar. Empresas de tecnologia querem contratos longos. Você é o engenheiro que faz as duas pontas se encontrarem.\n\nSeu primeiro grande contrato: município paraibano, R$ 100 milhões, 20 anos. Você vai desenhar o template que será replicado em dezenas de cidades.`,
 eras:[
 {id:'e1',year:'2016–2017',label:'ERA 01',title:'A Arquitetura do Futuro',
-context:`O template de Rodrigo será o esqueleto de contratos em 40 municípios. Você sabe disso.\n\nNo rascunho, uma cláusula que você mesmo escreveu: a concessionária pode adicionar câmeras, sensores, módulos de dados sem nova licitação, desde que dentro do "escopo de aprimoramento".\n\nÉ padrão de mercado. É legal.`,
+context:`O template de Rodrigo será o esqueleto de contratos em 40 municípios. Você sabe disso.\n\nNo rascunho, uma cláusula que você mesmo escreveu: a concessionária pode adicionar câmeras, sensores, módulos de dados sem nova licitação, desde que dentro do "escopo de aprimção".\n\nÉ padrão de mercado. É legal.`,
 decisions:[{q:'A cláusula de expansão sem licitação. Você mantém ou remove?',choices:[
 {text:'Mantém. É padrão. Agiliza. O cliente vai para outro se você retirar.',ef:2,eq:-1,pr:-2,impact:{rodrigoTemplate:'expansionist',cameras:2,transparency:-2},consequence:'O template é replicado em 38 cidades. Em 2020: 23 expandiram câmeras sem licitação. Três instalaram reconhecimento facial sem votação em câmara.',reveal:'Você não quis vigilância em massa. Você quis eficiência contratual. O resultado foi o mesmo.',hl:{main:'Consultor desenvolve modelo inovador para PPPs de cidades inteligentes no Brasil',alt:'Template de contrato permite expansão de vigilância sem licitação em 38 cidades brasileiras'}},
 {text:'Remove. Qualquer expansão exige nova licitação pública.',ef:-1,eq:2,pr:2,impact:{rodrigoTemplate:'controlled',transparency:2},consequence:'Você perde dois contratos. O template revisado é adotado por 12 municípios com maior controle democrático.',reveal:'Você perdeu mercado. Os 12 municípios têm processos mais transparentes. São as duas coisas juntas.',hl:{main:'Consultor perde contratos por "excesso de burocracia" em modelo de PPP',alt:'Template revisado garante controle democrático sobre expansão de câmeras em 12 cidades'}}
@@ -393,7 +397,7 @@ decisions:[{q:'A reunião é amanhã. O risco é real ou percebido. O que você 
 endings:{control:{type:'INVISIBILIDADE APRENDIDA',title:'Fluir Pelo Sistema',text:`2024. Edu aprendeu como ser invisível para o sistema.\n\nSabe quais ruas têm mais câmeras. Quais horários ativam mais alertas. Que não deve questionar.\n\nEle é um especialista em sobreviver numa cidade que não foi projetada para ele.\n\nO sistema funcionou como projetado.`},human:{type:'TESTEMUNHO NECESSÁRIO',title:'Seu Relato no Processo',text:`2024. O relato de Edu foi incluído como evidência numa ação coletiva contra o uso de reconhecimento facial sem regulamentação em Salvador.\n\nEle não vai ao tribunal. Não sabe como o processo vai terminar. Continua fazendo entregas.\n\nMas seu nome está num documento jurídico que desafia um sistema que achava que ele nunca ia questionar.`},collapse:{type:'DESGASTE SILENCIOSO',title:'O Preço do Cotidiano',text:`2024. Nada mudou de forma visível.\n\nEdu foi abordado 3 vezes em 5 anos por câmeras de reconhecimento facial. Nenhuma vez era ele. Nenhuma vez foi registrado como erro.\n\nEle ainda faz entregas. Ainda pensa duas vezes antes de certas ruas.\n\nO sistema chama isso de "operação normal".`},ambiguous:{type:'RESISTÊNCIA COTIDIANA',title:'Saber é Uma Forma de Poder',text:`2024. Edu não mudou o sistema. Mas o sistema também não o mudou completamente.\n\nEle sabe mais do que sabia. Sabe o que as câmeras fazem, como os algoritmos operam.\n\nEsse conhecimento não paga conta. Mas também não pode ser tirado.\n\nContinua fazendo entregas. Mais consciente. Mais cansado. Ainda lá.`}}
 }
 };
-
+ 
 // ════════════════════════════════════════
 // GAME STATE
 // ════════════════════════════════════════
@@ -408,7 +412,7 @@ function updateVis(){
   const r=Math.round(7+d*18),g=Math.round(9+d*2);
   document.documentElement.style.setProperty('--bg',`rgb(${r},${g},15)`);
 }
-
+ 
 // ════════════════════════════════════════
 // HELPERS
 // ════════════════════════════════════════
@@ -419,7 +423,7 @@ function scoreRows(col){
 function tl(){return`<div class="timeline">${C().eras.map((e,i)=>`<div class="tl-item ${i<S.eraIdx?'tl-done':i===S.eraIdx?'tl-active':''}">${e.year.split('–')[0]}</div>`).join('')}</div>`;}
 function cityFlags(){
   const f=[];
-  if(CITY.cameras>=8)f.push({t:`📹 Vigilância alta (${CITY.cameras}/10)`,c:'active'});
+  if(CITY.cameras>=8)f.push({t:`📷 Vigilância alta (${CITY.cameras}/10)`,c:'active'});
   else if(CITY.cameras<=4)f.push({t:'Vigilância baixa',c:'good'});
   if(CITY.ibmContract==='full')f.push({t:'Contrato IBM — dados privados',c:'active'});
   if(CITY.ibmContract==='negotiated')f.push({t:'Dados parcialmente protegidos',c:'good'});
@@ -435,31 +439,31 @@ function cityFlags(){
   if(!f.length)f.push({t:'Nenhuma decisão registrada ainda',c:'neutral'});
   return`<div class="city-flags">${f.map(x=>`<span class="city-flag city-flag-${x.c}">${x.t}</span>`).join('')}</div>`;
 }
-
+ 
 // ════════════════════════════════════════
 // SCREENS
 // ════════════════════════════════════════
 function renderSplash(){return`
 <div class="screen" style="text-align:center">
   <div style="margin-bottom:1.5rem"><span class="status-dot"></span><span class="label">Sistema Iniciando</span></div>
-  <div class="splash-title">CIDADE<br><em>ONLINE</em></div>
+  <div tabindex="-1" class="splash-title">CIDADE<br><em>ONLINE</em></div>
   <div class="splash-meta">Brasil · 2010–2040 · Um jogo de decisões</div>
   <div class="splash-tagline">Cidades inteligentes não são neutras.<br><strong>Inteligentes para quem?</strong></div>
-  <button class="btn" data-a="charSelect" style="font-size:.9rem;padding:.9rem 2.5rem">▶&nbsp; INICIAR SISTEMA</button>
+  <button class="btn" data-a="charSelect" style="font-size:.9rem;padding:.9rem 2.5rem">▶  INICIAR SISTEMA</button>
   <div style="margin-top:.75rem"><button class="btn btn-ghost" data-a="resetCity" style="font-size:.65rem;padding:.4rem 1rem">⟳ Resetar estado da cidade</button></div>
   <div style="margin-top:3.5rem;font-size:.65rem;color:var(--text-dim);max-width:480px;line-height:2;text-align:center">
     4 personagens · Múltiplos finais · Decisões herdadas entre personagens<br>
     Baseado em eventos, contratos e pesquisas reais do Brasil (2010–2025)
   </div>
 </div>`;}
-
+ 
 function renderCharSelect(){
   const cs=Object.values(CHARS),allPlayed=cs.every(c=>CITY.playedChars.includes(c.id)),hasPlayed=CITY.playedChars.length>0;
   return`
 <div class="screen">
   <div style="text-align:center;margin-bottom:1.25rem">
     <div class="label" style="margin-bottom:.4rem">Escolha seu personagem</div>
-    <div class="display" style="font-size:1.4rem;color:var(--text-bright)">Por qual lente você vê a cidade?</div>
+    <div tabindex="-1" class="display" style="font-size:1.4rem;color:var(--text-bright)">Por qual lente você vê a cidade?</div>
   </div>
   ${allPlayed?`<div style="text-align:center;margin-bottom:1.25rem"><button class="btn btn-finale" data-a="grandFinale">★ RELATÓRIO FINAL DA CIDADE</button></div>`:''}
   ${hasPlayed?`<div class="city-panel" style="max-width:980px"><div class="city-panel-title">Estado atual da cidade — herdado das suas escolhas</div>${cityFlags()}</div>`:''}
@@ -479,14 +483,14 @@ function renderCharSelect(){
     <div style="display:flex;gap:.75rem;justify-content:center"><button class="btn btn-ghost" data-a="splash">← Voltar</button></div>
   </div>
 </div>`;}
-
+ 
 function renderCharIntro(){
   const c=C();
   return`
 <div class="screen">
   <div style="width:100%;max-width:720px">
     <div class="label label-accent" style="margin-bottom:.4rem">Personagem</div>
-    <div class="display" style="font-size:clamp(1.8rem,6vw,3.2rem);color:var(--text-bright);margin-bottom:.2rem">${c.name}</div>
+    <div tabindex="-1" class="display" style="font-size:clamp(1.8rem,6vw,3.2rem);color:var(--text-bright);margin-bottom:.2rem">${c.name}</div>
     <div class="label" style="color:${c.color};margin-bottom:2rem">${c.role} · ${c.city}</div>
     <div class="char-intro-text">${c.intro.replace(/\n\n/g,'<br><br>')}</div>
     <div style="display:flex;gap:1rem;flex-wrap:wrap">
@@ -495,7 +499,7 @@ function renderCharIntro(){
     </div>
   </div>
 </div>`;}
-
+ 
 function renderEra(){
   const c=C(),era=c.eras[S.eraIdx],dec=era.decisions[S.decIdx],add=cityAddendum(c.id,S.eraIdx);
   const tickerText=buildTickerText(c.id);
@@ -511,7 +515,7 @@ function renderEra(){
     <div class="ticker-scroll"><div class="ticker-inner">${tickerText}</div></div>
   </div>
   <div class="era-year">${era.year}</div>
-  <div class="era-title">${era.title}</div>
+  <div tabindex="-1" class="era-title">${era.title}</div>
   <div class="context-text">${era.context.replace(/\n\n/g,'<br><br>')}
     ${add?`<div class="context-addendum">⟳ ${add}</div>`:''}
   </div>
@@ -525,7 +529,7 @@ function renderEra(){
   </div>
   <div class="spacer"></div>
 </div>`;}
-
+ 
 function renderConsequence(){
   const c=C(),era=c.eras[S.eraIdx],dec=era.decisions[S.decIdx],ch=dec.choices[S.lastChoice];
   const isLast=S.eraIdx>=c.eras.length-1;
@@ -536,18 +540,18 @@ function renderConsequence(){
     <div><div class="label label-accent">${c.name}</div><div class="label">${era.year} · Consequência</div></div>
     <div class="label">Opção ${String.fromCharCode(65+S.lastChoice)}</div>
   </div>
-  <div style="max-width:740px;width:100%;font-size:.78rem;color:var(--text-dim);font-style:italic;margin-bottom:.5rem">→ "${ch.text}"</div>
+  <div tabindex="-1" style="max-width:740px;width:100%;font-size:.78rem;color:var(--text-dim);font-style:italic;margin-bottom:.5rem">→ "${ch.text}"</div>
   <div class="consequence-box"><div class="consequence-label">O que acontece</div><div class="consequence-text">${ch.consequence}</div></div>
   <div class="reveal-box"><div class="reveal-label">Perspectiva crítica</div>${ch.reveal}</div>
   ${ch.hl?`<div class="manchetes">
     <div class="manchete manchete-mainstream"><div class="manchete-label">📰 Mídia convencional</div>${ch.hl.main}</div>
-    <div class="manchete manchete-alt"><div class="manchete-label">📻 Mídia independente</div>${ch.hl.alt}</div>
+    <div class="manchete manchete-alt"><div class="manchete-label">📡 Mídia independente</div>${ch.hl.alt}</div>
   </div>`:''}
   <div class="scores-wrap"><div class="label" style="margin-bottom:.75rem">Estado atual — ${c.name}</div>${scoreRows(c.color)}</div>
   <div style="display:flex;gap:1rem;flex-wrap:wrap">${nextBtn}</div>
   <div class="spacer"></div>
 </div>`;}
-
+ 
 function renderEnding(){
   const c=C(),ek=endKey(),e=c.endings[ek];
   const ec={control:'#ef4444',human:'#10b981',collapse:'#64748b',ambiguous:'#f59e0b'}[ek];
@@ -556,7 +560,7 @@ function renderEnding(){
 <div class="screen" style="--char-col:${ec}">
   <div class="ending-wrap">
     <div class="ending-type-badge" style="color:${ec};border-color:${ec}">${e.type}</div>
-    <div class="ending-title">${e.title}</div>
+    <div tabindex="-1" class="ending-title">${e.title}</div>
     <div class="ending-text">${e.text.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}</div>
     <hr class="div">
     <div class="scores-wrap"><div class="label" style="margin-bottom:.75rem">Balanço Final — ${c.name}</div>${scoreRows(ec)}</div>
@@ -574,14 +578,14 @@ function renderEnding(){
     <div class="footnote">Fontes: Data Privacy Brasil (2021) · CESeC & Lapin (2024) · O Panóptico/Lapin (2024) · Lab404/UFBA (2025) · O'Neil "Weapons of Math Destruction" (2016) · LGPD 13.709/2018 · Contratos de PPP municipal 2014–2024.</div>
   </div>
 </div>`;}
-
+ 
 function renderGrandFinale(){
   const ak=getCityArchetype(),arch=FINALE[ak],items=getAuditItems();
   return`
 <div class="screen">
   <div style="max-width:740px;width:100%;text-align:center;margin-bottom:2rem">
     <div class="label" style="margin-bottom:.5rem">Relatório Final da Cidade</div>
-    <div class="finale-header" style="color:${arch.color}">CIDADE<br>ONLINE</div>
+    <div tabindex="-1" class="finale-header" style="color:${arch.color}">CIDADE<br>ONLINE</div>
     <div class="finale-sub">Balanço coletivo · Todos os personagens · Salvador, BA</div>
   </div>
   <div style="max-width:700px;width:100%">
@@ -613,7 +617,7 @@ function renderGrandFinale(){
     <div class="footnote">Este relatório reflete as decisões tomadas em todas as jornadas. Cada nova partida com os mesmos personagens pode alterar o estado da cidade e desbloquear um arquétipo diferente.</div>
   </div>
 </div>`;}
-
+ 
 // ════════════════════════════════════════
 // EVENTS
 // ════════════════════════════════════════
@@ -623,7 +627,15 @@ function render(){
   const scr={splash:renderSplash,charSelect:renderCharSelect,charIntro:renderCharIntro,era:renderEra,consequence:renderConsequence,ending:renderEnding,grandFinale:renderGrandFinale};
   app.innerHTML=(scr[S.screen]||renderSplash)();
   app.scrollTop=0;
+  
+  // Acessibilidade: transfere o foco para o elemento principal de cada nova tela
+  const title = app.querySelector('.splash-title, .display, .era-title, .ending-title, .finale-header');
+  if(title) {
+    title.style.outline = 'none'; // Impede o contorno de foco visual padrão para manter a estética
+    title.focus();
+  }
 }
+
 app.addEventListener('click',e=>{
   const el=e.target.closest('[data-a]');if(!el)return;
   const a=el.dataset.a;
@@ -657,8 +669,3 @@ render();
 </script>
 </body>
 </html>
-HTMLEOF
-echo "Done. File size: $(wc -c < /mnt/user-data/outputs/index.html) bytes"
-Saída
-
-Done. File size: 75374 bytes

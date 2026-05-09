@@ -780,6 +780,7 @@ html, body {
   .pin-pulse { animation: none; opacity: 0; }
   * { transition: none !important; }
 }
+
 </style>
 </head>
 <body>
@@ -798,7 +799,6 @@ html, body {
     <div class="stat-pill">
       <span class="stat-label">TRANSP.</span>
       <span class="stat-value" id="val-transparency">6</span>
-            <span class="stat-value" id="val-transparency">6</span>
       <div class="stat-bar"><div class="stat-fill" id="bar-transparency" style="background:#3B82F6"></div></div>
     </div>
     <div class="stat-pill">
@@ -815,6 +815,7 @@ html, body {
   <div id="splash-screen">
     <div class="splash-content">
       <div class="splash-label">SIMULADOR DE IMPACTO SISTÊMICO · SALVADOR, BA</div>
+            <div class="splash-label">SIMULADOR DE IMPACTO SISTÊMICO · SALVADOR, BA</div>
       <div class="splash-title">CIDADE<br><span class="splash-accent">ONLINE</span></div>
       <div class="splash-subtitle">Baseado em eventos reais documentados entre 2014 e 2026.<br>
       Cada decisão modificou a cidade. Você vai entender como.</div>
@@ -826,7 +827,9 @@ html, body {
   <!-- MAP SCREEN -->
   <div id="map-screen" class="hidden">
     <svg id="map-svg" viewBox="0 0 800 540" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <!-- rendered by map.js -->
     </svg>
+
     <div id="map-legend">
       <div class="legend-item"><span class="legend-dot" style="background:#EF4444"></span>Câmera IA ativa</div>
       <div class="legend-item"><span class="legend-dot" style="background:#3B82F6"></span>Marco Santos</div>
@@ -834,6 +837,7 @@ html, body {
       <div class="legend-item"><span class="legend-dot" style="background:#F59E0B"></span>Amara Silva</div>
       <div class="legend-item"><span class="legend-dot" style="background:#8B5CF6"></span>Edu Santos</div>
     </div>
+
     <div id="map-hint">Clique em um personagem para começar</div>
   </div>
 
@@ -849,20 +853,26 @@ html, body {
       </div>
       <button id="panel-close" title="Fechar">✕</button>
     </div>
+
     <div id="panel-scroll">
       <div id="panel-era-tag" class="era-tag"></div>
       <div id="panel-era-title" class="panel-era-title"></div>
+
       <div id="panel-source" class="source-box hidden"></div>
+
       <div id="panel-artifact" class="artifact-card hidden">
         <div class="artifact-label">ARTEFATO</div>
         <div id="artifact-content"></div>
       </div>
+
       <div id="panel-scenario" class="scenario-text"></div>
+
       <div id="panel-decision" class="decision-block hidden">
         <div class="decision-label">DECISÃO</div>
         <div id="decision-question" class="decision-q"></div>
         <div id="options-list"></div>
       </div>
+
       <div id="panel-consequence" class="consequence-block hidden">
         <div class="consequence-label">CONSEQUÊNCIA</div>
         <div id="consequence-text"></div>
@@ -870,6 +880,7 @@ html, body {
         <div id="btn-continue-wrap"></div>
       </div>
     </div>
+
     <div id="panel-statusbar">
       <div class="ps-metric">
         <span class="ps-label">CÂMERAS</span>
@@ -894,9 +905,15 @@ html, body {
     <div id="report-content"></div>
   </div>
 
-</div>
+</div><!-- end game-container -->
+
+
+
+
+
 
 <script>
+// === data.js ===
 /* ═══════════════════════════════════════════════════════════════
    CIDADE ONLINE — GDD v4.0 — Dados Completos da Narrativa
    4 personagens · eras condicionais · 4 opções por decisão
@@ -947,7 +964,7 @@ O prefeito quer assinar antes do carnaval. A secretaria de fazenda aprovou sem l
         text:'Negocia: dados pertencem ao município. Aceita atrasar 3 meses.',
         vars:'ibmContract=negotiated | cameras+1 | transparency+1',
         consequence:'IBM aceita formalmente — mas insere "acesso preferencial para aprimoramento de algoritmos" no rodapé do aditivo. Propriedade dos dados conquistada; controle sobre uso de fato perdido. Auditoria tentada em 2018 revela que o acesso preferencial foi exercido 847 vezes sem registro.',
-        reveal:'Marco aprende que vitórias jurídicas não são vitórias técnicas.',
+        reveal:'O acesso preferencial ficou no rodapé do aditivo. Ninguém verificou quantas vezes foi exercido até a auditoria de 2018.',
         effects:{ ibmContract:'negotiated', cameras:1, transparency:1 }
       },
       {
@@ -989,7 +1006,7 @@ Marco é convocado a depor. O advogado do município orienta silêncio. O advoga
         text:'Depõe e entrega tudo — o relatório de falsos positivos, a cláusula de dados, os e-mails internos.',
         vars:'transparency+2 | equity+1 | marco_deposed=true | marco_fired=true',
         consequence:'CPI produz relatório final que vira referência nacional. Marco é demitido 6 semanas depois. Lei municipal de auditoria obrigatória para contratos de vigilância é aprovada em 2020 com seu nome no histórico.',
-        reveal:'Você ganhou a história — e perdeu o cargo.',
+        reveal:'A lei foi aprovada em 2020. Marco soube pelo jornal, de casa.',
         effects:{ transparency:2, equity:1, marco_deposed:true, marco_fired:true }
       },
       {
@@ -1005,7 +1022,7 @@ Marco é convocado a depor. O advogado do município orienta silêncio. O advoga
         text:'Recusa comparecer. CPI emite convocação coercitiva.',
         vars:'reputation-2 | marco_survived=true',
         consequence:'Semanas de pressão de imprensa. O caso é arquivado por falta de quórum antes da convocação executada. Marco sobrevive politicamente, mas a imprensa o cobre como "o secretário que não quis falar".',
-        reveal:'Sobrevivência política e reputação pública raramente coexistem.',
+        reveal:'A imprensa manteve 'o secretário que não quis falar' por três anos, toda vez que o assunto voltava.',
         effects:{ transparency:-1, marco_survived:true }
       },
       {
@@ -1013,7 +1030,7 @@ Marco é convocado a depor. O advogado do município orienta silêncio. O advoga
         text:'Depõe de forma técnica apenas — explica o que a cláusula significa, sem atribuir responsabilidade.',
         vars:'transparency+1 | amara_has_marco_analysis=true',
         consequence:'CPI não consegue nomear culpados. A análise técnica de Marco é usada por Amara como referência em seu paper.',
-        reveal:'Às vezes a contribuição mais duradoura é um documento técnico citado por quem sabe o que fazer com ele.',
+        reveal:'Dois anos depois, o depoimento técnico de Marco aparece em nota de rodapé do paper de Amara. Ela cita a audiência pelo número, sem mencionar o nome.',
         effects:{ transparency:1, amara_has_marco_analysis:true }
       }
     ]
@@ -1048,7 +1065,7 @@ O relatório existe. É confidencial. Vazar compromete o contrato — e a ilumin
         text:'Torna público. Suspende reconhecimento facial até revisão independente por universidade.',
         vars:'reportStatus=public | cameras-1 | equity+2 | transparency+2 | marco_fired=true',
         consequence:'Empresa ameaça rescisão por "descumprimento de cláusula de confidencialidade comercial". Prefeito furioso. Relatório vira referência nacional — 3 municípios suspendem sistemas similares citando Salvador. Marco é demitido 8 meses depois quando o prefeito troca o secretariado.',
-        reveal:'O sistema é revisado. Marco é demitido. As duas coisas são verdade e não se cancelam.',
+        reveal:'O sistema é suspenso em outubro. Marco é demitido em junho do ano seguinte, quando o prefeito troca o secretariado.',
         effects:{ reportStatus:'public', cameras:-1, equity:2, transparency:2, marco_fired:true }
       },
       {
@@ -1064,7 +1081,7 @@ O relatório existe. É confidencial. Vazar compromete o contrato — e a ilumin
         text:'Compartilha o relatório com Amara Silva (UFBA) de forma não oficial, sem registro.',
         vars:'reportStatus=leaked_to_amara | equity+1 | amara_has_report=true',
         consequence:'Amara recebe o dado antes de qualquer publicação oficial. Ela tem o documento — mas a origem é confidencial. Dependendo do que ela escolher fazer, o relatório pode virar pesquisa publicada, prova em CPI, ou ficar numa gaveta.',
-        reveal:'Marco tirou o peso das suas mãos. Não sabe se isso foi coragem ou covardia.',
+        reveal:'Marco nunca soube o que Amara fez com o documento. Ela não entrou em contato.',
         effects:{ reportStatus:'leaked_to_amara', equity:1, amara_has_report:true }
       }
     ]
@@ -1090,7 +1107,7 @@ O município não foi notificado. A cláusula de 2014 previa isso na sub-alínea
         text:'Aciona a empresa juridicamente por descumprimento contratual.',
         vars:'transparency+2 | marco_legal_action=true',
         consequence:'Processo dura 3 anos. Acordo extrajudicial em 2024: empresa "repatria" dados para servidor em São Paulo sob auditoria anual. Você vence formalmente. Os dados já foram processados no exterior por 3 anos.',
-        reveal:'Uma vitória jurídica de 3 anos sobre fato consumado de 3 anos.',
+        reveal:'Em 2024, quando o servidor de São Paulo é auditado, os metadados mostram processamento entre 2021 e 2024. O acordo chegou depois que os dados já tinham sido usados.',
         effects:{ transparency:2, marco_legal_action:true }
       },
       {
@@ -1098,7 +1115,7 @@ O município não foi notificado. A cláusula de 2014 previa isso na sub-alínea
         text:'Notifica o TCM e o MP mas não aciona processo. Prefere resolução administrativa.',
         vars:'transparency+1',
         consequence:'Processo administrativo é arquivado — a cláusula 14.3.b era válida.',
-        reveal:'A burocracia que deveria proteger o cidadão frequentemente só registra o dano.',
+        reveal:'A cláusula 14.3.b era juridicamente válida. O processo administrativo confirmou o que o advogado do município já tinha dito na primeira reunião.',
         effects:{ transparency:1 }
       },
       {
@@ -1106,7 +1123,7 @@ O município não foi notificado. A cláusula de 2014 previa isso na sub-alínea
         text:'Decide não agir. O contrato tem mais 11 anos. Abrir esse precedente pode comprometer todos os aditivos futuros.',
         vars:'transparency-1 | equity-1',
         consequence:'Os dados ficam no exterior. Nenhum registro formal de tentativa de recuperação. Em 2024, quando a mídia cobre a questão, Marco é citado como quem não agiu.',
-        reveal:'Omissão estratégica e cumplicidade passiva têm o mesmo resultado para os afetados.',
+        reveal:'Em 2024, o repórter pergunta a Marco por que o município não agiu em 2021. A resposta de Marco não aparece na reportagem.',
         effects:{ transparency:-1, equity:-1 }
       },
       {
@@ -1114,7 +1131,7 @@ O município não foi notificado. A cláusula de 2014 previa isso na sub-alínea
         text:'Vaza para Amara Silva e para a imprensa simultaneamente antes de qualquer ação formal.',
         vars:'amara_has_acquisition_docs=true | transparency+2 | marco_leaked_acquisition=true',
         consequence:'Pressão pública força ação municipal. Amara usa os documentos como evidência na CPI.',
-        reveal:'Às vezes a transparência é uma ação, não um valor.',
+        reveal:'Amara recebe os documentos numa tarde de segunda. Na quinta, já tinha rascunho de petição com o número do contrato.',
         effects:{ amara_has_acquisition_docs:true, transparency:2, marco_leaked_acquisition:true }
       }
     ]
@@ -1147,7 +1164,7 @@ O coordenador pedagógico da Secretaria de Educação pediu que alguém lesse o 
         text:'Bloqueia o aditivo. Propõe sistema alternativo de presença sem biometria.',
         vars:'schoolBiometrics=false | transparency+1 | marco_fired=true',
         consequence:'Prefeito revoga a decisão 48 horas depois, atribuindo a Marco "resistência à modernização". Marco pede exoneração. A notícia sai como "briga política interna". O fato sobre os dados das crianças fica no quinto parágrafo. O aditivo é assinado sem Marco.',
-        reveal:'Às vezes fazer a coisa certa significa que outros farão a coisa errada com mais facilidade.',
+        reveal:'O aditivo é assinado sem Marco na semana seguinte. Com a cláusula original, sem a revisão que ele propunha.',
         effects:{ schoolBiometrics:false, transparency:1, marco_fired:true }
       },
       {
@@ -1163,7 +1180,7 @@ O coordenador pedagógico da Secretaria de Educação pediu que alguém lesse o 
         text:'Vaza o aditivo para Amara antes de decidir. Pede análise técnica e jurídica urgente.',
         vars:'schoolBiometrics=audited | cameras+1 | amara_notified_school=true | transparency+1',
         consequence:'Amara publica análise em 48h apontando a LGPD art. 14 e a classificação incorreta como dado não sensível. Pressão pública adia assinatura por 3 meses. O prefeito assina mesmo assim, mas com cláusula de auditoria LGPD anual e consentimento parental obrigatório.',
-        reveal:'Marco permanece no cargo — precisamente porque não criou conflito aberto. Aprende que às vezes ficar é mais eficaz que sair.',
+        reveal:'Marco assina o aditivo revisado seis meses depois. O prefeito não menciona o episódio na reunião de secretariado.',
         effects:{ schoolBiometrics:'audited', cameras:1, amara_notified_school:true, transparency:1 }
       }
     ]
@@ -1189,7 +1206,7 @@ Ela tem os documentos. Quer o contexto. Marco tem os e-mails.`,
         text:'Conta tudo. Entrevista completa, documentação integral.',
         vars:'transparency+3 | equity+1 | marco_legacy=positive',
         consequence:'Reportagem ganha prêmio. Uma lei federal de auditoria de contratos de vigilância urbana é aprovada 14 meses depois citando o caso de Salvador como referência.',
-        reveal:'O custo foi o cargo. O legado é a lei.',
+        reveal:'A lei é aprovada em setembro de 2026. O projeto cita 'caso Salvador' na justificativa. O nome de Marco não aparece no texto.',
         effects:{ transparency:3, equity:1, marco_legacy:'positive' }
       },
       {
@@ -1197,7 +1214,7 @@ Ela tem os documentos. Quer o contexto. Marco tem os e-mails.`,
         text:'Entrevista parcial. Protege o prefeito — o vínculo político ainda existe.',
         vars:'transparency+1 | marco_legacy=ambiguous',
         consequence:'Reportagem sai com lacunas. Impacto limitado. Uma eventual nomeação futura ainda é possível.',
-        reveal:'A ambiguidade é confortável até o momento em que ela cobra seu preço.',
+        reveal:'A reportagem sai com cinco páginas. Marco aparece em duas linhas, sem citar declaração direta.',
         effects:{ transparency:1, marco_legacy:'ambiguous' }
       },
       {
@@ -1205,7 +1222,7 @@ Ela tem os documentos. Quer o contexto. Marco tem os e-mails.`,
         text:'Recusa. Guarda os documentos. Não quer ser o protagonista de uma história que ele próprio ajudou a escrever.',
         vars:'marco_legacy=silence',
         consequence:'Laura publica sem Marco. A investigação tem lacunas que só ele poderia preencher. O silêncio de Marco é citado no texto como ausência notável.',
-        reveal:'Silêncio também é uma declaração — só que você não escolheu o que ela diz.',
+        reveal:'Laura menciona a ausência de Marco no terceiro parágrafo. "Não respondeu às tentativas de contato." ',
         effects:{ marco_legacy:'silence' }
       },
       {
@@ -1213,7 +1230,7 @@ Ela tem os documentos. Quer o contexto. Marco tem os e-mails.`,
         text:'Fornece os documentos sem conceder entrevista. Laura publica com os docs mas sem declaração de Marco.',
         vars:'transparency+2 | marco_legacy=anonymous_source',
         consequence:'Reportagem é mais forte que com entrevista parcial, mais discreta que com entrevista completa. Marco mantém ambiguidade como escudo.',
-        reveal:'Fonte anônima é a forma de agir que preserva quem agiu. Às vezes isso é tudo que se pode oferecer.',
+        reveal:'Os documentos aparecem na reportagem identificados como 'obtidos por esta redação'. Marco lê o texto duas vezes.',
         effects:{ transparency:2, marco_legacy:'anonymous_source' }
       }
     ]
@@ -1252,7 +1269,7 @@ Em 2020: 23 cidades expandiram câmeras sem licitação. Três instalaram reconh
         text:'Remove a cláusula. Qualquer expansão exige nova licitação pública.',
         vars:'rodrigoTemplate=controlled | transparency+2 | equity+1',
         consequence:'Perde dois contratos imediatos — clientes migram para concorrente. O template revisado é adotado por 12 municípios com processo mais transparente.',
-        reveal:'Rodrigo é conhecido no setor como "o consultor que cria trabalho". Isso vai protegê-lo quando os documentos vierem em 2023.',
+        reveal:'Em 2023, quando os documentos chegarem, os municípios que assinaram o template expansionista vão buscar outro responsável. O template de Rodrigo tinha cláusula diferente.',
         effects:{ rodrigoTemplate:'controlled', transparency:2, equity:1 }
       },
       {
@@ -1260,7 +1277,7 @@ Em 2020: 23 cidades expandiram câmeras sem licitação. Três instalaram reconh
         text:'Mantém mas adiciona exigência de notificação pública 30 dias antes de qualquer expansão.',
         vars:'rodrigoTemplate=nominal_control | transparency+1 | cameras+1',
         consequence:'Na prática, 62% das expansões são realizadas sem a notificação exigida — a cláusula não tem mecanismo de enforcement. Rodrigo acredita que fez a coisa responsável. O Tribunal de Contas do município de Caruaru vai pensar diferente quando auditar em 2022.',
-        reveal:'Uma cláusula sem enforcement é uma promessa sem consequência.',
+        reveal:'A cláusula de notificação existe no contrato. O mecanismo de verificação do cumprimento, não.',
         effects:{ rodrigoTemplate:'nominal_control', transparency:1, cameras:1 }
       },
       {
@@ -1268,7 +1285,7 @@ Em 2020: 23 cidades expandiram câmeras sem licitação. Três instalaram reconh
         text:'Mantém mas insere sunset clause: o template expira em 5 anos e precisa ser renegociado com consulta pública.',
         vars:'rodrigoTemplate=sunset | transparency+1 | cameras+1 | rodrigo_innovator=true',
         consequence:'Em 2021, primeiro prazo de renegociação: 70% dos municípios simplesmente renovam sem consulta — alegando urgência de serviço. Rodrigo escreve paper sobre isso em 2022. É citado 28 vezes.',
-        reveal:'Cláusulas de expiração são condição necessária mas não suficiente para governança democrática de infraestrutura digital.',
+        reveal:'Em 2021, Rodrigo liga para dois dos doze municípios para perguntar como foi a renegociação. Ambos renovaram por e-mail, em 72 horas, sem consulta pública.',
         effects:{ rodrigoTemplate:'sunset', transparency:1, cameras:1, rodrigo_innovator:true }
       }
     ]
@@ -1294,7 +1311,7 @@ Em 2020: 23 cidades expandiram câmeras sem licitação. Três instalaram reconh
         text:'Aceita. É só mais uma tecnologia. O município vai contratar outro consultor se você recusar.',
         vars:'rodrigoTemplate=rf_included | cameras+2 | transparency-1 | rodrigo_compromised=true',
         consequence:'O reconhecimento facial é instalado. Sem auditoria de acurácia. A reputação que o trouxe ao contrato não se refletiu no contrato.',
-        reveal:'O mercado recompensa a reputação de integridade até o momento em que a integridade tem custo financeiro.',
+        reveal:'O secretário que o contratou por causa da reputação assina o contrato com outra empresa, no prazo original, sem as cláusulas que Rodrigo exigiria.',
         effects:{ cameras:2, transparency:-1, rodrigo_compromised:true }
       },
       {
@@ -1302,7 +1319,7 @@ Em 2020: 23 cidades expandiram câmeras sem licitação. Três instalaram reconh
         text:'Recusa. Explica que reconhecimento facial requer análise de impacto de dados (LGPD art. 38) e licitação específica.',
         vars:'rodrigo_refused_rf=true | equity+2 | transparency+1',
         consequence:'Perde o contrato. O município contrata consultor que aceita. Rodrigo perde R$ 280k. A auditoria que nunca foi feita teria revelado 94% de falsos positivos em pessoas negras.',
-        reveal:'Às vezes a consequência da integridade é que outra pessoa faz o dano que você recusou.',
+        reveal:'A empresa que assumiu o contrato instalou o sistema sem auditoria. A taxa de falsos positivos em pessoas negras foi de 94%, confirmada 18 meses depois por pesquisadores da USP.',
         effects:{ equity:2, transparency:1, rodrigo_refused_rf:true }
       },
       {
@@ -1310,7 +1327,7 @@ Em 2020: 23 cidades expandiram câmeras sem licitação. Três instalaram reconh
         text:'Negocia: piloto de 12 meses com auditoria independente obrigatória ao final, resultado público antes de renovação.',
         vars:'rodrigoTemplate=rf_pilot | cameras+1 | transparency+1 | rodrigo_audit_reveals=true',
         consequence:'O prefeito aceita relutante. A auditoria revela 94% de falsos positivos em pessoas negras. O sistema é suspenso. Rodrigo aprende que negociar o processo pode ser mais poderoso que recusar o produto.',
-        reveal:'Uma auditoria exigida em contrato é uma ferramenta. Uma auditoria voluntária é uma virtude.',
+        reveal:'O prefeito pediu que o resultado não fosse publicado antes das eleições. Rodrigo recusou. A auditoria saiu três semanas antes do segundo turno.',
         effects:{ cameras:1, transparency:1, rodrigo_audit_reveals:true }
       },
       {
@@ -1318,7 +1335,7 @@ Em 2020: 23 cidades expandiram câmeras sem licitação. Três instalaram reconh
         text:'Aceita com condição de privacy impact assessment (PIA) publicado antes da implantação.',
         vars:'rodrigo_pia_compromised=true | cameras+1',
         consequence:'Município publica PIA genérico que não atende aos critérios técnicos. Rodrigo assina mesmo assim.',
-        reveal:'Uma exigência sem definição de critérios de qualidade é uma exigência sem consequência.',
+        reveal:'O PIA tem oito páginas. Rodrigo leu três antes de perceber que os critérios de avaliação eram da própria empresa contratada.',
         effects:{ cameras:1, rodrigo_pia_compromised:true }
       }
     ]
@@ -1343,7 +1360,7 @@ O secretário da Paraíba: "Transparência é complexidade. Complexidade é risc
         text:'Assina. Transparência pode vir depois, quando o sistema já funcionar.',
         vars:'transparency-2 | rodrigo_pb_opaque=true',
         consequence:'Em 2024, jornalista pede dados via LAI. Prefeitura responde: "Dados de operação pertencem à concessionária, informação comercialmente sensível." Rodrigo é mencionado na reportagem como "consultor que estruturou as cláusulas".',
-        reveal:'A transparência que ficaria para depois nunca chegou — o contrato não a exige.',
+        reveal:'Em 2024, o jornalista envia LAI. A prefeitura responde em 22 dias: dados de operação são propriedade da concessionária. O nome de Rodrigo está no contrato.',
         effects:{ transparency:-2, rodrigo_pb_opaque:true }
       },
       {
@@ -1359,7 +1376,7 @@ O secretário da Paraíba: "Transparência é complexidade. Complexidade é risc
         text:'Propõe solução intermediária: relatório público anual sem auditoria independente.',
         vars:'transparency+1 | rodrigo_pb_partial=true',
         consequence:'Os relatórios são produzidos anualmente — por empresa de auditoria contratada pela própria concessionária. Em 2023, vereadora Mariana Leal usa os relatórios públicos para mostrar que as métricas de sucesso foram definidas pelo próprio contratado.',
-        reveal:'Transparência controlada pelo auditado não é transparência. É marketing.',
+        reveal:'Os relatórios existem. A empresa que os produziu foi contratada pela própria concessionária. A vereadora Mariana Leal identificou isso na segunda página do primeiro relatório.',
         effects:{ transparency:1, rodrigo_pb_partial:true }
       },
       {
@@ -1367,7 +1384,7 @@ O secretário da Paraíba: "Transparência é complexidade. Complexidade é risc
         text:'Assina mas insere cláusula de auditoria ativável por demanda de 10% dos vereadores do município.',
         vars:'transparency+1 | rodrigo_pb_councilors=true | rodrigo_innovator=true',
         consequence:'Em 2022, três vereadores ativam a cláusula. A concessionária contesta juridicamente. Processo dura 8 meses. Auditoria ocorre finalmente — com 14 meses de atraso. Rodrigo publica o caso como estudo sobre "mecanismos de accountability delegada".',
-        reveal:'Inovação contratual real: funciona com atrito, mas funciona.',
+        reveal:'Rodrigo publica o caso como estudo. O processo durou 22 meses e a auditoria saiu com 14 meses de atraso. Os dados estavam lá.',
         effects:{ transparency:1, rodrigo_pb_councilors:true, rodrigo_innovator:true }
       }
     ]
@@ -1393,7 +1410,7 @@ Rodrigo recebe o relatório num envelope físico. Não tem obrigação legal de 
         text:'Notifica os municípios informalmente por e-mail. Eles "tomam providências".',
         vars:'rodrigo_notified=true',
         consequence:'Municípios arquivam o assunto. Rodrigo sente que fez a parte que lhe cabia.',
-        reveal:'Notificar o beneficiário do problema raramente resolve o problema.',
+        reveal:'Os e-mails de retorno chegaram em três dias. 'Providências serão tomadas.' Sem prazo, sem responsável nomeado.',
         effects:{ rodrigo_notified:true }
       },
       {
@@ -1401,7 +1418,7 @@ Rodrigo recebe o relatório num envelope físico. Não tem obrigação legal de 
         text:'Publica o relatório no site da consultoria. Primeiro consultor do setor a fazê-lo voluntariamente.',
         vars:'rodrigo_published_audit=true | transparency+2 | equity+1',
         consequence:'Perde 6 contratos nos 18 meses seguintes. Vira referência em papers de Amara e de dois outros pesquisadores.',
-        reveal:'A transparência voluntária tem custo de mercado e legado acadêmico.',
+        reveal:'Rodrigo perde seis contratos em 18 meses. O paper de Amara cita o relatório dele em duas notas de rodapé e uma vez no corpo do texto.',
         effects:{ rodrigo_published_audit:true, transparency:2, equity:1 }
       },
       {
@@ -1409,7 +1426,7 @@ Rodrigo recebe o relatório num envelope físico. Não tem obrigação legal de 
         text:'Guarda o relatório. Não é obrigação dele.',
         vars:'rodrigo_has_audit=true',
         consequence:'Em dois anos, vai receber documentos muito piores — e precisará decidir se o relatório guardado faz parte da evidência.',
-        reveal:'Guardar uma prova não é o mesmo que não ter agido. Mas também não é agir.',
+        reveal:'O relatório fica na pasta de arquivos por dois anos. Quando os documentos piores chegam, Rodrigo sabe onde o envelope está.',
         effects:{ rodrigo_has_audit:true }
       },
       {
@@ -1417,7 +1434,7 @@ Rodrigo recebe o relatório num envelope físico. Não tem obrigação legal de 
         text:'Entrega o relatório diretamente ao MP Federal, com pedido de sigilo sobre sua identidade como fonte.',
         vars:'rodrigo_mp_source=true | transparency+2 | equity+1',
         consequence:'O MP abre inquérito. Dois dos quatro municípios são notificados. As irregularidades são corrigidas.',
-        reveal:'Fonte anônima ao MP é a forma legal de denunciar sem se expor.',
+        reveal:'O inquérito é aberto em 40 dias. Rodrigo recebe confirmação por carta, sem assinatura do promotor.',
         effects:{ rodrigo_mp_source:true, transparency:2, equity:1 }
       }
     ]
@@ -1460,7 +1477,7 @@ O template é o seu. O que você faz?`,
         text:'Reporta internamente à empresa responsável pelo CCO. Pede que cessem o monitoramento.',
         vars:'rodrigoWhistle=internal | equity-1',
         consequence:'Empresa "agradece o alerta" por e-mail com cópia ao jurídico. Seis meses depois os documentos vazam por outra fonte. Relatório de investigação do MP confirma: o monitoramento continuou após o comunicado de Rodrigo.',
-        reveal:'Reportar ao beneficiário do problema raramente resolve o problema.',
+        reveal:'O e-mail com cópia ao jurídico chegou em 48 horas. Seis meses depois, os mesmos documentos vazaram por outro canal.',
         effects:{ rodrigoWhistle:'internal', equity:-1 }
       },
       {
@@ -1468,7 +1485,7 @@ O template é o seu. O que você faz?`,
         text:'Entrega os documentos para Amara Silva. Ela tem proteção acadêmica que ele não tem.',
         vars:'rodrigoWhistle=to_amara | amara_has_rodrigo_docs=true | equity+1',
         consequence:'Amara recebe os documentos como pesquisadora — pode usá-los com enquadramento de pesquisa científica. Rodrigo não controla o que acontece daqui para frente — mas escolheu em quem confiar.',
-        reveal:'Confiar em alguém com mais proteção do que você é uma forma de agir sem se expor completamente.',
+        reveal:'Rodrigo não sabe o que Amara vai fazer com os documentos. Ela vai decidir na Era 3 dela, sem ele na sala.',
         effects:{ rodrigoWhistle:'to_amara', amara_has_rodrigo_docs:true, equity:1 }
       }
     ]
@@ -1492,7 +1509,7 @@ O template é o seu. O que você faz?`,
         text:'Aceita. Depõe tecnicamente — explica a arquitetura, as brechas, o que mudaria hoje. Sem dramatismo.',
         vars:'rodrigo_testified=true | transparency+2',
         consequence:'A frieza técnica é mais devastadora que o ativismo emocional. O depoimento é amplamente citado.',
-        reveal:'Expertise usada a favor da accountability é o uso mais poderoso de conhecimento técnico.',
+        reveal:'O depoimento técnico dura 47 minutos. A senadora Carla Fonseca usa quatro trechos diretamente no relatório final da CPI.',
         effects:{ rodrigo_testified:true, transparency:2 }
       },
       {
@@ -1500,7 +1517,7 @@ O template é o seu. O que você faz?`,
         text:'Recusa. Envia relatório técnico por escrito em vez de depor.',
         vars:'transparency+1',
         consequence:'Relatório é lido por dois assessores e arquivado. Impacto mínimo.',
-        reveal:'Documentos técnicos sem voz pública raramente mudam legislação.',
+        reveal:'O relatório é protocolado. Dois assessores assinam o recibo. Nos arquivos da CPI, ocupa a pasta 347.',
         effects:{ transparency:1 }
       },
       {
@@ -1508,7 +1525,7 @@ O template é o seu. O que você faz?`,
         text:'Aceita condicionado à imunidade processual parcial. CPI concede. Rodrigo entrega os nomes das empresas e os contratos específicos.',
         vars:'rodrigo_testified_immunity=true | transparency+3 | equity+1',
         consequence:'Duas empresas são investigadas. Uma fecha.',
-        reveal:'Imunidade negociada é o preço da verdade completa num sistema adversarial.',
+        reveal:'A imunidade cobre o período de depoimento. Rodrigo entrega nomes e números de contrato. Uma das empresas fecha o departamento de smart cities 14 meses depois.',
         effects:{ rodrigo_testified_immunity:true, transparency:3, equity:1 }
       },
       {
@@ -1516,7 +1533,7 @@ O template é o seu. O que você faz?`,
         text:'Aceita mas negocia que seu depoimento seja público ao vivo — transmitido pela TV Senado.',
         vars:'rodrigo_testified_public=true | transparency+3 | equity+2',
         consequence:'140.000 espectadores. "Se for público, ninguém consegue enterrar depois."',
-        reveal:'A transparência da transmissão é parte da estratégia — e funciona.',
+        reveal:'140.000 espectadores ao vivo. O clipe do depoimento circula por três dias nas redes. Rodrigo não assiste à repercussão.',
         effects:{ rodrigo_testified_public:true, transparency:3, equity:2 }
       }
     ]
@@ -1545,7 +1562,7 @@ A secretaria pediu reunião antes da publicação. A orientadora quer "contextua
         text:'Aceita a reunião com a secretaria. Ouve antes de publicar.',
         vars:'amaraPublished=softened | transparency-1 | equity-1',
         consequence:'Publica 7 meses depois com seção expandida de "limitações metodológicas". O dado sobre concentração em bairros negros vai para nota de rodapé n.12. A secretaria usa o tempo para publicar própria pesquisa com metodologia diferente.',
-        reveal:'Nota de rodapé é onde dados incômodos vão morrer academicamente.',
+        reveal:'O dado sobre concentração em bairros negros está na nota 12. A secretaria cita o paper como referência metodológica — especificamente a nota 12.',
         effects:{ amaraPublished:'softened', transparency:-1, equity:-1 }
       },
       {
@@ -1553,7 +1570,7 @@ A secretaria pediu reunião antes da publicação. A orientadora quer "contextua
         text:'Publica diretamente. Sem intermediários. O dado fala por si.',
         vars:'amaraPublished=true | equity+2 | amara_public=true',
         consequence:'Paper vira notícia no dia seguinte. Secretaria emite nota sobre "metodologia incompatível com padrões técnicos do setor". Dois vereadores pedem sua destituição da UFBA.',
-        reveal:'O conhecimento circulou. O poder que ele ameaçava não ficou parado — mas também não parou a pesquisa. As duas coisas são verdade.',
+        reveal:'A nota da secretaria sai na manhã seguinte. Dois vereadores pedem audiência com a reitoria da UFBA. O paper já tinha 340 downloads.',
         effects:{ amaraPublished:true, equity:2, amara_public:true }
       },
       {
@@ -1561,7 +1578,7 @@ A secretaria pediu reunião antes da publicação. A orientadora quer "contextua
         text:'Submete a journal internacional primeiro. A secretaria que espere o peer review.',
         vars:'amaraPublished=delayed | amara_outframed=true',
         consequence:'Peer review leva 11 meses. No intervalo, a secretaria publica própria pesquisa usando como métrica "câmeras por ocorrência policial registrada por bairro". Resultados opostos. Quando Amara publica, o debate já foi enquadrado pelo outro lado.',
-        reveal:'O tempo do mercado e o tempo acadêmico não são o mesmo.',
+        reveal:'Amara publica em novembro. A pesquisa da secretaria saiu em agosto. A maioria dos veículos cobre as duas como 'debate em aberto'.',
         effects:{ amaraPublished:'delayed', amara_outframed:true }
       },
       {
@@ -1593,15 +1610,15 @@ A secretaria pediu reunião antes da publicação. A orientadora quer "contextua
         text:'Publica réplica técnica demolindo a metodologia circular.',
         vars:'amara_rebuttal=true | equity+1 | transparency+1',
         consequence:'Paper sólido, debate continua, mas fica num registro técnico que o público não acompanha.',
-        reveal:'Debate acadêmico é necessário e insuficiente ao mesmo tempo.',
+        reveal:'A réplica é publicada em março. O secretário a cita em junho como 'debate científico saudável'. O dado da concentração continua circulando nos dois formatos.',
         effects:{ amara_rebuttal:true, equity:1, transparency:1 }
       },
       {
         letter:'B', colorClass:'opt-green',
-                text:'Procura a jornalista de dados com o paper publicado — agora ela tem os dois estudos para reportagem comparativa.',
+        text:'Procura a jornalista de dados com o paper publicado — agora ela tem os dois estudos para reportagem comparativa.',
         vars:'amara_press_collaboration=true | equity+2 | amara_journalist_ally=true',
         consequence:'Reportagem comparativa expõe a metodologia circular para o público amplo.',
-        reveal:'A jornalista torna-se aliada permanente porque você a tratou como parceira, não como megafone.',
+        reveal:'A jornalista liga antes de publicar para confirmar os números. Amara envia os dados brutos. Elas trocam e-mail por três anos depois disso.',
         effects:{ amara_press_collaboration:true, equity:2, amara_journalist_ally:true }
       },
       {
@@ -1609,15 +1626,15 @@ A secretaria pediu reunião antes da publicação. A orientadora quer "contextua
         text:'Leva o debate para audiência pública na Câmara Municipal. Apresenta os dois estudos lado a lado para vereadores.',
         vars:'amara_public_hearing=true | transparency+2',
         consequence:'Câmara Municipal vê os dois estudos lado a lado. A metodologia circular fica exposta institucionalmente.',
-        reveal:'Audiências públicas criam registro formal que papers não criam.',
+        reveal:'A ata da audiência pública fica nos arquivos da Câmara. Dois anos depois, um vereador de outro partido a usa em plenário.',
         effects:{ amara_public_hearing:true, transparency:2 }
       },
       {
         letter:'D', colorClass:'opt-blue',
         text:'Ignora. A réplica alimenta o conflito. Segue para próxima pesquisa.',
-        vars:'amara_ignored_debate=true',
+                vars:'amara_ignored_debate=true',
         consequence:'O debate da secretaria fica sem resposta formal. A credibilidade de Amara na era 2 começa com essa lacuna.',
-        reveal:'Às vezes ignorar é estratégico. Outras vezes é fuga.',
+        reveal:'A pesquisa da secretaria continua circulando. Em 2019, um relatório do governo estadual a cita como referência principal.',
         effects:{ amara_ignored_debate:true }
       }
     ]
@@ -1650,7 +1667,7 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
         text:'Recusa. Busca financiamento alternativo.',
         vars:'amaraIndependent=true | equity+2 | amara_independent=true',
         consequence:'Três bolsistas saem do grupo em dois meses. Dezoito meses no limite financeiro. FAPESB aprova financiamento em 2021 — R$ 420.000, sem cláusulas. Paper integral publicado, citado 40 vezes em dois anos.',
-        reveal:'Uma bolsista que saiu encontrou emprego melhor. Outra não. Independência tem preço concreto.',
+        reveal:'Uma das bolsistas que saiu está numa startup de dados em São Paulo. Amara encontrou o perfil no LinkedIn por acaso, em 2023.',
         effects:{ amaraIndependent:true, equity:2, amara_independent:true }
       },
       {
@@ -1690,7 +1707,7 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
         text:'Publica com nota "dados verificados por fonte com acesso interno, identidade protegida por protocolo ético".',
         vars:'amara_published_sensitive=true | equity+2 | transparency+1',
         consequence:'Secretaria vai atacar a metodologia sem poder atacar o dado — não sabe o que é o dado. O paper circula amplamente.',
-        reveal:'Proteger a fonte e publicar o dado são simultaneamente possíveis — com o protocolo ético correto.',
+        reveal:'A secretaria emite nota técnica atacando a metodologia de amostragem. O dado específico, em nenhum momento.',
         effects:{ amara_published_sensitive:true, equity:2, transparency:1 }
       },
       {
@@ -1698,7 +1715,7 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
         text:'Usa os dados para orientar a pesquisa sem citar diretamente.',
         vars:'amara_guided_by_docs=true | equity+1',
         consequence:'Paper mais forte, mas origem não aparece. Se alguém pedir os dados brutos, não pode fornecer.',
-        reveal:'Pesquisa orientada por evidência que não pode citar é mais forte e mais vulnerável ao mesmo tempo.',
+        reveal:'Quando um pesquisador da USP pede acesso aos dados brutos para replicação, Amara não pode responder. O paper fica com três anos de solicitação de replicação aberta.',
         effects:{ amara_guided_by_docs:true, equity:1 }
       },
       {
@@ -1706,7 +1723,7 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
         text:'Entrega os documentos ao Ministério Público Federal com solicitação de abertura de inquérito.',
         vars:'amara_mp_delivery=true | equity+2 | transparency+2',
         consequence:'MP abre inquérito. Investigação é independente da pesquisa de Amara. Os dados chegam ao debate pelo caminho institucional.',
-        reveal:'Às vezes o caminho mais poderoso não passa pela publicação.',
+        reveal:'O inquérito do MP corre em paralelo à pesquisa. Dois dos quatro municípios são notificados antes de Amara submeter o paper.',
         effects:{ amara_mp_delivery:true, equity:2, transparency:2 }
       },
       {
@@ -1714,7 +1731,7 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
         text:'Entrega à advogada LGPD para avaliar possibilidade de uso como evidência judicial.',
         vars:'amara_legal_delay=true',
         consequence:'Processo leva 8 meses. Os dados chegam ao debate quando o debate já mudou de pauta.',
-        reveal:'O tempo jurídico raramente coincide com o momento em que o dado importa.',
+        reveal:'O processo de avaliação dura oito meses. Quando termina, a CPI que analisaria o dado já tinha encerrado os trabalhos.',
         effects:{ amara_legal_delay:true }
       }
     ]
@@ -1738,7 +1755,7 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
         text:'Publica pesquisa sobre estádios em paralelo à pesquisa de segurança pública. Dois fronts simultaneamente.',
         vars:'amara_stadiums_published=true | equity+1 | transparency+1',
         consequence:'Duas frentes de pesquisa simultâneas. Impacto ampliado — dois contextos do mesmo problema.',
-        reveal:'O mesmo viés em dois contextos diferentes é prova de sistema, não de coincidência.',
+        reveal:'Um dos clubes envia carta à UFBA pedindo direito de resposta antes da publicação. Amara encaminha para o departamento jurídico.',
         effects:{ amara_stadiums_published:true, equity:1, transparency:1 }
       },
       {
@@ -1746,7 +1763,7 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
         text:'Integra os dados de estádios na pesquisa de segurança pública como seção comparativa.',
         vars:'amara_integrated_research=true | equity+2',
         consequence:'Mostra que é o mesmo sistema, o mesmo viés, contextos diferentes. Argumento mais poderoso pela integração.',
-        reveal:'Pesquisa integrada é mais difícil de atacar — não é possível invalidar um contexto sem invalidar o outro.',
+        reveal:'A empresa que fornece o sistema para os estádios é subsidiária da mesma que atende a SSP/BA. Amara descobre isso no segundo mês de pesquisa.',
         effects:{ amara_integrated_research:true, equity:2 }
       },
       {
@@ -1754,7 +1771,7 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
         text:'Apresenta em audiência pública na Câmara dos Deputados — onde o debate sobre regulação de reconhecimento facial está em andamento.',
         vars:'amara_congressional_hearing=true | transparency+2',
         consequence:'O debate sobre regulação recebe evidência empírica no momento em que o projeto de lei está em tramitação.',
-        reveal:'Timing de pesquisa com timing legislativo é raro e poderoso.',
+        reveal:'O projeto de regulação estava em segunda leitura quando Amara apresentou. O relator pediu cópia da pesquisa para a assessoria técnica.',
         effects:{ amara_congressional_hearing:true, transparency:2 }
       },
       {
@@ -1762,7 +1779,7 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
         text:'Faz pesquisa colaborativa com coletivos de torcedores negros que já documentaram os casos. Paper co-autorado com a comunidade.',
         vars:'amara_community_research=true | equity+3',
         consequence:'Paper co-autorado com comunidade. A metodologia participativa produz evidência mais difícil de deslegitimar — os afetados são co-autores, não apenas objetos de estudo.',
-        reveal:'Pesquisa feita com a comunidade, não sobre ela, é resistente a críticas de "quem você pensa que é para falar por eles".',
+        reveal:'O paper tem 23 co-autores. Quando a empresa questiona a representatividade da amostra, três torcedores co-autores dão entrevista juntos.',
         effects:{ amara_community_research:true, equity:3 }
       }
     ]
@@ -1797,7 +1814,7 @@ A audiência é em três dias.`,
         text:'Recua. Envia relatório escrito de 80 páginas. Protege a empresa.',
         vars:'cpiDeponent=false | equity-2',
         consequence:'80 páginas lidas por dois assessores durante o recesso. O tema desaparece da pauta em 3 semanas.',
-        reveal:'O custo da intimidação não é o processo judicial. É o silêncio que ela produz antes de qualquer processo — e que ela produziu desta vez.',
+        reveal:'A intimidação não precisou de processo. Produziu silêncio antes de qualquer audiência.',
         effects:{ cpiDeponent:false, equity:-2 }
       },
       {
@@ -1838,7 +1855,7 @@ A audiência é em três dias.`,
         text:'Apresenta tudo. Já começou — parar agora é pior que não ter começado.',
         vars:'cpiDeponent=full | equity+3 | transparency+2',
         consequence:'A sessão completa o que a primeira começou. Os documentos são autenticados e entram no processo como evidência.',
-        reveal:'Consistência de ação é mais poderosa que a perfeição estratégica.',
+        reveal:'Os documentos são autenticados em seis semanas. A empresa que processava os dados fecha o departamento de smart cities no Brasil.',
         effects:{ cpiDeponent:'full', equity:3, transparency:2 }
       },
       {
@@ -1846,7 +1863,7 @@ A audiência é em três dias.`,
         text:'Apresenta só dados com origem verificável. Deixa os outros de fora.',
         vars:'cpiDeponent=partial_plus | equity+2',
         consequence:'Depoimento sólido, impacto moderado. A CPI aceita o que tem.',
-        reveal:'Parcialidade consistente é mais sustentável do que exposição completa com risco.',
+        reveal:'A CPI fecha os trabalhos com o que tem. O relatório final cita os dados publicados de Amara em quatro seções diferentes.',
         effects:{ cpiDeponent:'partial_plus', equity:2 }
       },
       {
@@ -1854,7 +1871,7 @@ A audiência é em três dias.`,
         text:'Não comparece. A pressão foi demais.',
         vars:'equity-1 | amara_withdrew=true',
         consequence:'A CPI segue sem ela. A pressão de intimidação funcionou — não precisou de processo.',
-        reveal:'O objetivo da intimidação nunca foi punir — era produzir esse momento.',
+        reveal:'A auditoria da Receita continua aberta por mais 14 meses. Nenhuma irregularidade é encontrada. O processo simplesmente fecha.',
         effects:{ equity:-1, amara_withdrew:true }
       }
     ]
@@ -1885,7 +1902,7 @@ Estas não são decisões morais abstratas — são reações de sobrevivência 
         text:'Cede imediatamente. Mostra documentos sem questionar. Quanto mais rápido acabar, melhor.',
         vars:'equity-1 | eduRegistered=false | edu_incident_1=surrendered',
         consequence:'Liberado em 40 minutos. Entrega cancelada pelo app — penalidade por atraso. Nota ruim. Não registrou o incidente em nenhum lugar.',
-        reveal:'O sistema aprendeu que pode errar sem consequência. Você aprendeu que questionar é perigoso.',
+        reveal:'Edu saiu da padaria às 11h42. A entrega estava marcada para 11h. O cliente deu nota 2.',
         effects:{ equity:-1, eduRegistered:false, edu_incident_1:'surrendered' }
       },
       {
@@ -1933,7 +1950,7 @@ Estas não são decisões morais abstratas — são reações de sobrevivência 
         text:'Documenta as primeiras abordagens no ônibus no mesmo canal que usou na Era 1. Dois sistemas conectados, dois tipos de evidência.',
         vars:'edu_bus_documented=true | equity+1',
         consequence:'Canal de documentação conecta dois contextos — rua e ônibus — como parte do mesmo sistema.',
-        reveal:'Evidência acumulada de padrão é mais forte que casos isolados.',
+        reveal:'O canal acumula 41 casos em seis meses. Dois sistemas diferentes, mas o protocolo de abordagem é o mesmo.',
         effects:{ edu_bus_documented:true, equity:1 }
       },
       {
@@ -1949,7 +1966,7 @@ Estas não são decisões morais abstratas — são reações de sobrevivência 
         text:'Começa a andar de bicicleta para evitar o sistema. Custo físico enorme.',
         vars:'edu_adapted_bus=true | equity-1',
         consequence:'A estratégia de adaptação individual funciona para Edu mas confirma ao algoritmo que a vigilância funciona como dissuasão.',
-        reveal:'Evitar a opressão não é o mesmo que combatê-la.',
+        reveal:'Edu pedala 11 km a mais por dia para evitar os pontos com câmera. Em quatro meses, perdeu 2,3 kg e R$ 40 por semana em entregas.',
         effects:{ edu_adapted_bus:true, equity:-1 }
       },
       {
@@ -1957,7 +1974,7 @@ Estas não são decisões morais abstratas — são reações de sobrevivência 
         text:'Escreve relato e manda para Amara diretamente — se conhece ela, via coletivo ou via pesquisa.',
         vars:'amara_has_bus_testimony=true | equity+1',
         consequence:'Amara recebe o relato de quem usa o sistema todo dia. Dado qualitativo que fortalece a pesquisa quantitativa.',
-        reveal:'A pesquisa que não ouve as pessoas afetadas é incompleta por definição.',
+        reveal:'Amara lê o relato numa tarde. Responde no dia seguinte pedindo para conversar.',
         effects:{ amara_has_bus_testimony:true, equity:1 }
       }
     ]
@@ -1982,7 +1999,7 @@ Sem prova formal — só o padrão que 40 entregadores veem toda semana. Colega 
         text:'Aceita e segue. Reclamar não adianta. O app vai te penalizar se você fizer barulho.',
         vars:'equity-1 | eduOrganized=false | edu_adapted=true',
         consequence:'Renda cai 12% quando tenta as rotas para bairros ricos. Aprende a evitá-los. Nunca mais vai ao Itaigara a trabalho.',
-        reveal:'O sistema injusto sobrevive porque as pessoas afetadas adaptam comportamentos para sobreviver a ele — e essa adaptação confirma ao algoritmo que as rotas estão certas.',
+        reveal:'Edu para de aceitar pedidos do Itaigara. O algoritmo registra a preferência e para de oferecer. Em seis meses, não recebe mais um pedido de lá.',
         effects:{ equity:-1, eduOrganized:false, edu_adapted:true }
       },
       {
@@ -1990,7 +2007,7 @@ Sem prova formal — só o padrão que 40 entregadores veem toda semana. Colega 
         text:'Documenta e contribui com seus dados para o levantamento do Fábio.',
         vars:'equity+1 | eduOrganized=true | edu_data_contributed=true',
         consequence:'Levantamento de 40 entregadores vai para jornalismo de dados do Nexo. App nega. UFRJ confirma 18 meses depois. App lança "revisão do algoritmo de otimização de rotas". Nada muda de forma mensurável no bolso de Edu.',
-        reveal:'A evidência existiu. Às vezes precisa de mais tempo — ou de mais pressão.',
+        reveal:'O app nega a discriminação em nota. A UFRJ publica a confirmação 18 meses depois. O app lança 'revisão do algoritmo de otimização' sem especificar o que mudou.',
         effects:{ equity:1, eduOrganized:true, edu_data_contributed:true }
       },
       {
@@ -1998,7 +2015,7 @@ Sem prova formal — só o padrão que 40 entregadores veem toda semana. Colega 
         text:'Contribui com dados mas exige anonimato total no levantamento.',
         vars:'equity+1 | eduOrganized=anonymous | edu_unknown_impact=true',
         consequence:'Fábio aceita. Edu aparece como "entregador E17" no estudo. Quando o estudo vira base de uma ação coletiva trabalhista, o relato de E17 é usado como evidência. Edu nunca sabe que contribuiu com uma ação judicial que beneficia 340 entregadores.',
-        reveal:'Impacto anônimo é impacto real — mesmo que você nunca saiba.',
+        reveal:'Edu nunca soube que era o E17. Em 2024, quando a ação trabalhista beneficia 340 entregadores, ele recebe R$ 380 de indenização coletiva sem entender de onde veio.',
         effects:{ equity:1, eduOrganized:'anonymous', edu_unknown_impact:true }
       },
       {
@@ -2030,7 +2047,7 @@ Sem prova formal — só o padrão que 40 entregadores veem toda semana. Colega 
         text:'Autoriza. Os dados entram no paper com crédito para "coletivo de entregadores de Salvador".',
         vars:'edu_cited=true | amara_has_edu_data=true',
         consequence:'O coletivo aparece no paper acadêmico. O dado de 73 entregadores entra em publicação formal.',
-        reveal:'Quem coletou o dado importa tanto quanto o dado.',
+        reveal:'O coletivo aparece no paper como 'Coletivo de Entregadores de Salvador — 73 colaboradores'. É a primeira vez que o nome do grupo aparece numa publicação acadêmica.',
         effects:{ edu_cited:true, amara_has_edu_data:true }
       },
       {
@@ -2038,7 +2055,7 @@ Sem prova formal — só o padrão que 40 entregadores veem toda semana. Colega 
         text:'Autoriza mas pede ser entrevistado também. Aparece no paper com nome real e depoimento próprio.',
         vars:'edu_named=true | amara_has_edu_interview=true',
         consequence:'Edu aparece no paper com nome real e depoimento próprio. A voz de quem viveu o problema entra na publicação acadêmica.',
-        reveal:'Testemunho de quem foi afetado tem força diferente do dado estatístico — e deve aparecer junto.',
+        reveal:'Edu aparece com nome, foto e três parágrafos de depoimento. A secretaria ataca os dados do paper. Não menciona o depoimento.',
         effects:{ edu_named:true, amara_has_edu_interview:true }
       },
       {
@@ -2046,7 +2063,7 @@ Sem prova formal — só o padrão que 40 entregadores veem toda semana. Colega 
         text:'Recusa decidir sozinho. "Essa planilha é do coletivo todo. Preciso consultar."',
         vars:'edu_consulted_collective=true | equity+1',
         consequence:'Processo coletivo de decisão atrasa Amara em 3 meses mas produz autorização com assinatura de 18 entregadores — muito mais forte juridicamente.',
-        reveal:'Decisão coletiva é mais lenta e mais legítima.',
+        reveal:'18 entregadores assinam a autorização. O processo leva três meses. Quando a empresa tenta contestar o uso dos dados, o advogado apresenta as 18 assinaturas.',
         effects:{ edu_consulted_collective:true, equity:1 }
       }
     ]
@@ -2073,7 +2090,7 @@ Esta é a era de agência real. Não é reagir ao sistema — é decidir que tip
         text:'Vai. A reunião importa. Não pode deixar o medo decidir por você.',
         vars:'equity+2 | eduWhistle=attended | edu_meeting=attended',
         consequence:'Reunião acontece. Colega Renata fotografada saindo do local é abordada duas semanas depois com menção explícita às câmeras. Coletivo documenta. Caso vai ao MP.',
-        reveal:'O objetivo da vigilância não era prender. Era fazer vocês saberem que estavam sendo vistos. Funcionou — mas você foi mesmo assim.',
+        reveal:'Renata foi abordada duas semanas depois, com menção explícita à câmera. Ela sabia que poderia acontecer. Foi mesmo assim.',
         effects:{ equity:2, eduWhistle:'attended', edu_meeting:'attended' }
       },
       {
@@ -2081,7 +2098,7 @@ Esta é a era de agência real. Não é reagir ao sistema — é decidir que tip
         text:'Não vai. Arriscado demais. Você tem mãe doente que depende do seu salário.',
         vars:'equity-2 | eduWhistle=stayed | edu_meeting=avoided',
         consequence:'A reunião acontece sem Edu. Mais 12 entregadores ficaram em casa por medo. O coletivo encolheu para 19 pessoas.',
-        reveal:'A vigilância não prendeu ninguém. Não precisou. Ela produziu silêncio preventivo — que é mais eficaz e mais barato que a repressão.',
+        reveal:'O coletivo que tinha 31 pessoas em agosto tem 19 em outubro. Ninguém foi preso. Doze decidiram não voltar.',
         effects:{ equity:-2, eduWhistle:'stayed', edu_meeting:'avoided' }
       },
       {
@@ -2089,7 +2106,7 @@ Esta é a era de agência real. Não é reagir ao sistema — é decidir que tip
         text:'Vai mas muda o endereço de última hora para um que só você e dois colegas sabem.',
         vars:'equity+2 | eduWhistle=evaded | edu_meeting=evaded | edu_tactic=true',
         consequence:'O sistema de monitoramento tem o endereço errado. Reunião acontece sem incidente. Edu não sabe se funcionou porque o monitoramento era real ou porque não era.',
-        reveal:'Mas o coletivo aprendeu que pode se mover. Esse aprendizado vale mais que a reunião em si.',
+        reveal:'A reunião aconteceu. Edu não sabe se o sistema tinha o endereço errado ou se nunca houve monitoramento real. O coletivo passou a trocar o endereço como prática padrão.',
         effects:{ equity:2, eduWhistle:'evaded', edu_meeting:'evaded', edu_tactic:true }
       },
       {
@@ -2097,7 +2114,7 @@ Esta é a era de agência real. Não é reagir ao sistema — é decidir que tip
         text:'Vai e propõe dentro da reunião criar registro permanente de casos de vigilância para o MP e para Amara.',
         vars:'equity+3 | eduWhistle=organized | edu_meeting=transformed | eduOrganized=leadership',
         consequence:'A reunião vira momento fundador. Coletivo decide criar protocolo de documentação de vigilância — formulário padrão, canal seguro, contato com advogada de direitos digitais. Se Amara está na cadeia, recebe o primeiro relatório do coletivo.',
-        reveal:'Edu deixou de ser uma vítima do sistema para ser alguém que o documenta.',
+        reveal:'O protocolo existe. Canal seguro, formulário padrão, contato da advogada. Em três semanas, 14 casos entram no sistema.',
         effects:{ equity:3, eduWhistle:'organized', edu_meeting:'transformed', eduOrganized:'leadership' }
       }
     ]
@@ -2129,7 +2146,7 @@ Esta é a era de agência real. Não é reagir ao sistema — é decidir que tip
         text:'Assina como parte do processo mas recusa ser porta-voz. Em segundo plano.',
         vars:'eduWhistle=case_member | equity+2',
         consequence:'A ação avança sem o rosto de Edu. Outros casos são a face pública.',
-        reveal:'Participação sem exposição ainda é participação.',
+        reveal:'A ação avança. Em audiência, o advogado apresenta os 264 casos. Edu está no processo como requerente número 37.',
         effects:{ eduWhistle:'case_member', equity:2 }
       },
       {
@@ -2137,7 +2154,7 @@ Esta é a era de agência real. Não é reagir ao sistema — é decidir que tip
         text:'Recusa participar. Tem medo de represália no app e não pode perder a renda.',
         vars:'equity-1 | edu_withdrew=true',
         consequence:'A ação avança sem Edu. A represália que ele temia pode ou não ter acontecido — mas o medo foi suficiente.',
-        reveal:'A vigilância não precisou punir — o medo da punição já era suficiente.',
+        reveal:'A represália que Edu temia não aconteceu. O medo foi suficiente para produzir o mesmo efeito.',
         effects:{ equity:-1, edu_withdrew:true }
       },
       {
@@ -2145,7 +2162,7 @@ Esta é a era de agência real. Não é reagir ao sistema — é decidir que tip
         text:'Aceita ser porta-voz mas negocia que a advogada fale técnico e ele fale pessoal. Divisão de papéis.',
         vars:'eduWhistle=public_face_protected | equity+3 | edu_named_case=true',
         consequence:'A advogada fala de LGPD e jurisprudência. Edu fala do policial com a mão no coldre dentro da padaria. As duas vozes juntas são mais poderosas que qualquer uma separada.',
-        reveal:'Divisão de papéis protege Edu juridicamente sem diminuir seu impacto.',
+        reveal:'A sessão dura 22 minutos. A advogada fala 18. Edu fala 4. A jornalista da Folha transcreve os 4 minutos de Edu.',
         effects:{ eduWhistle:'public_face_protected', equity:3, edu_named_case:true }
       }
     ]
@@ -2171,7 +2188,7 @@ Amara pergunta o que Edu quer que aconteça com tudo isso.`,
         text:'"Quero que para. Quero não ser parado na rua por uma câmera que erra."',
         vars:'equity+1 | edu_demand=stop',
         consequence:'Demanda concreta. Amara usa no depoimento como exemplo do impacto humano.',
-        reveal:'A demanda mais simples é frequentemente a mais poderosa.',
+        reveal:'Amara anota no caderno: 'parar — concreto, verificável, pessoal'. Usa como abertura do depoimento na CPI.',
         effects:{ equity:1, edu_demand:'stop' }
       },
       {
@@ -2179,7 +2196,7 @@ Amara pergunta o que Edu quer que aconteça com tudo isso.`,
         text:'"Quero que as pessoas saibam o que acontece com a gente."',
         vars:'equity+2 | edu_demand=visibility',
         consequence:'Pede visibilidade. Amara escreve texto de opinião com relato de Edu (com autorização) no Nexo.',
-        reveal:'Visibilidade é o antídoto para a vigilância unilateral.',
+        reveal:'O texto de opinião no Nexo tem 4.200 compartilhamentos em dois dias. Edu recebe sete mensagens de pessoas que passaram pela mesma situação.',
         effects:{ equity:2, edu_demand:'visibility' }
       },
       {
@@ -2249,6 +2266,9 @@ const ARCHETYPES = [
     color:'#4A3F38'
   }
 ];
+
+
+// === state.js ===
 /* ═══════════════════════════════════════════════════
    CIDADE ONLINE — State Management
    ═══════════════════════════════════════════════════ */
@@ -2398,7 +2418,7 @@ function applyEffects(effects) {
 function isCharUnlocked(charId) {
   const meta = CHARS_META[charId];
   if (!meta.unlockCondition) return true;
-    return meta.unlockCondition(PROG.completed);
+  return meta.unlockCondition(PROG.completed);
 }
 
 function isCharComplete(charId) {
@@ -2429,7 +2449,7 @@ function advanceEra(charId) {
   if (!PROG.currentEraIdx[charId]) PROG.currentEraIdx[charId] = 0;
   PROG.currentEraIdx[charId]++;
   const queue = getEraQueue(charId);
-  if (PROG.currentEraIdx[charId] >= queue.length) {
+    if (PROG.currentEraIdx[charId] >= queue.length) {
     PROG.completed[charId] = true;
     return null;
   }
@@ -2446,6 +2466,9 @@ function getArchetype() {
   }
   return ARCHETYPES[ARCHETYPES.length - 1];
 }
+
+
+// === map.js ===
 /* ═══════════════════════════════════════════════════
    CIDADE ONLINE — SVG Map of Salvador
    Estética Chris Ware / planta baixa arquitetônica
@@ -2785,6 +2808,9 @@ function updateMap() {
     updatePinState(charId);
   }
 }
+
+
+// === ui.js ===
 /* ═══════════════════════════════════════════════════
    CIDADE ONLINE — UI Components
    Panel, Stats, Options, Artifact, Final Report
@@ -3101,6 +3127,9 @@ function buildStateFlags() {
     </ul>
   `;
 }
+
+
+// === main.js ===
 /* ═══════════════════════════════════════════════════
    CIDADE ONLINE — Main Game Logic
    ═══════════════════════════════════════════════════ */
@@ -3234,8 +3263,7 @@ function onRestart() {
 
 // Boot
 document.addEventListener('DOMContentLoaded', init);
+
 </script>
 </body>
 </html>
-
-      

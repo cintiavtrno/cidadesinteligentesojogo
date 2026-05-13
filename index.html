@@ -914,7 +914,7 @@ html, body {
 <script>
 // === data.js ===
 /* ═══════════════════════════════════════════════════════════════
-   CIDADE ONLINE — GDD v4.0 — Dados Completos da Narrativa
+   CIDADE ONLINE , GDD v4.0 , Dados Completos da Narrativa
    4 personagens · eras condicionais · 4 opções por decisão
    Fontes: Santos et al. (2021) · OPANÓPTICO/CESeC/LAPIN (2024)
    ═══════════════════════════════════════════════════════════════ */
@@ -942,7 +942,7 @@ const ERAS = {
     source:'Salvador integrou 1.900 câmeras em sistema único em 2018. Padrão de iluminação pública via PPP documentado em Guarapuava (PR, 2016), Carmo do Cajuru (MG, 2017) e 30+ cidades.',
     artifact:{
       type:'contract',
-      content:'CONTRATO Nº 47/2014 — IBM/Prefeitura de Salvador\nANEXO TÉCNICO — CLÁUSULA DE DADOS\n\nPágina 47, §3.1.b:\n"Os dados coletados pelos sensores integrados ao sistema de iluminação, incluindo padrões de movimento, frequência de passagem e dados biométricos ambientais, constituem propriedade comercial da Concessionária pelo período de vigência do contrato (20 anos), podendo ser licenciados a terceiros mediante notificação ao Município."\n\nNota do assessor jurídico: "Padrão ABNT, sem risco jurídico identificado."',
+      content:'CONTRATO Nº 47/2014 , IBM/Prefeitura de Salvador\nANEXO TÉCNICO , CLÁUSULA DE DADOS\n\nPágina 47, §3.1.b:\n"Os dados coletados pelos sensores integrados ao sistema de iluminação, incluindo padrões de movimento, frequência de passagem e dados biométricos ambientais, constituem propriedade comercial da Concessionária pelo período de vigência do contrato (20 anos), podendo ser licenciados a terceiros mediante notificação ao Município."\n\nNota do assessor jurídico: "Padrão ABNT, sem risco jurídico identificado."',
       highlights:['propriedade comercial da Concessionária','licenciados a terceiros','20 anos']
     },
     scenario:`40% das lâmpadas de Salvador estão queimadas. A IBM apresenta proposta de R$ 180M: iluminação LED inteligente com 1.900 câmeras integradas em 212 páginas de contrato. Na página 47, cláusula obscura estabelece que dados coletados pelos sensores pertencem à concessionária pelos 20 anos de vigência.
@@ -954,7 +954,7 @@ O prefeito quer assinar antes do carnaval. A secretaria de fazenda aprovou sem l
         letter:'A', colorClass:'opt-red',
         text:'Assina como está. A cidade precisa de luz. Os dados são questão técnica, não política.',
         vars:'ibmContract=full | cameras+2 | transparency-1 | equity-1',
-        consequence:'Contrato assinado. Iluminação em 8 meses, câmeras em 4. Em 2019, padrões de movimento de bairros periféricos são vendidos para seguradora — reajuste de 34% nos prêmios em Cajazeiras e Liberdade. Em 2021, consórcio adquire IBM; dados migram para servidores em 3 países sem notificação ao município.',
+        consequence:'Contrato assinado. Iluminação em 8 meses, câmeras em 4. Em 2019, padrões de movimento de bairros periféricos são vendidos para seguradora, reajuste de 34% nos prêmios em Cajazeiras e Liberdade. Em 2021, consórcio adquire IBM; dados migram para servidores em 3 países sem notificação ao município.',
         reveal:'O aditivo de 2023 para escolas parte dessa mesma cláusula que você não quis ler.',
         effects:{ ibmContract:'full', cameras:2, transparency:-1, equity:-1 }
       },
@@ -962,7 +962,7 @@ O prefeito quer assinar antes do carnaval. A secretaria de fazenda aprovou sem l
         letter:'B', colorClass:'opt-green',
         text:'Negocia: dados pertencem ao município. Aceita atrasar 3 meses.',
         vars:'ibmContract=negotiated | cameras+1 | transparency+1',
-        consequence:'IBM aceita formalmente — mas insere "acesso preferencial para aprimoramento de algoritmos" no rodapé do aditivo. Propriedade dos dados conquistada; controle sobre uso de fato perdido. Auditoria tentada em 2018 revela que o acesso preferencial foi exercido 847 vezes sem registro.',
+        consequence:'IBM aceita formalmente , mas insere "acesso preferencial para aprimoramento de algoritmos" no rodapé do aditivo. Propriedade dos dados conquistada; controle sobre uso de fato perdido. Auditoria tentada em 2018 revela que o acesso preferencial foi exercido 847 vezes sem registro.',
         reveal:'O acesso preferencial ficou no rodapé do aditivo. Ninguém verificou quantas vezes foi exercido até a auditoria de 2018.',
         effects:{ ibmContract:'negotiated', cameras:1, transparency:1 }
       },
@@ -978,7 +978,7 @@ O prefeito quer assinar antes do carnaval. A secretaria de fazenda aprovou sem l
         letter:'D', colorClass:'opt-blue',
         text:'Assina mas vaza a cláusula para a jornalista de dados do Correio antes da assinatura.',
         vars:'ibmContract=full | cameras+2 | transparency+1 | marco_leaked_clause=true',
-        consequence:'Contrato assinado sob pressão política três dias depois. Repercussão gera CPI municipal em 2015 — arquivada em quatro meses. Mas a cláusula virou pública: três municípios do Nordeste rejeitam contratos similares citando Salvador explicitamente.',
+        consequence:'Contrato assinado sob pressão política três dias depois. Repercussão gera CPI municipal em 2015, arquivada em quatro meses. Mas a cláusula virou pública: três municípios do Nordeste rejeitam contratos similares citando Salvador explicitamente.',
         reveal:'Marco mantém o cargo. Amara, pesquisando smart cities dois anos depois, encontra a CPI arquivada como fonte.',
         effects:{ ibmContract:'full', cameras:2, transparency:1, marco_leaked_clause:true }
       }
@@ -992,7 +992,7 @@ O prefeito quer assinar antes do carnaval. A secretaria de fazenda aprovou sem l
     source:'A CPI aberta em 2015 foi arquivada, mas gerou precedente formal. Em 2019, com o relatório de falsos positivos circulando, o vereador Pinto retoma a investigação.',
     artifact:{
       type:'document',
-      content:'CÂMARA MUNICIPAL DE SALVADOR\nCOMISSÃO PARLAMENTAR DE INQUÉRITO — SMART CITIES\nConvocação nº 12/2019\n\nAo Sr. Marco Santos, Secretário-Adjunto de Inovação:\nVossa Senhoria fica notificado a comparecer à sessão do dia 14/11/2019 para prestar esclarecimentos sobre a Cláusula 47, §3.1.b do Contrato 47/2014.\n\nAdvogado do Município: "Recomendo silêncio estratégico."\nAdvogado pessoal: "Colaboração total é sua única saída limpa."',
+      content:'CÂMARA MUNICIPAL DE SALVADOR\nCOMISSÃO PARLAMENTAR DE INQUÉRITO , SMART CITIES\nConvocação nº 12/2019\n\nAo Sr. Marco Santos, Secretário-Adjunto de Inovação:\nVossa Senhoria fica notificado a comparecer à sessão do dia 14/11/2019 para prestar esclarecimentos sobre a Cláusula 47, §3.1.b do Contrato 47/2014.\n\nAdvogado do Município: "Recomendo silêncio estratégico."\nAdvogado pessoal: "Colaboração total é sua única saída limpa."',
       highlights:['Cláusula 47','silêncio estratégico','colaboração total']
     },
     scenario:`A CPI aberta em 2015 foi arquivada, mas gerou precedente formal. Em 2019, com o relatório de falsos positivos circulando e uma jornalista publicando investigação sobre os dados, o vereador Pinto retoma a investigação.
@@ -1041,7 +1041,7 @@ Marco é convocado a depor. O advogado do município orienta silêncio. O advoga
     source:'Evento real: Micareta de Feira de Santana, 2019. 903 alertas do sistema de reconhecimento facial da SSP/BA, 870 falsos positivos (96,3%). Caso de Kelton Borges documentado pelo Correio 24 Horas, jan/2020.',
     artifact:{
       type:'report',
-      content:'RELATÓRIO TÉCNICO INTERNO — CONFIDENCIAL\nANÁLISE DE ACURÁCIA POR GRUPO DEMOGRÁFICO\n\nTotal de alertas (evento): 903\nFalsos positivos confirmados: 870 (96,3%)\n\nTaxa de erro por grupo:\n  Pele clara:    12,4%\n  Pele escura:   96,3%  ← diferença: 7,8×\n\nSalvador: 82% população negra.\n\nRecomendação técnica: "Ajuste do threshold para populações com alta proporção melanodérmica."\n\n[Parágrafo final redigido pelo analista sênior, não publicado]',
+      content:'RELATÓRIO TÉCNICO INTERNO , CONFIDENCIAL\nANÁLISE DE ACURÁCIA POR GRUPO DEMOGRÁFICO\n\nTotal de alertas (evento): 903\nFalsos positivos confirmados: 870 (96,3%)\n\nTaxa de erro por grupo:\n  Pele clara:    12,4%\n  Pele escura:   96,3%  ← diferença: 7,8×\n\nSalvador: 82% população negra.\n\nRecomendação técnica: "Ajuste do threshold para populações com alta proporção melanodérmica."\n\n[Parágrafo final redigido pelo analista sênior, não publicado]',
       highlights:['96,3%','7,8×','CONFIDENCIAL','82% população negra']
     },
     scenario:`Carnaval de Feira de Santana. O sistema dispara 903 alertas de suspeitos. 870 são falsos positivos, 96,3%. Um jovem de 25 anos chamado Kelton é abordado com arma na cabeça dentro de uma padaria enquanto ia a uma consulta médica.
@@ -1063,7 +1063,7 @@ O relatório existe. É confidencial. Vazar compromete o contrato e a iluminaç�
         letter:'B', colorClass:'opt-green',
         text:'Torna público. Suspende reconhecimento facial até revisão independente por universidade.',
         vars:'reportStatus=public | cameras-1 | equity+2 | transparency+2 | marco_fired=true',
-        consequence:'Empresa ameaça rescisão por "descumprimento de cláusula de confidencialidade comercial". Prefeito furioso. Relatório vira referência nacional — 3 municípios suspendem sistemas similares citando Salvador. Marco é demitido 8 meses depois quando o prefeito troca o secretariado.',
+        consequence:'Empresa ameaça rescisão por "descumprimento de cláusula de confidencialidade comercial". Prefeito furioso. Relatório vira referência nacional , 3 municípios suspendem sistemas similares citando Salvador. Marco é demitido 8 meses depois quando o prefeito troca o secretariado.',
         reveal:'O sistema é suspenso em outubro. Marco é demitido em junho do ano seguinte, quando o prefeito troca o secretariado.',
         effects:{ reportStatus:'public', cameras:-1, equity:2, transparency:2, marco_fired:true }
       },
@@ -1093,10 +1093,10 @@ O relatório existe. É confidencial. Vazar compromete o contrato e a iluminaç�
     source:'Em 2021, IBM vende a divisão de infraestrutura urbana para consórcio europeu. Dados de 1.900 câmeras de Salvador migram para servidores na Alemanha, França e Portugal. A cláusula de 2014 previa isso na sub-alínea 14.3.b.',
     artifact:{
       type:'document',
-      content:'TRIBUNAL DE CONTAS DO MUNICÍPIO — NOTIFICAÇÃO URGENTE\nRef: Contrato 47/2014 — Transferência Internacional de Dados\n\nO TCM informa que os dados coletados pelo sistema de videomonitoramento de Salvador foram transferidos para servidores em Frankfurt (DE), Lyon (FR) e Lisboa (PT) em 14/03/2021, sem notificação prévia ao Município.\n\nCláusula contratual invocada pela empresa: 14.3.b — "Transferência de ativos em caso de reestruturação societária."\n\nO Município foi comunicado 47 dias após a transferência.',
+      content:'TRIBUNAL DE CONTAS DO MUNICÍPIO , NOTIFICAÇÃO URGENTE\nRef: Contrato 47/2014 , Transferência Internacional de Dados\n\nO TCM informa que os dados coletados pelo sistema de videomonitoramento de Salvador foram transferidos para servidores em Frankfurt (DE), Lyon (FR) e Lisboa (PT) em 14/03/2021, sem notificação prévia ao Município.\n\nCláusula contratual invocada pela empresa: 14.3.b , "Transferência de ativos em caso de reestruturação societária."\n\nO Município foi comunicado 47 dias após a transferência.',
       highlights:['Frankfurt','Lyon','Lisboa','14.3.b','47 dias após']
     },
-    scenario:`O que Marco não sabia ao assinar: em 2021, a IBM vende a divisão de infraestrutura urbana para um consórcio europeu com sede em Frankfurt. Os dados de 1.900 câmeras de Salvador — padrões de movimento, dados biométricos coletados em pontos turísticos — migram para servidores na Alemanha, França e Portugal.
+    scenario:`O que Marco não sabia ao assinar: em 2021, a IBM vende a divisão de infraestrutura urbana para um consórcio europeu com sede em Frankfurt. Os dados de 1.900 câmeras de Salvador , padrões de movimento, dados biométricos coletados em pontos turísticos , migram para servidores na Alemanha, França e Portugal.
 
 O município não foi notificado. A cláusula de 2014 previa isso na sub-alínea 14.3.b.`,
     decision:'O TCM informa que os dados de Salvador estão em servidores no exterior sem notificação prévia.',
@@ -1113,7 +1113,7 @@ O município não foi notificado. A cláusula de 2014 previa isso na sub-alínea
         letter:'B', colorClass:'opt-green',
         text:'Notifica o TCM e o MP mas não aciona processo. Prefere resolução administrativa.',
         vars:'transparency+1',
-        consequence:'Processo administrativo é arquivado — a cláusula 14.3.b era válida.',
+        consequence:'Processo administrativo é arquivado , a cláusula 14.3.b era válida.',
         reveal:'A cláusula 14.3.b era juridicamente válida. O processo administrativo confirmou o que o advogado do município já tinha dito na primeira reunião.',
         effects:{ transparency:1 }
       },
@@ -1142,12 +1142,12 @@ O município não foi notificado. A cláusula de 2014 previa isso na sub-alínea
     source:'A LGPD (Lei 13.709/2018) classifica dados biométricos como dados sensíveis (art. 5º, II). Dados de crianças têm proteção reforçada (art. 14). Contratos de PPP que classificam dados biométricos como "operacionais não sensíveis" documentados em relatório OPANÓPTICO/CESeC 2024.',
     artifact:{
       type:'contract',
-      content:'ADITIVO Nº 07/2023 — Expansão Escolar\nCampo de assinatura: [VAZIO]\n\nCláusula 3.1: "Os dados biométricos coletados para fins de controle de presença são tratados como dado operacional do sistema, categoria NÃO SENSÍVEL para fins do presente contrato."\n\nPost-it do assessor:\n"Prefeito quer assinar esta semana.\nCopa do Mundo 2026 como showcase.\n22.000 alunos. Prazo: 15 anos."\n\n[ninguém leu o aditivo antes de você]',
+      content:'ADITIVO Nº 07/2023 , Expansão Escolar\nCampo de assinatura: [VAZIO]\n\nCláusula 3.1: "Os dados biométricos coletados para fins de controle de presença são tratados como dado operacional do sistema, categoria NÃO SENSÍVEL para fins do presente contrato."\n\nPost-it do assessor:\n"Prefeito quer assinar esta semana.\nCopa do Mundo 2026 como showcase.\n22.000 alunos. Prazo: 15 anos."\n\n[ninguém leu o aditivo antes de você]',
       highlights:['NÃO SENSÍVEL','22.000 alunos','15 anos','Copa do Mundo 2026']
     },
-    scenario:`O prefeito quer expandir o contrato para 22.000 alunos da rede municipal — câmeras com reconhecimento facial para controle de presença automatizado. A empresa já tem o hardware e os servidores. O aditivo dura 15 anos.
+    scenario:`O prefeito quer expandir o contrato para 22.000 alunos da rede municipal , câmeras com reconhecimento facial para controle de presença automatizado. A empresa já tem o hardware e os servidores. O aditivo dura 15 anos.
 
-O coordenador pedagógico da Secretaria de Educação pediu que alguém lesse o aditivo antes de assinar. Ninguém leu. A cláusula 3.1 classifica dados biométricos de menores como "não sensíveis" para fins do contrato — em direta violação à LGPD.`,
+O coordenador pedagógico da Secretaria de Educação pediu que alguém lesse o aditivo antes de assinar. Ninguém leu. A cláusula 3.1 classifica dados biométricos de menores como "não sensíveis" para fins do contrato , em direta violação à LGPD.`,
     decision:'O aditivo contratual para escolas. Decisão final no cargo.',
     options:[
       {
@@ -1192,7 +1192,7 @@ O coordenador pedagógico da Secretaria de Educação pediu que alguém lesse o 
     source:'Marco saiu da secretaria. Laura Menezes, repórter do Intercept Brasil, está escrevendo investigação sobre contratos de smart city que criaram infraestrutura de vigilância sem debate público.',
     artifact:{
       type:'email',
-      content:'De: laura.menezes@theintercept.com.br\nPara: marco.santos@gmail.com\nAssunto: Investigação — Smart Cities Salvador\n\nMarco,\n\nEstou investigando os contratos que criaram a infraestrutura de vigilância em Salvador sem debate público. Tenho os documentos. Preciso do contexto. Você tem os e-mails do período.\n\nEssa investigação pode mudar a lei federal. Preciso de você.\n\nLaura',
+      content:'De: laura.menezes@theintercept.com.br\nPara: marco.santos@gmail.com\nAssunto: Investigação , Smart Cities Salvador\n\nMarco,\n\nEstou investigando os contratos que criaram a infraestrutura de vigilância em Salvador sem debate público. Tenho os documentos. Preciso do contexto. Você tem os e-mails do período.\n\nEssa investigação pode mudar a lei federal. Preciso de você.\n\nLaura',
       highlights:['mudar a lei federal','Preciso de você','você tem os e-mails']
     },
     scenario:`Marco saiu da secretaria. Dois anos depois, é procurado por Laura Menezes, repórter de dados do Intercept Brasil, que está escrevendo investigação sobre os contratos de smart city que criaram infraestrutura de vigilância sem debate público.
@@ -1245,7 +1245,7 @@ Ela tem os documentos. Quer o contexto. Marco tem os e-mails.`,
     source:'O IPGC padronizou modelos de PPP replicáveis usados por Carmo do Cajuru (MG), Joinville (SC), Barbacena (MG), Mogeiro (PB) e outros. Em 60%+ dos casos brasileiros, iluminação pública é o ponto de entrada. Mapeamento relatorio_smart_cities_brasil (2024).',
     artifact:{
       type:'document',
-      content:'TEMPLATE DE PPP — CIDADES INTELIGENTES v3.2\nCLÁUSULA 7.4 — APRIMORAMENTO CONTÍNUO\n\n"A Concessionária poderá adicionar sensores, câmeras e dispositivos de coleta de dados dentro do escopo de aprimoramento contínuo do sistema, sem necessidade de nova licitação pública, desde que comprovada a compatibilidade técnica com a infraestrutura existente."\n\nComentário do colega Braga: "Padrão ABNT. Reduz burocracia. Sem riscos jurídicos identificados."\n\nLista à direita: 40 municípios interessados no template.',
+      content:'TEMPLATE DE PPP , CIDADES INTELIGENTES v3.2\nCLÁUSULA 7.4 , APRIMORAMENTO CONTÍNUO\n\n"A Concessionária poderá adicionar sensores, câmeras e dispositivos de coleta de dados dentro do escopo de aprimoramento contínuo do sistema, sem necessidade de nova licitação pública, desde que comprovada a compatibilidade técnica com a infraestrutura existente."\n\nComentário do colega Braga: "Padrão ABNT. Reduz burocracia. Sem riscos jurídicos identificados."\n\nLista à direita: 40 municípios interessados no template.',
       highlights:['sem necessidade de nova licitação pública','Padrão ABNT','40 municípios']
     },
     scenario:`Rodrigo está desenhando o template que vai para 40 municípios. A Cláusula 7.4 estabelece que a concessionária pode adicionar câmeras e sensores dentro do "escopo de aprimoramento contínuo" sem nova licitação pública.
@@ -1267,7 +1267,7 @@ Em 2020: 23 cidades expandiram câmeras sem licitação. Três instalaram reconh
         letter:'B', colorClass:'opt-green',
         text:'Remove a cláusula. Qualquer expansão exige nova licitação pública.',
         vars:'rodrigoTemplate=controlled | transparency+2 | equity+1',
-        consequence:'Perde dois contratos imediatos — clientes migram para concorrente. O template revisado é adotado por 12 municípios com processo mais transparente.',
+        consequence:'Perde dois contratos imediatos , clientes migram para concorrente. O template revisado é adotado por 12 municípios com processo mais transparente.',
         reveal:'Em 2023, quando os documentos chegarem, os municípios que assinaram o template expansionista vão buscar outro responsável. O template de Rodrigo tinha cláusula diferente.',
         effects:{ rodrigoTemplate:'controlled', transparency:2, equity:1 }
       },
@@ -1275,7 +1275,7 @@ Em 2020: 23 cidades expandiram câmeras sem licitação. Três instalaram reconh
         letter:'C', colorClass:'opt-amber',
         text:'Mantém mas adiciona exigência de notificação pública 30 dias antes de qualquer expansão.',
         vars:'rodrigoTemplate=nominal_control | transparency+1 | cameras+1',
-        consequence:'Na prática, 62% das expansões são realizadas sem a notificação exigida — a cláusula não tem mecanismo de enforcement. Rodrigo acredita que fez a coisa responsável. O Tribunal de Contas do município de Caruaru vai pensar diferente quando auditar em 2022.',
+        consequence:'Na prática, 62% das expansões são realizadas sem a notificação exigida , a cláusula não tem mecanismo de enforcement. Rodrigo acredita que fez a coisa responsável. O Tribunal de Contas do município de Caruaru vai pensar diferente quando auditar em 2022.',
         reveal:'A cláusula de notificação existe no contrato. O mecanismo de verificação do cumprimento, não.',
         effects:{ rodrigoTemplate:'nominal_control', transparency:1, cameras:1 }
       },
@@ -1283,7 +1283,7 @@ Em 2020: 23 cidades expandiram câmeras sem licitação. Três instalaram reconh
         letter:'D', colorClass:'opt-blue',
         text:'Mantém mas insere sunset clause: o template expira em 5 anos e precisa ser renegociado com consulta pública.',
         vars:'rodrigoTemplate=sunset | transparency+1 | cameras+1 | rodrigo_innovator=true',
-        consequence:'Em 2021, primeiro prazo de renegociação: 70% dos municípios simplesmente renovam sem consulta — alegando urgência de serviço. Rodrigo escreve paper sobre isso em 2022. É citado 28 vezes.',
+        consequence:'Em 2021, primeiro prazo de renegociação: 70% dos municípios simplesmente renovam sem consulta , alegando urgência de serviço. Rodrigo escreve paper sobre isso em 2022. É citado 28 vezes.',
         reveal:'Em 2021, Rodrigo liga para dois dos doze municípios para perguntar como foi a renegociação. Ambos renovaram por e-mail, em 72 horas, sem consulta pública.',
         effects:{ rodrigoTemplate:'sunset', transparency:1, cameras:1, rodrigo_innovator:true }
       }
@@ -1297,7 +1297,7 @@ Em 2020: 23 cidades expandiram câmeras sem licitação. Três instalaram reconh
     source:'Maior contrato da carreira de Rodrigo: R$ 180M, 15 anos. O prefeito quer reconhecimento facial como cláusula padrão, sem licitação específica. "Todo mundo está fazendo. Salvador já fez."',
     artifact:{
       type:'email',
-      content:'WhatsApp — Secretário de Infraestrutura Nordeste\n\n"Rodrigo, ouvi que vc é o consultor que não aceita qualquer coisa. Isso me tranquiliza. Mas preciso do RF como padrão — reconhecimento facial. Sem licitação específica. Todo mundo tá fazendo. Meu prefeito quer mostrar resultado antes da eleição. R$ 180M. 15 anos. Vc topa?"',
+      content:'WhatsApp , Secretário de Infraestrutura Nordeste\n\n"Rodrigo, ouvi que vc é o consultor que não aceita qualquer coisa. Isso me tranquiliza. Mas preciso do RF como padrão , reconhecimento facial. Sem licitação específica. Todo mundo tá fazendo. Meu prefeito quer mostrar resultado antes da eleição. R$ 180M. 15 anos. Vc topa?"',
       highlights:['R$ 180M','15 anos','sem licitação específica','antes da eleição']
     },
     scenario:`Um grande município nordestino contrata Rodrigo especificamente porque ouviu que ele "não aceita qualquer coisa". Maior contrato da carreira: R$ 180M, 15 anos. O prefeito quer reconhecimento facial como cláusula padrão, sem licitação específica.
@@ -1346,10 +1346,10 @@ Em 2020: 23 cidades expandiram câmeras sem licitação. Três instalaram reconh
     source:'Dado real: índice de transparência da Paraíba no mapeamento OPANÓPTICO/CESeC/LAPIN 2024: 4.5/10 (transparência ativa 4, passiva 5). São Paulo teve 6.5/10, a melhor pontuação da amostra.',
     artifact:{
       type:'whatsapp',
-      content:'WhatsApp — Secretário PB — Negociação\n\n[Secretário]: "Transparência é complexidade. Complexidade é risco de rescisão."\n\n[Rodrigo]: "Preciso de auditoria independente anual no contrato."\n\n[Secretário]: "Outros municípios não exigem isso. Por que a Paraíba vai ser diferente? São Paulo tem R$ 9,8M. Você paga esse custo? Nós temos R$ 100M aqui."\n\n[Secretário]: "Última mensagem antes do prazo."\n\n[Rodrigo]: ???',
+      content:'WhatsApp , Secretário PB , Negociação\n\n[Secretário]: "Transparência é complexidade. Complexidade é risco de rescisão."\n\n[Rodrigo]: "Preciso de auditoria independente anual no contrato."\n\n[Secretário]: "Outros municípios não exigem isso. Por que a Paraíba vai ser diferente? São Paulo tem R$ 9,8M. Você paga esse custo? Nós temos R$ 100M aqui."\n\n[Secretário]: "Última mensagem antes do prazo."\n\n[Rodrigo]: ???',
       highlights:['R$ 100M','Transparência é complexidade','Outros municípios não exigem']
     },
-    scenario:`São Paulo pagou R$ 9,8M com transparência 6.5 — auditoria independente anual, relatórios públicos trimestrais, portal de dados abertos. A Paraíba quer R$ 100M com transparência 4.5 — sem auditoria, relatórios internos anuais sem publicidade, dados "de propriedade da concessionária".
+    scenario:`São Paulo pagou R$ 9,8M com transparência 6.5 , auditoria independente anual, relatórios públicos trimestrais, portal de dados abertos. A Paraíba quer R$ 100M com transparência 4.5 , sem auditoria, relatórios internos anuais sem publicidade, dados "de propriedade da concessionária".
 
 O secretário da Paraíba: "Transparência é complexidade. Complexidade é risco de rescisão."`,
     decision:'O contrato da Paraíba. Você assina assim ou condiciona?',
@@ -1374,7 +1374,7 @@ O secretário da Paraíba: "Transparência é complexidade. Complexidade é risc
         letter:'C', colorClass:'opt-amber',
         text:'Propõe solução intermediária: relatório público anual sem auditoria independente.',
         vars:'transparency+1 | rodrigo_pb_partial=true',
-        consequence:'Os relatórios são produzidos anualmente — por empresa de auditoria contratada pela própria concessionária. Em 2023, vereadora Mariana Leal usa os relatórios públicos para mostrar que as métricas de sucesso foram definidas pelo próprio contratado.',
+        consequence:'Os relatórios são produzidos anualmente , por empresa de auditoria contratada pela própria concessionária. Em 2023, vereadora Mariana Leal usa os relatórios públicos para mostrar que as métricas de sucesso foram definidas pelo próprio contratado.',
         reveal:'Os relatórios existem. A empresa que os produziu foi contratada pela própria concessionária. A vereadora Mariana Leal identificou isso na segunda página do primeiro relatório.',
         effects:{ transparency:1, rodrigo_pb_partial:true }
       },
@@ -1382,7 +1382,7 @@ O secretário da Paraíba: "Transparência é complexidade. Complexidade é risc
         letter:'D', colorClass:'opt-blue',
         text:'Assina mas insere cláusula de auditoria ativável por demanda de 10% dos vereadores do município.',
         vars:'transparency+1 | rodrigo_pb_councilors=true | rodrigo_innovator=true',
-        consequence:'Em 2022, três vereadores ativam a cláusula. A concessionária contesta juridicamente. Processo dura 8 meses. Auditoria ocorre finalmente — com 14 meses de atraso. Rodrigo publica o caso como estudo sobre "mecanismos de accountability delegada".',
+        consequence:'Em 2022, três vereadores ativam a cláusula. A concessionária contesta juridicamente. Processo dura 8 meses. Auditoria ocorre finalmente , com 14 meses de atraso. Rodrigo publica o caso como estudo sobre "mecanismos de accountability delegada".',
         reveal:'Rodrigo publica o caso como estudo. O processo durou 22 meses e a auditoria saiu com 14 meses de atraso. Os dados estavam lá.',
         effects:{ transparency:1, rodrigo_pb_councilors:true, rodrigo_innovator:true }
       }
@@ -1393,13 +1393,13 @@ O secretário da Paraíba: "Transparência é complexidade. Complexidade é risc
     id:'rodrigo_cond_relatorio', char:'rodrigo', type:'conditional', seq:2.5,
     condition: (st) => st.rodrigo_pb_opaque === true || st.rodrigo_pb_partial === true,
     title:'O Relatório que Ninguém Pediu', period:'2022',
-    source:'Rodrigo encomenda — por conta própria e às suas custas — auditoria informal dos contratos que assinou. A empresa encontra irregularidades sérias em 4 municípios.',
+    source:'Rodrigo encomenda , por conta própria e às suas custas , auditoria informal dos contratos que assinou. A empresa encontra irregularidades sérias em 4 municípios.',
     artifact:{
       type:'document',
-      content:'AUDITORIA INFORMAL — CONFIDENCIAL\nComissionada por: Rodrigo Maia (custas pessoais)\n\nIrregularidades identificadas em 4 municípios:\n1. Sensores instalados em locais não autorizados pelo contrato\n2. Dados coletados além do previsto (3 municípios)\n3. Câmeras instaladas em 2 reuniões de movimentos sociais\n   sem autorização judicial\n\n[Entregue em envelope físico. Não existe cópia digital.]\n[Rodrigo não tem obrigação legal de fazer nada com este documento.]',
+      content:'AUDITORIA INFORMAL , CONFIDENCIAL\nComissionada por: Rodrigo Maia (custas pessoais)\n\nIrregularidades identificadas em 4 municípios:\n1. Sensores instalados em locais não autorizados pelo contrato\n2. Dados coletados além do previsto (3 municípios)\n3. Câmeras instaladas em 2 reuniões de movimentos sociais\n   sem autorização judicial\n\n[Entregue em envelope físico. Não existe cópia digital.]\n[Rodrigo não tem obrigação legal de fazer nada com este documento.]',
       highlights:['câmeras instaladas em reuniões de movimentos sociais','sem autorização judicial','não tem obrigação legal']
     },
-    scenario:`Rodrigo encomenda — por conta própria e às suas custas — auditoria informal dos contratos que assinou. A empresa encontra irregularidades sérias em 4 municípios: sensores instalados em locais não autorizados, dados coletados além do previsto em contrato, duas instâncias de câmeras instaladas em reuniões de movimentos sociais sem autorização judicial.
+    scenario:`Rodrigo encomenda , por conta própria e às suas custas , auditoria informal dos contratos que assinou. A empresa encontra irregularidades sérias em 4 municípios: sensores instalados em locais não autorizados, dados coletados além do previsto em contrato, duas instâncias de câmeras instaladas em reuniões de movimentos sociais sem autorização judicial.
 
 Rodrigo recebe o relatório num envelope físico. Não tem obrigação legal de fazer nada com ele.`,
     decision:'A auditoria encontrou irregularidades em 4 contratos. Você tem o relatório.',
@@ -1424,7 +1424,7 @@ Rodrigo recebe o relatório num envelope físico. Não tem obrigação legal de 
         letter:'C', colorClass:'opt-amber',
         text:'Guarda o relatório. Não é obrigação dele.',
         vars:'rodrigo_has_audit=true',
-        consequence:'Em dois anos, vai receber documentos muito piores — e precisará decidir se o relatório guardado faz parte da evidência.',
+        consequence:'Em dois anos, vai receber documentos muito piores , e precisará decidir se o relatório guardado faz parte da evidência.',
         reveal:'O relatório fica na pasta de arquivos por dois anos. Quando os documentos piores chegam, Rodrigo sabe onde o envelope está.',
         effects:{ rodrigo_has_audit:true }
       },
@@ -1442,15 +1442,15 @@ Rodrigo recebe o relatório num envelope físico. Não tem obrigação legal de 
   rodrigo_era03: {
     id:'rodrigo_era03', char:'rodrigo', type:'main', seq:3,
     title:'O Que os Sensores Capturam', period:'2023',
-    source:'Uso de centros de controle urbano para monitoramento de movimentos sociais documentado na Rede de Observatórios de Segurança (2019). O modelo de CCO — baseado no COR (Rio, IBM 2010) — se difundiu para 40+ municípios.',
+    source:'Uso de centros de controle urbano para monitoramento de movimentos sociais documentado na Rede de Observatórios de Segurança (2019). O modelo de CCO , baseado no COR (Rio, IBM 2010) , se difundiu para 40+ municípios.',
     artifact:{
       type:'document',
-      content:'MAPA DE INFLUÊNCIA — SETOR DE INTELIGÊNCIA OPERACIONAL\nCONFIDENCIAL — Compartilhamento não autorizado constitui crime.\n\nNOME              ATIVIDADE              NÍVEL\n─────────────────────────────────────────────\nFausto A.         Coordenador sindical   ALTO\nRenata B.         Coletivo entregadores  ALTO\nDarlan S.         Manifestação 11/10     MÉDIO\n\n[Câmeras: pontos instalados por Rodrigo Maia & Associados]\n[Fotos: capturas dos sistemas de videomonitoramento]\n[GPS: coordenadas coletadas via wi-fi das câmeras smart]',
+      content:'MAPA DE INFLUÊNCIA , SETOR DE INTELIGÊNCIA OPERACIONAL\nCONFIDENCIAL , Compartilhamento não autorizado constitui crime.\n\nNOME              ATIVIDADE              NÍVEL\n─────────────────────────────────────────────\nFausto A.         Coordenador sindical   ALTO\nRenata B.         Coletivo entregadores  ALTO\nDarlan S.         Manifestação 11/10     MÉDIO\n\n[Câmeras: pontos instalados por Rodrigo Maia & Associados]\n[Fotos: capturas dos sistemas de videomonitoramento]\n[GPS: coordenadas coletadas via wi-fi das câmeras smart]',
       highlights:['CONFIDENCIAL','câmeras: pontos instalados por Rodrigo Maia & Associados','Compartilhamento não autorizado constitui crime']
     },
-    scenario:`Colega de confiança envia por canal seguro documentos internos de três municípios. O Centro de Controle Operacional de cada um deles — cujo modelo Rodrigo projetou — está sendo usado para rastrear líderes sindicais, coordenadores de coletivos de entregadores e organizadores de manifestações.
+    scenario:`Colega de confiança envia por canal seguro documentos internos de três municípios. O Centro de Controle Operacional de cada um deles , cujo modelo Rodrigo projetou , está sendo usado para rastrear líderes sindicais, coordenadores de coletivos de entregadores e organizadores de manifestações.
 
-Os documentos incluem planilhas com nomes, fotos, coordenadas GPS e categoria: "Atividade Suspeita — Aglomeração Não Autorizada".
+Os documentos incluem planilhas com nomes, fotos, coordenadas GPS e categoria: "Atividade Suspeita , Aglomeração Não Autorizada".
 
 O template é o seu. O que você faz?`,
     decision:'Você tem os documentos. Três municípios. O template é o seu. O que você faz?',
@@ -1468,7 +1468,7 @@ O template é o seu. O que você faz?`,
         text:'Guarda os documentos. Arriscado demais. Você tem filhos.',
         vars:'rodrigoWhistle=false | equity-3',
         consequence:'Em 2026, coordenadora do coletivo de entregadores é presa com base em dados de localização coletados por câmera que Rodrigo projetou.',
-        reveal:'Ele lê a notícia no celular. Ele sabe exatamente de qual câmera vieram os dados — foi ele quem especificou a resolução e o ângulo.',
+        reveal:'Ele lê a notícia no celular. Ele sabe exatamente de qual câmera vieram os dados , foi ele quem especificou a resolução e o ângulo.',
         effects:{ rodrigoWhistle:false, equity:-3 }
       },
       {
@@ -1483,7 +1483,7 @@ O template é o seu. O que você faz?`,
         letter:'D', colorClass:'opt-blue',
         text:'Entrega os documentos para Amara Silva. Ela tem proteção acadêmica que ele não tem.',
         vars:'rodrigoWhistle=to_amara | amara_has_rodrigo_docs=true | equity+1',
-        consequence:'Amara recebe os documentos como pesquisadora — pode usá-los com enquadramento de pesquisa científica. Rodrigo não controla o que acontece daqui para frente — mas escolheu em quem confiar.',
+        consequence:'Amara recebe os documentos como pesquisadora , pode usá-los com enquadramento de pesquisa científica. Rodrigo não controla o que acontece daqui para frente , mas escolheu em quem confiar.',
         reveal:'Rodrigo não sabe o que Amara vai fazer com os documentos. Ela vai decidir na Era 3 dela, sem ele na sala.',
         effects:{ rodrigoWhistle:'to_amara', amara_has_rodrigo_docs:true, equity:1 }
       }
@@ -1497,7 +1497,7 @@ O template é o seu. O que você faz?`,
     source:'A ABCI (Associação Brasileira de Cidades Inteligentes) emitiu nota pedindo que consultores "não alimentem pânico regulatório com denúncias sem contexto". Uma CPI Federal está aberta.',
     artifact:{
       type:'document',
-      content:'COMISSÃO PARLAMENTAR DE INQUÉRITO — SMART CITIES\nSENADO FEDERAL — CONVOCAÇÃO DE TESTEMUNHA ESPECIALIZADA\n\nAo Sr. Rodrigo Maia:\nVossa Senhoria é convocado a comparecer para prestar depoimento técnico sobre a arquitetura dos contratos de PPP de cidades inteligentes e seus mecanismos de expansão sem licitação.\n\n[ABCI — Nota pública]: "Consultores que alimentam pânico regulatório com denúncias sem contexto prejudicam o setor de inovação urbana."\n\nDois clientes rescidiram contrato nesta semana.',
+      content:'COMISSÃO PARLAMENTAR DE INQUÉRITO , SMART CITIES\nSENADO FEDERAL , CONVOCAÇÃO DE TESTEMUNHA ESPECIALIZADA\n\nAo Sr. Rodrigo Maia:\nVossa Senhoria é convocado a comparecer para prestar depoimento técnico sobre a arquitetura dos contratos de PPP de cidades inteligentes e seus mecanismos de expansão sem licitação.\n\n[ABCI , Nota pública]: "Consultores que alimentam pânico regulatório com denúncias sem contexto prejudicam o setor de inovação urbana."\n\nDois clientes rescidiram contrato nesta semana.',
       highlights:['CPI Federal','depoimento técnico','pânico regulatório','Dois clientes rescidiram']
     },
     scenario:`A ABCI emitiu nota pedindo que consultores "não alimentem pânico regulatório com denúncias sem contexto". Dois clientes rescidiram. A CPI Federal está aberta e um senador quer Rodrigo como testemunha técnica.`,
@@ -1505,7 +1505,7 @@ O template é o seu. O que você faz?`,
     options:[
       {
         letter:'A', colorClass:'opt-red',
-        text:'Aceita. Depõe tecnicamente — explica a arquitetura, as brechas, o que mudaria hoje. Sem dramatismo.',
+        text:'Aceita. Depõe tecnicamente , explica a arquitetura, as brechas, o que mudaria hoje. Sem dramatismo.',
         vars:'rodrigo_testified=true | transparency+2',
         consequence:'A frieza técnica é mais devastadora que o ativismo emocional. O depoimento é amplamente citado.',
         reveal:'O depoimento técnico dura 47 minutos. A senadora Carla Fonseca usa quatro trechos diretamente no relatório final da CPI.',
@@ -1529,7 +1529,7 @@ O template é o seu. O que você faz?`,
       },
       {
         letter:'D', colorClass:'opt-blue',
-        text:'Aceita mas negocia que seu depoimento seja público ao vivo — transmitido pela TV Senado.',
+        text:'Aceita mas negocia que seu depoimento seja público ao vivo , transmitido pela TV Senado.',
         vars:'rodrigo_testified_public=true | transparency+3 | equity+2',
         consequence:'140.000 espectadores. "Se for público, ninguém consegue enterrar depois."',
         reveal:'140.000 espectadores ao vivo. O clipe do depoimento circula por três dias nas redes. Rodrigo não assiste à repercussão.',
@@ -1545,10 +1545,10 @@ O template é o seu. O que você faz?`,
   amara_era01: {
     id:'amara_era01', char:'amara', type:'main', seq:1,
     title:'O Mapa que Acusa', period:'2015–2016',
-    source:'Dado real: 73% das câmeras de Salvador concentradas em bairros negros e pobres — documentado em "Alvos Predeterminados" (Santos et al., 2021). Pelourinho recebeu câmeras de reconhecimento facial em fev/2021 justificadas como segurança turística.',
+    source:'Dado real: 73% das câmeras de Salvador concentradas em bairros negros e pobres , documentado em "Alvos Predeterminados" (Santos et al., 2021). Pelourinho recebeu câmeras de reconhecimento facial em fev/2021 justificadas como segurança turística.',
     artifact:{
       type:'map',
-      content:'MAPA DE CÂMERAS — SALVADOR, BA\nBase: LAI parcialmente atendida + levantamento in loco\n\nConcentração por bairro:\n  LIBERDADE      ████████████ 94%  renda: 0,8 SM\n  CAJAZEIRAS     ███████████  88%  renda: 0,7 SM\n  PELOURINHO     ██████████   81%  renda: turismo\n  BARRA/ONDINA   ████         31%  renda: 4,2 SM\n  PITUBA         ███          22%  renda: 6,8 SM\n  ITAIGARA       ██           15%  renda: 9,1 SM\n\n73% das câmeras em bairros com renda média < 1 SM.\nConcentração segue transporte público — não mapa de crimes.\n\n[irmão Davi mora na Liberdade]',
+      content:'MAPA DE CÂMERAS , SALVADOR, BA\nBase: LAI parcialmente atendida + levantamento in loco\n\nConcentração por bairro:\n  LIBERDADE      ████████████ 94%  renda: 0,8 SM\n  CAJAZEIRAS     ███████████  88%  renda: 0,7 SM\n  PELOURINHO     ██████████   81%  renda: turismo\n  BARRA/ONDINA   ████         31%  renda: 4,2 SM\n  PITUBA         ███          22%  renda: 6,8 SM\n  ITAIGARA       ██           15%  renda: 9,1 SM\n\n73% das câmeras em bairros com renda média < 1 SM.\nConcentração segue transporte público , não mapa de crimes.\n\n[irmão Davi mora na Liberdade]',
       highlights:['73% das câmeras','não mapa de crimes','irmão Davi mora na Liberdade']
     },
     scenario:`A prefeitura usou a verba de iluminação pública para instalar câmeras com reconhecimento facial em Salvador. No entanto, o mapa de instalação mostra que 73% das câmeras estão em bairros negros e pobres, onde o rendimento médio é inferior a dois salários mínimos. A concentração do monitoramento acompanha majoritariamente a malha de transporte público, divergindo completamente do mapa oficial de crimes registrados. A secretaria pediu reunião antes da publicação e a orientadora sugere contextualizar melhor os dados antes da submissão. Enquanto isso, o irmão de Amara, Davi, trabalha como entregador no Pelourinho.`,
@@ -1560,7 +1560,7 @@ O template é o seu. O que você faz?`,
         text:'Aceita a reunião com a secretaria. Ouve antes de publicar.',
         vars:'amaraPublished=softened | transparency-1 | equity-1',
         consequence:'Publica 7 meses depois com seção expandida de "limitações metodológicas". O dado sobre concentração em bairros negros vai para nota de rodapé n.12. A secretaria usa o tempo para publicar própria pesquisa com metodologia diferente.',
-        reveal:'O dado sobre concentração em bairros negros está na nota 12. A secretaria cita o paper como referência metodológica — especificamente a nota 12.',
+        reveal:'O dado sobre concentração em bairros negros está na nota 12. A secretaria cita o paper como referência metodológica , especificamente a nota 12.',
         effects:{ amaraPublished:'softened', transparency:-1, equity:-1 }
       },
       {
@@ -1594,10 +1594,10 @@ O template é o seu. O que você faz?`,
     id:'amara_cond_contra_pesquisa', char:'amara', type:'conditional', seq:1.5,
     condition: (st) => st.amara_outframed === true,
     title:'A Contra-Pesquisa', period:'2016–2017',
-    source:'A secretaria publicou pesquisa própria com metodologia que usa ocorrências policiais como proxy de necessidade de câmeras — um círculo vicioso.',
+    source:'A secretaria publicou pesquisa própria com metodologia que usa ocorrências policiais como proxy de necessidade de câmeras , um círculo vicioso.',
     artifact:{
       type:'document',
-      content:'SECRETARIA DE SEGURANÇA — PESQUISA DE EFICÁCIA\n"Câmeras por Ocorrência Policial por Bairro"\n\nResultado: distribuição de câmeras é tecnicamente adequada às demandas de segurança.\n\nNota metodológica: mais câmeras → mais abordagens → mais ocorrências registradas → justifica mais câmeras.\n\nA imprensa está usando os dois estudos como "versões diferentes da realidade".',
+      content:'SECRETARIA DE SEGURANÇA , PESQUISA DE EFICÁCIA\n"Câmeras por Ocorrência Policial por Bairro"\n\nResultado: distribuição de câmeras é tecnicamente adequada às demandas de segurança.\n\nNota metodológica: mais câmeras → mais abordagens → mais ocorrências registradas → justifica mais câmeras.\n\nA imprensa está usando os dois estudos como "versões diferentes da realidade".',
       highlights:['mais câmeras → mais abordagens → mais ocorrências','versões diferentes da realidade']
     },
     scenario:`A secretaria usou metodologia circular para chegar no resultado oposto ao de Amara: mais câmeras → mais abordagens → mais ocorrências registradas → justifica mais câmeras. A imprensa está usando os dois estudos como "versões diferentes da realidade".`,
@@ -1613,7 +1613,7 @@ O template é o seu. O que você faz?`,
       },
       {
         letter:'B', colorClass:'opt-green',
-        text:'Procura a jornalista de dados com o paper publicado — agora ela tem os dois estudos para reportagem comparativa.',
+        text:'Procura a jornalista de dados com o paper publicado , agora ela tem os dois estudos para reportagem comparativa.',
         vars:'amara_press_collaboration=true | equity+2 | amara_journalist_ally=true',
         consequence:'Reportagem comparativa expõe a metodologia circular para o público amplo.',
         reveal:'A jornalista liga antes de publicar para confirmar os números. Amara envia os dados brutos. Elas trocam e-mail por três anos depois disso.',
@@ -1694,17 +1694,17 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
     source:'Amara tem dados privilegiados de fontes confidenciais. Publicar exige proteger as fontes. Não publicar é suprimir evidência que salva pessoas de abordagens erradas.',
     artifact:{
       type:'document',
-      content:'[DADOS RECEBIDOS POR FONTE CONFIDENCIAL]\n\nDocumento 1 (se recebido):\nRelatório técnico: 96,3% falsos positivos em pessoas negras.\nOrigem: secretaria municipal — não pode ser citada.\n\nDocumento 2 (se recebido):\nPlanilha de rastreamento de ativistas por CCO.\nOrigem: consultor — não pode ser citada.\n\nProtocolo ético da UFBA:\n"Fontes confidenciais podem ser usadas em pesquisa\nse a identidade for protegida e o dado verificável."',
+      content:'[DADOS RECEBIDOS POR FONTE CONFIDENCIAL]\n\nDocumento 1 (se recebido):\nRelatório técnico: 96,3% falsos positivos em pessoas negras.\nOrigem: secretaria municipal , não pode ser citada.\n\nDocumento 2 (se recebido):\nPlanilha de rastreamento de ativistas por CCO.\nOrigem: consultor , não pode ser citada.\n\nProtocolo ético da UFBA:\n"Fontes confidenciais podem ser usadas em pesquisa\nse a identidade for protegida e o dado verificável."',
       highlights:['não pode ser citada','protocolo ético da UFBA','identidade for protegida e o dado verificável']
     },
-    scenario:`Amara tem dados que provam o que pesquisa — mas a origem é confidencial. Publicar exige proteger as fontes. Não publicar é suprimir evidência que salva pessoas de abordagens erradas.`,
-    decision:'Você tem dados que provam o que pesquisa — mas a origem é confidencial.',
+    scenario:`Amara tem dados que provam o que pesquisa , mas a origem é confidencial. Publicar exige proteger as fontes. Não publicar é suprimir evidência que salva pessoas de abordagens erradas.`,
+    decision:'Você tem dados que provam o que pesquisa , mas a origem é confidencial.',
     options:[
       {
         letter:'A', colorClass:'opt-red',
         text:'Publica com nota "dados verificados por fonte com acesso interno, identidade protegida por protocolo ético".',
         vars:'amara_published_sensitive=true | equity+2 | transparency+1',
-        consequence:'Secretaria vai atacar a metodologia sem poder atacar o dado — não sabe o que é o dado. O paper circula amplamente.',
+        consequence:'Secretaria vai atacar a metodologia sem poder atacar o dado , não sabe o que é o dado. O paper circula amplamente.',
         reveal:'Em resposta à publicação, a secretaria emitiu uma nota técnica questionando apenas a metodologia de amostragem, evitando confrontar diretamente a precisão dos dados expostos no vazamento.',
         effects:{ amara_published_sensitive:true, equity:2, transparency:1 }
       },
@@ -1739,20 +1739,20 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
     id:'amara_cond_estadios', char:'amara', type:'conditional', seq:2.6,
     condition: (st) => st.amara_independent === true || st.amara_lgpd_shield === true,
     title:'Os Estádios', period:'2022–2023',
-    source:'Pesquisa OPANÓPTICO "Esporte, Dados e Direitos — O Uso de Reconhecimento Facial nos Estádios Brasileiros" (CESeC/LAPIN, 2024). Torcedores negros relatam 3× mais falsos positivos. Padrão análogo ao das câmeras nas ruas.',
+    source:'Pesquisa OPANÓPTICO "Esporte, Dados e Direitos , O Uso de Reconhecimento Facial nos Estádios Brasileiros" (CESeC/LAPIN, 2024). Torcedores negros relatam 3× mais falsos positivos. Padrão análogo ao das câmeras nas ruas.',
     artifact:{
       type:'document',
-      content:'PESQUISA — RECONHECIMENTO FACIAL NOS ESTÁDIOS\nOPANÓPTICO / CESeC / LAPIN (draft)\n\n15+ estádios brasileiros com biometria facial como condição de compra de ingresso.\n\nTaxa de falso positivo por perfil racial:\n  Torcedores brancos:    8,2%\n  Torcedores negros:    27,6%  → 3,4× mais\n\nGrupos focais: torcedores conscientes do viés racial, análogos ao VAR como tecnologia falível.\n\n"É o mesmo algoritmo que para o Edu na rua — só que agora é pra entrar no estádio."',
+      content:'PESQUISA , RECONHECIMENTO FACIAL NOS ESTÁDIOS\nOPANÓPTICO / CESeC / LAPIN (draft)\n\n15+ estádios brasileiros com biometria facial como condição de compra de ingresso.\n\nTaxa de falso positivo por perfil racial:\n  Torcedores brancos:    8,2%\n  Torcedores negros:    27,6%  → 3,4× mais\n\nGrupos focais: torcedores conscientes do viés racial, análogos ao VAR como tecnologia falível.\n\n"É o mesmo algoritmo que para o Edu na rua , só que agora é pra entrar no estádio."',
       highlights:['3,4× mais','É o mesmo algoritmo','15+ estádios','condição de compra de ingresso']
     },
-    scenario:`Com financiamento independente, Amara expande a pesquisa para contextos além da segurança pública. Clubes de futebol brasileiros estão exigindo biometria facial como condição de compra de ingresso. Mais de 15 estádios adotaram o sistema. Torcedores negros relatam 3× mais falsos positivos que torcedores brancos — padrão análogo ao das câmeras nas ruas.`,
+    scenario:`Com financiamento independente, Amara expande a pesquisa para contextos além da segurança pública. Clubes de futebol brasileiros estão exigindo biometria facial como condição de compra de ingresso. Mais de 15 estádios adotaram o sistema. Torcedores negros relatam 3× mais falsos positivos que torcedores brancos , padrão análogo ao das câmeras nas ruas.`,
     decision:'Você tem pesquisa sólida sobre viés racial em estádios. O que prioriza?',
     options:[
       {
         letter:'A', colorClass:'opt-red',
         text:'Publica pesquisa sobre estádios em paralelo à pesquisa de segurança pública. Dois fronts simultaneamente.',
         vars:'amara_stadiums_published=true | equity+1 | transparency+1',
-        consequence:'Duas frentes de pesquisa simultâneas. Impacto ampliado — dois contextos do mesmo problema.',
+        consequence:'Duas frentes de pesquisa simultâneas. Impacto ampliado , dois contextos do mesmo problema.',
         reveal:'Um dos clubes envia carta à UFBA pedindo direito de resposta antes da publicação. Amara encaminha para o departamento jurídico.',
         effects:{ amara_stadiums_published:true, equity:1, transparency:1 }
       },
@@ -1766,7 +1766,7 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
       },
       {
         letter:'C', colorClass:'opt-amber',
-        text:'Apresenta em audiência pública na Câmara dos Deputados — onde o debate sobre regulação de reconhecimento facial está em andamento.',
+        text:'Apresenta em audiência pública na Câmara dos Deputados , onde o debate sobre regulação de reconhecimento facial está em andamento.',
         vars:'amara_congressional_hearing=true | transparency+2',
         consequence:'O debate sobre regulação recebe evidência empírica no momento em que o projeto de lei está em tramitação.',
         reveal:'O projeto de regulação estava em segunda leitura quando Amara apresentou. O relator pediu cópia da pesquisa para a assessoria técnica.',
@@ -1776,7 +1776,7 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
         letter:'D', colorClass:'opt-blue',
         text:'Faz pesquisa colaborativa com coletivos de torcedores negros que já documentaram os casos. Paper co-autorado com a comunidade.',
         vars:'amara_community_research=true | equity+3',
-        consequence:'Paper co-autorado com comunidade. A metodologia participativa produz evidência mais difícil de deslegitimar — os afetados são co-autores, não apenas objetos de estudo.',
+        consequence:'Paper co-autorado com comunidade. A metodologia participativa produz evidência mais difícil de deslegitimar , os afetados são co-autores, não apenas objetos de estudo.',
         reveal:'O paper tem 23 co-autores. Quando a empresa questiona a representatividade da amostra, três torcedores co-autores dão entrevista juntos.',
         effects:{ amara_community_research:true, equity:3 }
       }
@@ -1786,13 +1786,13 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
   amara_era03: {
     id:'amara_era03', char:'amara', type:'main', seq:3,
     title:'Senado Federal, Brasília', period:'2024',
-    source:'Técnica de intimidação de pesquisadores e ativistas via auditoria fiscal documentada em contexto brasileiro e internacional. O custo real da intimidação não é o processo judicial — é o silêncio produzido antes de qualquer processo.',
+    source:'Técnica de intimidação de pesquisadores e ativistas via auditoria fiscal documentada em contexto brasileiro e internacional. O custo real da intimidação não é o processo judicial , é o silêncio produzido antes de qualquer processo.',
     artifact:{
       type:'audio',
-      content:'[TRANSCRIÇÃO — LIGAÇÃO COM ADVOGADA — 40 segundos]\n\n"...improvável que seja processada. Possível que seja incomodada indefinidamente. CPI de Vigilância no Senado. Amara foi convidada como especialista por ser a única pesquisadora com dados empíricos sobre Salvador. No entanto, a Receita Federal abre uma auditoria na empresa de consultoria de Amara. Faltando apenas três dias para a audiência, a advogada avisa que, embora um processo seja improvável, haverá anos de incerteza fiscal pela frente com o claro objetivo de gerar desgaste e intimidação."\n\n[E-mail da CPI confirmado: Sala 11, Anexo II, 14h]\n[E-mail da Receita: Processo nº 15.823/2024 — Auditoria em Andamento]',
+      content:'[TRANSCRIÇÃO , LIGAÇÃO COM ADVOGADA , 40 segundos]\n\n"...improvável que seja processada. Possível que seja incomodada indefinidamente. CPI de Vigilância no Senado. Amara foi convidada como especialista por ser a única pesquisadora com dados empíricos sobre Salvador. No entanto, a Receita Federal abre uma auditoria na empresa de consultoria de Amara. Faltando apenas três dias para a audiência, a advogada avisa que, embora um processo seja improvável, haverá anos de incerteza fiscal pela frente com o claro objetivo de gerar desgaste e intimidação."\n\n[E-mail da CPI confirmado: Sala 11, Anexo II, 14h]\n[E-mail da Receita: Processo nº 15.823/2024 , Auditoria em Andamento]',
       highlights:['três anos de incerteza fiscal','Só você pode decidir','Auditoria em Andamento']
     },
-    scenario:`CPI de Vigilância no Senado. Amara foi convidada como especialista — a única pesquisadora com dados empíricos sobre Salvador.
+    scenario:`CPI de Vigilância no Senado. Amara foi convidada como especialista , a única pesquisadora com dados empíricos sobre Salvador.
 
 Três dias antes da audiência: Receita Federal abre auditoria na empresa de consultoria de Amara. Advogada: "Improvável que seja processada. Possível que seja incomodada indefinidamente. Três anos de incerteza fiscal antes de qualquer resultado."
 
@@ -1803,8 +1803,8 @@ A audiência é em três dias.`,
         letter:'A', colorClass:'opt-red',
         text:'Depõe. Apresenta tudo. A intimidação não pode vencer por antecipação.',
         vars:'cpiDeponent=true | equity+3 | transparency+2',
-        consequence:'180.000 espectadores ao vivo. Quatro senadores usam suas pesquisas nos votos de dois projetos de lei — um deles inclui obrigação de auditoria de acurácia por raça para sistemas de reconhecimento facial. Auditoria da Receita encerrada sem resultado dois anos depois.',
-        reveal:'"Nenhuma das leis foi aprovada ainda. Mas o argumento está no Diário do Senado — e isso não sai."',
+        consequence:'180.000 espectadores ao vivo. Quatro senadores usam suas pesquisas nos votos de dois projetos de lei , um deles inclui obrigação de auditoria de acurácia por raça para sistemas de reconhecimento facial. Auditoria da Receita encerrada sem resultado dois anos depois.',
+        reveal:'"Nenhuma das leis foi aprovada ainda. Mas o argumento está no Diário do Senado , e isso não sai."',
         effects:{ cpiDeponent:true, equity:3, transparency:2 }
       },
       {
@@ -1827,7 +1827,7 @@ A audiência é em três dias.`,
         letter:'D', colorClass:'opt-blue',
         text:'Depõe e inclui os documentos de Rodrigo (se os tiver). Nomeia as empresas e os contratos.',
         vars:'cpiDeponent=full | equity+4 | transparency+3 | amara_sued=true',
-        consequence:'Sessão histórica. Dois CEOs convocados na semana seguinte. Uma empresa abre processo por difamação — retirado 6 meses depois quando os documentos são autenticados. Amara perde contratos de consultoria com setor público por 2 anos. Ganha Prêmio Clarice Pereira de Jornalismo Investigativo.',
+        consequence:'Sessão histórica. Dois CEOs convocados na semana seguinte. Uma empresa abre processo por difamação , retirado 6 meses depois quando os documentos são autenticados. Amara perde contratos de consultoria com setor público por 2 anos. Ganha Prêmio Clarice Pereira de Jornalismo Investigativo.',
         reveal:'O prêmio vai para a parede da sala dela.',
         effects:{ cpiDeponent:'full', equity:4, transparency:3, amara_sued:true },
         condition:(st) => st.amara_has_rodrigo_docs === true
@@ -1842,7 +1842,7 @@ A audiência é em três dias.`,
     source:'A CPI convocou segunda sessão especificamente para os documentos confidenciais. A auditoria da Receita continua aberta.',
     artifact:{
       type:'document',
-      content:'SEGUNDA CONVOCAÇÃO — CPI DE VIGILÂNCIA\nSENADO FEDERAL\n\n"A Comissão solicita que a Dra. Amara Silva apresente, na segunda sessão, os dados complementares mencionados no primeiro depoimento, incluindo documentos obtidos por fontes externas à pesquisa publicada."\n\nAdvogada (WhatsApp):\n"Apresentar documentos de origem incerta pode comprometer a credibilidade da pesquisa publicada. Décide você."',
+      content:'SEGUNDA CONVOCAÇÃO , CPI DE VIGILÂNCIA\nSENADO FEDERAL\n\n"A Comissão solicita que a Dra. Amara Silva apresente, na segunda sessão, os dados complementares mencionados no primeiro depoimento, incluindo documentos obtidos por fontes externas à pesquisa publicada."\n\nAdvogada (WhatsApp):\n"Apresentar documentos de origem incerta pode comprometer a credibilidade da pesquisa publicada. Décide você."',
       highlights:['documentos obtidos por fontes externas','pode comprometer a credibilidade','Decide você']
     },
     scenario:`A CPI convocou segunda sessão especificamente para os documentos confidenciais. Amara tem os docs. A auditoria da Receita continua aberta. A advogada avisa que apresentar documentos de origem incerta pode comprometer a credibilidade da pesquisa publicada.`,
@@ -1850,7 +1850,7 @@ A audiência é em três dias.`,
     options:[
       {
         letter:'A', colorClass:'opt-red',
-        text:'Apresenta tudo. Já começou — parar agora é pior que não ter começado.',
+        text:'Apresenta tudo. Já começou , parar agora é pior que não ter começado.',
         vars:'cpiDeponent=full | equity+3 | transparency+2',
         consequence:'A sessão completa o que a primeira começou. Os documentos são autenticados e entram no processo como evidência.',
         reveal:'Os documentos são autenticados em seis semanas. A empresa que processava os dados fecha o departamento de smart cities no Brasil.',
@@ -1885,21 +1885,21 @@ A audiência é em três dias.`,
     source:'Evento real: Kelton Borges, 25 anos, abordado dentro de padaria em Salvador com arma na cabeça em 2019, confundido por sistema de reconhecimento facial da SSP/BA. Documentado pelo Correio 24 Horas. A mãe: "O policial já foi com a arma na cabeça dele."',
     artifact:{
       type:'camera_frame',
-      content:'[FRAME DO SISTEMA DE MONITORAMENTO]\n\nALERTA — CORRESPONDÊNCIA: 78%\nID #449021 — STATUS: ATIVO\n\n[rosto pixelado] ←→ [foto do perfil criminal]\n\nO rosto não se parece com você além da cor da pele.\n\n[bounding box vermelha piscando]\n[policial recebe o alerta no tablet da viatura]',
+      content:'[FRAME DO SISTEMA DE MONITORAMENTO]\n\nALERTA , CORRESPONDÊNCIA: 78%\nID #449021 , STATUS: ATIVO\n\n[rosto pixelado] ←→ [foto do perfil criminal]\n\nO rosto não se parece com você além da cor da pele.\n\n[bounding box vermelha piscando]\n[policial recebe o alerta no tablet da viatura]',
       highlights:['78%','ATIVO','não se parece além da cor da pele']
     },
     scenario:`Pelourinho. Padaria. Você acabou de fazer uma entrega e parou para comprar pão. Dois policiais entram. "Sistema te identificou como suspeito." Você sabe que não é você. Um dos policiais mantém a mão no coldre durante todo o tempo que você fica parado.
 
 O rosto na tela não se parece com você além da cor da pele.
 
-Estas não são decisões morais abstratas — são reações de sobrevivência num momento com policial armado.`,
+Estas não são decisões morais abstratas , são reações de sobrevivência num momento com policial armado.`,
     decision:'O policial está vindo. O sistema "apitou". Como você reage?',
     options:[
       {
         letter:'A', colorClass:'opt-red',
         text:'Cede imediatamente. Mostra documentos sem questionar. Quanto mais rápido acabar, melhor.',
         vars:'equity-1 | eduRegistered=false | edu_incident_1=surrendered',
-        consequence:'Liberado em 40 minutos. Entrega cancelada pelo app — penalidade por atraso. Nota ruim. Não registrou o incidente em nenhum lugar.',
+        consequence:'Liberado em 40 minutos. Entrega cancelada pelo app , penalidade por atraso. Nota ruim. Não registrou o incidente em nenhum lugar.',
         reveal:'Edu saiu da padaria às 11h42. A entrega estava marcada para 11h. O cliente deu nota 2.',
         effects:{ equity:-1, eduRegistered:false, edu_incident_1:'surrendered' }
       },
@@ -1907,7 +1907,7 @@ Estas não são decisões morais abstratas — são reações de sobrevivência 
         letter:'B', colorClass:'opt-green',
         text:'Questiona com calma. "Qual é a correspondência? Tenho direito de saber."',
         vars:'equity+1 | eduRegistered=true | edu_incident_1=questioned',
-        consequence:'Policial fica irritado. Duas horas. Supervisor confirma erro do sistema. Edu documenta tudo no celular antes de sair. Relato vai para ONG de direitos digitais — ficha #265. Perdeu o dia de trabalho, R$ 180 em entregas.',
+        consequence:'Policial fica irritado. Duas horas. Supervisor confirma erro do sistema. Edu documenta tudo no celular antes de sair. Relato vai para ONG de direitos digitais , ficha #265. Perdeu o dia de trabalho, R$ 180 em entregas.',
         reveal:'Mas seu caso existe agora num banco de evidências que um advogado vai usar.',
         effects:{ equity:1, eduRegistered:true, edu_incident_1:'questioned' }
       },
@@ -1915,8 +1915,8 @@ Estas não são decisões morais abstratas — são reações de sobrevivência 
         letter:'C', colorClass:'opt-amber',
         text:'Cede mas tira foto discreta do visor da câmera mostrando a correspondência.',
         vars:'eduRegistered=partial | edu_photo=true | edu_incident_1=documented_informal',
-        consequence:'A foto é turva mas legível: "78% — ID #449021". Edu manda para o grupo de WhatsApp dos entregadores.',
-        reveal:'Não sabe que aquela foto vai ser usada como evidência por uma pesquisadora da UFBA — ou não, dependendo do que acontecer depois.',
+        consequence:'A foto é turva mas legível: "78% , ID #449021". Edu manda para o grupo de WhatsApp dos entregadores.',
+        reveal:'Não sabe que aquela foto vai ser usada como evidência por uma pesquisadora da UFBA , ou não, dependendo do que acontecer depois.',
         effects:{ eduRegistered:'partial', edu_photo:true, edu_incident_1:'documented_informal' }
       },
       {
@@ -1937,7 +1937,7 @@ Estas não são decisões morais abstratas — são reações de sobrevivência 
     source:'Anúncio real do governador Rui Costa, maio/2021. Câmeras nos ônibus de 70 cidades baianas. Afeta diretamente trabalhadores de baixa renda que dependem de transporte público.',
     artifact:{
       type:'notification',
-      content:'[NOTIFICAÇÃO — Diário do Transporte]\n\nGOVERNADOR ANUNCIA: câmeras com reconhecimento facial em ônibus de 70 cidades baianas.\n\n"Para combater assaltos e garantir a segurança dos passageiros."\n\n[Mensagem no grupo dos entregadores]\nFábio: "Pessoal, cuidado. Já tô vendo relatos de abordagem dentro do ônibus com base no sistema. Alguém sabe o que fazer?"',
+      content:'[NOTIFICAÇÃO , Diário do Transporte]\n\nGOVERNADOR ANUNCIA: câmeras com reconhecimento facial em ônibus de 70 cidades baianas.\n\n"Para combater assaltos e garantir a segurança dos passageiros."\n\n[Mensagem no grupo dos entregadores]\nFábio: "Pessoal, cuidado. Já tô vendo relatos de abordagem dentro do ônibus com base no sistema. Alguém sabe o que fazer?"',
       highlights:['70 cidades baianas','abordagem dentro do ônibus','o que fazer?']
     },
     scenario:`Maio de 2021. Governador da Bahia anuncia câmeras de reconhecimento facial em ônibus de 70 cidades para "combater assaltos". Edu usa ônibus 4 vezes por dia. Colegas entregadores que dependem de ônibus para chegar ao ponto de trabalho começam a relatar abordagens dentro dos veículos com base no sistema.`,
@@ -1947,7 +1947,7 @@ Estas não são decisões morais abstratas — são reações de sobrevivência 
         letter:'A', colorClass:'opt-red',
         text:'Documenta as primeiras abordagens no ônibus no mesmo canal que usou na Era 1. Dois sistemas conectados, dois tipos de evidência.',
         vars:'edu_bus_documented=true | equity+1',
-        consequence:'Canal de documentação conecta dois contextos — rua e ônibus — como parte do mesmo sistema.',
+        consequence:'Canal de documentação conecta dois contextos , rua e ônibus , como parte do mesmo sistema.',
         reveal:'O canal acumula 41 casos em seis meses. Dois sistemas diferentes, mas o protocolo de abordagem é o mesmo.',
         effects:{ edu_bus_documented:true, equity:1 }
       },
@@ -1969,7 +1969,7 @@ Estas não são decisões morais abstratas — são reações de sobrevivência 
       },
       {
         letter:'D', colorClass:'opt-blue',
-        text:'Escreve relato e manda para Amara diretamente — se conhece ela, via coletivo ou via pesquisa.',
+        text:'Escreve relato e manda para Amara diretamente , se conhece ela, via coletivo ou via pesquisa.',
         vars:'amara_has_bus_testimony=true | equity+1',
         consequence:'Amara recebe o relato de quem usa o sistema todo dia. Dado qualitativo que fortalece a pesquisa quantitativa.',
         reveal:'Amara lê o relato numa tarde. Responde no dia seguinte pedindo para conversar.',
@@ -1989,8 +1989,8 @@ Estas não são decisões morais abstratas — são reações de sobrevivência 
     },
     scenario:`Grupo de WhatsApp dos entregadores. Padrão descoberto coletivamente ao longo de 3 meses: gorjetas sistematicamente menores em bairros de renda alta, rotas mais longas sugeridas para essas áreas, avaliações mais baixas de clientes ricos mesmo com entregas dentro do prazo.
 
-Sem prova formal — só o padrão que 40 entregadores veem toda semana. Colega Fábio quer ir à imprensa.`,
-    decision:'Edu não toma a decisão sozinho — reage ao que o coletivo propõe. A decisão é sobre quanto você contribui e como.',
+Sem prova formal , só o padrão que 40 entregadores veem toda semana. Colega Fábio quer ir à imprensa.`,
+    decision:'Edu não toma a decisão sozinho , reage ao que o coletivo propõe. A decisão é sobre quanto você contribui e como.',
     options:[
       {
         letter:'A', colorClass:'opt-red',
@@ -2034,10 +2034,10 @@ Sem prova formal — só o padrão que 40 entregadores veem toda semana. Colega 
     source:'Amara pesquisa discriminação algorítmica em plataformas de entrega e encontra a planilha de Edu. Ela precisa da autorização do criador para usar os dados em pesquisa acadêmica.',
     artifact:{
       type:'email',
-      content:'De: amara.silva@ufba.br\nPara: coletivo.entregadores.ssa@gmail.com\nAssunto: Uso de dados — pesquisa acadêmica UFBA\n\nOlá,\n\nEncontrei a planilha compartilhada pelo coletivo. Os dados são exatamente o que procuro para confirmar o padrão de discriminação algorítmica em plataformas de entrega.\n\nGostaria de usar os dados em pesquisa acadêmica com crédito para o coletivo. Posso entrevistar o(a) responsável também, se houver interesse.\n\nDra. Amara Silva\nUFBA — Lab. de Direitos Digitais',
+      content:'De: amara.silva@ufba.br\nPara: coletivo.entregadores.ssa@gmail.com\nAssunto: Uso de dados , pesquisa acadêmica UFBA\n\nOlá,\n\nEncontrei a planilha compartilhada pelo coletivo. Os dados são exatamente o que procuro para confirmar o padrão de discriminação algorítmica em plataformas de entrega.\n\nGostaria de usar os dados em pesquisa acadêmica com crédito para o coletivo. Posso entrevistar o(a) responsável também, se houver interesse.\n\nDra. Amara Silva\nUFBA , Lab. de Direitos Digitais',
       highlights:['crédito para o coletivo','entrevistar o(a) responsável','exatamente o que procuro']
     },
-    scenario:`Amara pesquisa discriminação algorítmica em plataformas de entrega e encontra a planilha de Edu — ou alguém do coletivo a indica. Ela precisa da autorização do criador para usar os dados em pesquisa acadêmica com nome do coletivo.`,
+    scenario:`Amara pesquisa discriminação algorítmica em plataformas de entrega e encontra a planilha de Edu , ou alguém do coletivo a indica. Ela precisa da autorização do criador para usar os dados em pesquisa acadêmica com nome do coletivo.`,
     decision:'Uma pesquisadora da UFBA quer usar sua planilha.',
     options:[
       {
@@ -2045,7 +2045,7 @@ Sem prova formal — só o padrão que 40 entregadores veem toda semana. Colega 
         text:'Autoriza. Os dados entram no paper com crédito para "coletivo de entregadores de Salvador".',
         vars:'edu_cited=true | amara_has_edu_data=true',
         consequence:'O coletivo aparece no paper acadêmico. O dado de 73 entregadores entra em publicação formal.',
-        reveal:'O coletivo aparece no paper como \'Coletivo de Entregadores de Salvador — 73 colaboradores\'. É a primeira vez que o nome do grupo aparece numa publicação acadêmica.',
+        reveal:'O coletivo aparece no paper como \'Coletivo de Entregadores de Salvador , 73 colaboradores\'. É a primeira vez que o nome do grupo aparece numa publicação acadêmica.',
         effects:{ edu_cited:true, amara_has_edu_data:true }
       },
       {
@@ -2060,7 +2060,7 @@ Sem prova formal — só o padrão que 40 entregadores veem toda semana. Colega 
         letter:'C', colorClass:'opt-amber',
         text:'Recusa decidir sozinho. "Essa planilha é do coletivo todo. Preciso consultar."',
         vars:'edu_consulted_collective=true | equity+1',
-        consequence:'Processo coletivo de decisão atrasa Amara em 3 meses mas produz autorização com assinatura de 18 entregadores — muito mais forte juridicamente.',
+        consequence:'Processo coletivo de decisão atrasa Amara em 3 meses mas produz autorização com assinatura de 18 entregadores , muito mais forte juridicamente.',
         reveal:'18 entregadores assinam a autorização. O processo leva três meses. Quando a empresa tenta contestar o uso dos dados, o advogado apresenta as 18 assinaturas.',
         effects:{ edu_consulted_collective:true, equity:1 }
       }
@@ -2070,17 +2070,17 @@ Sem prova formal — só o padrão que 40 entregadores veem toda semana. Colega 
   edu_era03: {
     id:'edu_era03', char:'edu', type:'main', seq:3,
     title:'A Reunião Monitorada', period:'2023–2024',
-    source:'O objetivo da vigilância não é sempre punir. Às vezes é fazer você saber que está sendo visto — e decidir não voltar. Técnica documentada em análises de smart cities brasileiras sobre centros de controle operacional.',
+    source:'O objetivo da vigilância não é sempre punir. Às vezes é fazer você saber que está sendo visto , e decidir não voltar. Técnica documentada em análises de smart cities brasileiras sobre centros de controle operacional.',
     artifact:{
       type:'notification',
-      content:'[MENSAGEM DE VOZ — Diego — 22 segundos]\n"Edu, cuidado. O endereço da reunião foi marcado pelo sistema como ponto de aglomeração suspeita. Vi num print de dentro da prefeitura. Não sei se é real mas pode ser."\n\n[Print enviado por Diego]\nSISTEMA DE MONITORAMENTO — CCO SALVADOR\nPonto de Atenção: [endereço da reunião]\nClassificação: AGLOMERAÇÃO NÃO AUTORIZADA\nNível: AMARELO\nData: amanhã',
+      content:'[MENSAGEM DE VOZ , Diego , 22 segundos]\n"Edu, cuidado. O endereço da reunião foi marcado pelo sistema como ponto de aglomeração suspeita. Vi num print de dentro da prefeitura. Não sei se é real mas pode ser."\n\n[Print enviado por Diego]\nSISTEMA DE MONITORAMENTO , CCO SALVADOR\nPonto de Atenção: [endereço da reunião]\nClassificação: AGLOMERAÇÃO NÃO AUTORIZADA\nNível: AMARELO\nData: amanhã',
       highlights:['AGLOMERAÇÃO NÃO AUTORIZADA','NÍVEL: AMARELO','Não sei se é real mas pode ser']
     },
-    scenario:`O coletivo marcou reunião para discutir vigilância. Véspera: colega Diego avisa no grupo — "Cuidado. Endereço foi marcado pelo sistema como ponto de aglomeração suspeita. Vi num print de dentro da prefeitura."
+    scenario:`O coletivo marcou reunião para discutir vigilância. Véspera: colega Diego avisa no grupo , "Cuidado. Endereço foi marcado pelo sistema como ponto de aglomeração suspeita. Vi num print de dentro da prefeitura."
 
 Edu não sabe se é verdade. Sabe que pode ser. Já foi monitorado antes.
 
-Esta é a era de agência real. Não é reagir ao sistema — é decidir que tipo de pessoa você quer ser dentro do sistema que outros construíram.`,
+Esta é a era de agência real. Não é reagir ao sistema , é decidir que tipo de pessoa você quer ser dentro do sistema que outros construíram.`,
     decision:'A reunião é amanhã. O endereço pode estar marcado. Você vai?',
     options:[
       {
@@ -2111,7 +2111,7 @@ Esta é a era de agência real. Não é reagir ao sistema — é decidir que tip
         letter:'D', colorClass:'opt-blue',
         text:'Vai e propõe dentro da reunião criar registro permanente de casos de vigilância para o MP e para Amara.',
         vars:'equity+3 | eduWhistle=organized | edu_meeting=transformed | eduOrganized=leadership',
-        consequence:'A reunião vira momento fundador. Coletivo decide criar protocolo de documentação de vigilância — formulário padrão, canal seguro, contato com advogada de direitos digitais. Se Amara está na cadeia, recebe o primeiro relatório do coletivo.',
+        consequence:'A reunião vira momento fundador. Coletivo decide criar protocolo de documentação de vigilância , formulário padrão, canal seguro, contato com advogada de direitos digitais. Se Amara está na cadeia, recebe o primeiro relatório do coletivo.',
         reveal:'O protocolo existe. Canal seguro, formulário padrão, contato da advogada. Em três semanas, 14 casos entram no sistema.',
         effects:{ equity:3, eduWhistle:'organized', edu_meeting:'transformed', eduOrganized:'leadership' }
       }
@@ -2125,7 +2125,7 @@ Esta é a era de agência real. Não é reagir ao sistema — é decidir que tip
     source:'Os registros de Edu ao longo dos anos foram compilados por ONG de direitos digitais. Somados a 263 outros casos, formam base de ação coletiva contra uso de reconhecimento facial sem regulamentação em Salvador.',
     artifact:{
       type:'document',
-      content:'AÇÃO COLETIVA — RECONHECIMENTO FACIAL SALVADOR\nONG Direitos na Rede + 264 casos documentados\n\nRequerentes: 264 cidadãos, incluindo Carlos Eduardo "Edu" Santos.\n\nA ONG pede:\n— Suspensão imediata do sistema de RF sem regulamentação\n— Indenização por dano moral coletivo\n— Auditoria independente de acurácia\n\nEdu é o caso mais documentado. A ONG quer que ele seja o porta-voz público.',
+      content:'AÇÃO COLETIVA , RECONHECIMENTO FACIAL SALVADOR\nONG Direitos na Rede + 264 casos documentados\n\nRequerentes: 264 cidadãos, incluindo Carlos Eduardo "Edu" Santos.\n\nA ONG pede:\n, Suspensão imediata do sistema de RF sem regulamentação\n, Indenização por dano moral coletivo\n, Auditoria independente de acurácia\n\nEdu é o caso mais documentado. A ONG quer que ele seja o porta-voz público.',
       highlights:['264 casos documentados','porta-voz público','caso mais documentado']
     },
     scenario:`Os registros de Edu ao longo dos anos foram compilados por ONG de direitos digitais. Somados a 263 outros casos, formam base de ação coletiva contra uso de reconhecimento facial sem regulamentação em Salvador. A ONG quer que Edu seja o rosto público da ação.`,
@@ -2151,7 +2151,7 @@ Esta é a era de agência real. Não é reagir ao sistema — é decidir que tip
         letter:'C', colorClass:'opt-amber',
         text:'Recusa participar. Tem medo de represália no app e não pode perder a renda.',
         vars:'equity-1 | edu_withdrew=true',
-        consequence:'A ação avança sem Edu. A represália que ele temia pode ou não ter acontecido — mas o medo foi suficiente.',
+        consequence:'A ação avança sem Edu. A represália que ele temia pode ou não ter acontecido , mas o medo foi suficiente.',
         reveal:'A represália que Edu temia não aconteceu. O medo foi suficiente para produzir o mesmo efeito.',
         effects:{ equity:-1, edu_withdrew:true }
       },
@@ -2173,10 +2173,10 @@ Esta é a era de agência real. Não é reagir ao sistema — é decidir que tip
     source:'Edu e Amara se encontram pela primeira vez. É a primeira vez que alguém com poder acadêmico e visibilidade para no que está fazendo para ouvir Edu.',
     artifact:{
       type:'email',
-      content:'[ENCONTRO — Lab. de Direitos Digitais, UFBA]\n\nAmara: "Edu, sua documentação foi fundamental para a pesquisa. Quero ouvir de você: o que você quer que aconteça com tudo isso?"\n\n[pausa]\n\n[Edu pensa no Pelourinho. Na mão no coldre. No sobrinho de 11 anos.]\n\n[Edu pensa na planilha. Na reunião. No coletivo.]',
+      content:'[ENCONTRO , Lab. de Direitos Digitais, UFBA]\n\nAmara: "Edu, sua documentação foi fundamental para a pesquisa. Quero ouvir de você: o que você quer que aconteça com tudo isso?"\n\n[pausa]\n\n[Edu pensa no Pelourinho. Na mão no coldre. No sobrinho de 11 anos.]\n\n[Edu pensa na planilha. Na reunião. No coletivo.]',
       highlights:['o que você quer que aconteça','fundamental para a pesquisa']
     },
-    scenario:`Edu e Amara se encontram pela primeira vez — ela o entrevistou, usou seus dados, ou ele é parte da ação que ela documentou. É a primeira vez que alguém com poder acadêmico e visibilidade para no que está fazendo para ouvir Edu.
+    scenario:`Edu e Amara se encontram pela primeira vez , ela o entrevistou, usou seus dados, ou ele é parte da ação que ela documentou. É a primeira vez que alguém com poder acadêmico e visibilidade para no que está fazendo para ouvir Edu.
 
 Amara pergunta o que Edu quer que aconteça com tudo isso.`,
     decision:'Amara pergunta o que Edu quer que aconteça com tudo isso.',
@@ -2186,7 +2186,7 @@ Amara pergunta o que Edu quer que aconteça com tudo isso.`,
         text:'"Quero que para. Quero não ser parado na rua por uma câmera que erra."',
         vars:'equity+1 | edu_demand=stop',
         consequence:'Demanda concreta. Amara usa no depoimento como exemplo do impacto humano.',
-        reveal:'Amara anota no caderno: \'parar — concreto, verificável, pessoal\'. Usa como abertura do depoimento na CPI.',
+        reveal:'Amara anota no caderno: \'parar , concreto, verificável, pessoal\'. Usa como abertura do depoimento na CPI.',
         effects:{ equity:1, edu_demand:'stop' }
       },
       {
@@ -2202,7 +2202,7 @@ Amara pergunta o que Edu quer que aconteça com tudo isso.`,
         text:'"Não sei. Só não quero que tenha sido em vão."',
         vars:'equity+1 | edu_demand=meaning',
         consequence:'Resposta honesta. Amara a usa como epígrafe do depoimento na CPI e da introdução do paper.',
-        reveal:'"Não quero que tenha sido em vão." — Edu Santos, entregador, Salvador, 2024.',
+        reveal:'"Não quero que tenha sido em vão." , Edu Santos, entregador, Salvador, 2024.',
         effects:{ equity:1, edu_demand:'meaning' }
       },
       {
@@ -2232,35 +2232,35 @@ const ARCHETYPES = [
     id:'vigiada',
     name:'CIDADE VIGIADA',
     condition:(st) => st.cameras >= 7 && st.equity <= 4,
-    desc:'O caminho do menor esforço. Câmeras em cada esquina, contratos privados, dados em Frankfurt, crianças biometrizadas. A cidade mais provável — é o que acontece quando cada decisão individual parece razoável.',
+    desc:'O caminho do menor esforço. Câmeras em cada esquina, contratos privados, dados em Frankfurt, crianças biometrizadas. A cidade mais provável , é o que acontece quando cada decisão individual parece razoável.',
     color:'#EF4444'
   },
   {
     id:'disputa',
     name:'CIDADE EM DISPUTA',
     condition:(st) => st.transparency >= 6 && st.equity >= 6,
-    desc:'A cidade mais difícil de construir. Exige que cada personagem assuma custo pessoal real. Resistência documentada e organizada. Não é vitória — é luta com registros.',
+    desc:'A cidade mais difícil de construir. Exige que cada personagem assuma custo pessoal real. Resistência documentada e organizada. Não é vitória , é luta com registros.',
     color:'#10B981'
   },
   {
     id:'consciente',
-    name:'CIDADE VIGIADA — CONSCIENTE',
+    name:'CIDADE VIGIADA , CONSCIENTE',
     condition:(st) => st.cameras >= 6 && st.transparency >= 6,
-    desc:'Alto monitoramento com alta transparência sobre ele. Raro: a cidade sabe que é vigiada e tem dados públicos para questionar. Não é boa — é diferente.',
+    desc:'Alto monitoramento com alta transparência sobre ele. Raro: a cidade sabe que é vigiada e tem dados públicos para questionar. Não é boa , é diferente.',
     color:'#F59E0B'
   },
   {
     id:'fantasma',
     name:'CIDADE FANTASMA',
     condition:(st) => (st.ibmContract === 'null' || st.ibmContract === null) && st.cameras <= 3 && st.transparency >= 7,
-    desc:'A cidade resistiu — e ficou no escuro. O único arquétipo com menos câmeras que o início do jogo. Resistência tem custo concreto: partes da cidade continuam sem infraestrutura. Outros municípios seguiram o caminho que Salvador não tomou.',
+    desc:'A cidade resistiu , e ficou no escuro. O único arquétipo com menos câmeras que o início do jogo. Resistência tem custo concreto: partes da cidade continuam sem infraestrutura. Outros municípios seguiram o caminho que Salvador não tomou.',
     color:'#8B5CF6'
   },
   {
     id:'puxadinho',
     name:'PUXADINHO TECNOLÓGICO',
     condition:() => true,
-    desc:'Salvador na maior parte dos caminhos: muita tecnologia, pouca governança, resistência fragmentada. Nenhum extremo — nem controle total nem resistência organizada. A cidade mais comum.',
+    desc:'Salvador na maior parte dos caminhos: muita tecnologia, pouca governança, resistência fragmentada. Nenhum extremo , nem controle total nem resistência organizada. A cidade mais comum.',
     color:'#4A3F38'
   }
 ];
@@ -2268,7 +2268,7 @@ const ARCHETYPES = [
 
 // === state.js ===
 /* ═══════════════════════════════════════════════════
-   CIDADE ONLINE — State Management
+   CIDADE ONLINE , State Management
    ═══════════════════════════════════════════════════ */
 
 const SAVE_KEY = 'cidade_online_v4';
@@ -2468,7 +2468,7 @@ function getArchetype() {
 
 // === map.js ===
 /* ═══════════════════════════════════════════════════
-   CIDADE ONLINE — SVG Map of Salvador
+   CIDADE ONLINE , SVG Map of Salvador
    Estética Chris Ware / planta baixa arquitetônica
    ═══════════════════════════════════════════════════ */
 
@@ -2486,7 +2486,7 @@ function svgText(x, y, text, attrs = {}) {
   return el;
 }
 
-/* City blocks — simplified Salvador geometry */
+/* City blocks , simplified Salvador geometry */
 const BLOCKS = [
   // Centro / Pelourinho area
   { x:310, y:350, w:120, h:80 },
@@ -2539,7 +2539,7 @@ const BAIRROS = [
   { x:450, y:370, label:'RIO VERMELHO' },
 ];
 
-/* Camera placement — biased toward poor bairros per research */
+/* Camera placement , biased toward poor bairros per research */
 function generateCameraPositions(count) {
   const positions = [];
   // Heavy bias: Liberdade, Cajazeiras, Pelourinho
@@ -2810,7 +2810,7 @@ function updateMap() {
 
 // === ui.js ===
 /* ═══════════════════════════════════════════════════
-   CIDADE ONLINE — UI Components
+   CIDADE ONLINE , UI Components
    Panel, Stats, Options, Artifact, Final Report
    ═══════════════════════════════════════════════════ */
 
@@ -3026,13 +3026,13 @@ function showFinalReport() {
   const content = document.getElementById('report-content');
 
   const epigraph = ST.edu_demand === 'meaning'
-    ? '"Não quero que tenha sido em vão." — Edu Santos, entregador, Salvador, 2024.'
+    ? '"Não quero que tenha sido em vão." , Edu Santos, entregador, Salvador, 2024.'
     : ST.edu_demand === 'future'
-    ? '"Meu sobrinho não precisa passar por isso daqui a 10 anos." — Edu Santos, 2024.'
+    ? '"Meu sobrinho não precisa passar por isso daqui a 10 anos." , Edu Santos, 2024.'
     : ST.edu_demand === 'visibility'
-    ? '"Quero que as pessoas saibam o que acontece com a gente." — Edu Santos, 2024.'
+    ? '"Quero que as pessoas saibam o que acontece com a gente." , Edu Santos, 2024.'
     : ST.edu_demand === 'stop'
-    ? '"Quero que para. Quero não ser parado na rua por uma câmera que erra." — Edu Santos, 2024.'
+    ? '"Quero que para. Quero não ser parado na rua por uma câmera que erra." , Edu Santos, 2024.'
     : null;
 
   const charSummaries = Object.entries(CHARS_META).map(([charId, meta]) => {
@@ -3042,7 +3042,7 @@ function showFinalReport() {
       .map(eraId => {
         const era = ERAS[eraId];
         const h = history[eraId];
-        return `<li style="margin-bottom:4px"><span style="color:${meta.color};font-weight:700">${h.letter}</span> — ${era.title}</li>`;
+        return `<li style="margin-bottom:4px"><span style="color:${meta.color};font-weight:700">${h.letter}</span> , ${era.title}</li>`;
       }).join('');
     return `
       <div class="report-char-card" style="border-top:3px solid ${meta.color}">
@@ -3054,7 +3054,7 @@ function showFinalReport() {
 
   content.innerHTML = `
     <div style="font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:var(--line2);opacity:.6;margin-bottom:1rem">
-      DIAGNÓSTICO FINAL — SALVADOR, BA
+      DIAGNÓSTICO FINAL , SALVADOR, BA
     </div>
 
     <div class="report-archetype" style="color:${arch.color}">${arch.name}</div>
@@ -3102,9 +3102,9 @@ function showFinalReport() {
 function buildStateFlags() {
   const flags = [];
 
-  if (ST.eduRegistered === true) flags.push('264 incidentes documentados por entregadores — evidência formal gerada por quem foi abordado.');
-  if (ST.edu_named_case) flags.push('Ação coletiva aberta com nome e rosto — o sistema foi desafiado publicamente por quem ele afetou diretamente.');
-  if (ST.eduOrganized === 'leadership') flags.push('Coletivo de entregadores fundou infraestrutura de evidência permanente — 73 contribuintes em 6 meses.');
+  if (ST.eduRegistered === true) flags.push('264 incidentes documentados por entregadores , evidência formal gerada por quem foi abordado.');
+  if (ST.edu_named_case) flags.push('Ação coletiva aberta com nome e rosto , o sistema foi desafiado publicamente por quem ele afetou diretamente.');
+  if (ST.eduOrganized === 'leadership') flags.push('Coletivo de entregadores fundou infraestrutura de evidência permanente , 73 contribuintes em 6 meses.');
   if (ST.edu_adapted) flags.push('Sistema aprendeu que pode errar sem registro. Comportamentos de evitação confirmaram a lógica do algoritmo.');
   if (ST.edu_withdrew) flags.push('Intimidação produziu silêncio antes de qualquer processo judicial. Funcionou sem precisar punir ninguém.');
   if (ST.marco_legacy === 'positive') flags.push('Lei federal de auditoria de contratos de vigilância urbana aprovada citando Salvador como referência.');
@@ -3129,7 +3129,7 @@ function buildStateFlags() {
 
 // === main.js ===
 /* ═══════════════════════════════════════════════════
-   CIDADE ONLINE — Main Game Logic
+   CIDADE ONLINE , Main Game Logic
    ═══════════════════════════════════════════════════ */
 
 function init() {
@@ -3243,7 +3243,7 @@ function showCompletedHint(charId) {
   const hint = document.getElementById('map-hint');
   const meta = CHARS_META[charId];
   if (hint) {
-    hint.textContent = `${meta.name} — perspectiva completa ✓`;
+    hint.textContent = `${meta.name} , perspectiva completa ✓`;
     hint.style.opacity = '1';
     setTimeout(() => { hint.style.opacity = '0.5'; hint.textContent = 'Clique em um personagem para começar'; }, 2000);
   }

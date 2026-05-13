@@ -1003,10 +1003,10 @@ Marco é convocado a depor. O advogado do município orienta silêncio. O advoga
     options:[
       {
         letter:'A', colorClass:'opt-red',
-        text:'Depõe e entrega tudo — o relatório de falsos positivos, a cláusula de dados, os e-mails internos.',
+        text:'Depõe e entrega tudo, o relatório de falsos positivos, a cláusula de dados, os e-mails internos.',
         vars:'transparency+2 | equity+1 | marco_deposed=true | marco_fired=true',
         consequence:'CPI produz relatório final que vira referência nacional. Marco é demitido 6 semanas depois. Lei municipal de auditoria obrigatória para contratos de vigilância é aprovada em 2020 com seu nome no histórico.',
-        reveal:'A lei foi aprovada em 2020. Marco soube pelo jornal, de casa.',
+        reveal:'A aprovação apressada criou um precedente jurídico: o aditivo de 2023 para as escolas utilizou essa mesma cláusula de dados como base legal.',
         effects:{ transparency:2, equity:1, marco_deposed:true, marco_fired:true }
       },
       {
@@ -1022,12 +1022,12 @@ Marco é convocado a depor. O advogado do município orienta silêncio. O advoga
         text:'Recusa comparecer. CPI emite convocação coercitiva.',
         vars:'reputation-2 | marco_survived=true',
         consequence:'Semanas de pressão de imprensa. O caso é arquivado por falta de quórum antes da convocação executada. Marco sobrevive politicamente, mas a imprensa o cobre como "o secretário que não quis falar".',
-        reveal:'A imprensa manteve \'o secretário que não quis falar\' por três anos, toda vez que o assunto voltava.',
+        reveal:'A recusa em depor marcou a imagem pública de Marco, que passou a ser constantemente lembrado pela imprensa como o secretário que preferiu o silêncio.',
         effects:{ transparency:-1, marco_survived:true }
       },
       {
         letter:'D', colorClass:'opt-blue',
-        text:'Depõe de forma técnica apenas — explica o que a cláusula significa, sem atribuir responsabilidade.',
+        text:'Depõe de forma técnica apenas. Explica o que a cláusula significa, sem atribuir responsabilidade.',
         vars:'transparency+1 | amara_has_marco_analysis=true',
         consequence:'CPI não consegue nomear culpados. A análise técnica de Marco é usada por Amara como referência em seu paper.',
         reveal:'Dois anos depois, o depoimento técnico de Marco aparece em nota de rodapé do paper de Amara. Ela cita a audiência pelo número, sem mencionar o nome.',
@@ -1045,11 +1045,11 @@ Marco é convocado a depor. O advogado do município orienta silêncio. O advoga
       content:'RELATÓRIO TÉCNICO INTERNO — CONFIDENCIAL\nANÁLISE DE ACURÁCIA POR GRUPO DEMOGRÁFICO\n\nTotal de alertas (evento): 903\nFalsos positivos confirmados: 870 (96,3%)\n\nTaxa de erro por grupo:\n  Pele clara:    12,4%\n  Pele escura:   96,3%  ← diferença: 7,8×\n\nSalvador: 82% população negra.\n\nRecomendação técnica: "Ajuste do threshold para populações com alta proporção melanodérmica."\n\n[Parágrafo final redigido pelo analista sênior, não publicado]',
       highlights:['96,3%','7,8×','CONFIDENCIAL','82% população negra']
     },
-    scenario:`Carnaval de Feira de Santana. O sistema dispara 903 alertas de suspeitos. 870 são falsos positivos — 96,3%. Um jovem de 25 anos chamado Kelton é abordado com arma na cabeça dentro de uma padaria enquanto ia a uma consulta médica.
+    scenario:`Carnaval de Feira de Santana. O sistema dispara 903 alertas de suspeitos. 870 são falsos positivos, 96,3%. Um jovem de 25 anos chamado Kelton é abordado com arma na cabeça dentro de uma padaria enquanto ia a uma consulta médica.
 
 O relatório técnico interno da empresa mostra que o sistema erra 7 vezes mais em pessoas negras. Salvador é 82% negra.
 
-O relatório existe. É confidencial. Vazar compromete o contrato — e a iluminação que depende dele. Não vazar compromete pessoas que vão ser abordadas amanhã.`,
+O relatório existe. É confidencial. Vazar compromete o contrato e a iluminação que depende dele. Não vazar compromete pessoas que vão ser abordadas amanhã.`,
     decision:'O relatório existe. É confidencial. O que você faz com ele?',
     options:[
       {
@@ -1057,7 +1057,7 @@ O relatório existe. É confidencial. Vazar compromete o contrato — e a ilumin
         text:'Suprime o relatório. Abre revisão técnica "interna" sem prazo nem responsável nomeado.',
         vars:'reportStatus=suppressed | equity-1 | transparency-1',
         consequence:'Relatório desaparece na pasta de arquivos do servidor. Em 2021, jovem inocente preso por 4 dias em Salvador com base no sistema. Defensor público encontra o relatório suprimido via LAI e o usa como prova de que o município sabia.',
-        reveal:'Marco responde a processo administrativo. O processo é arquivado por "ausência de dolo". O jovem ficou preso mesmo assim.',
+        reveal:'Embora o jovem inocente tenha permanecido preso, o processo administrativo aberto contra Marco terminou arquivado sob a justificativa formal de ausência de dolo.',
         effects:{ reportStatus:'suppressed', equity:-1, transparency:-1 }
       },
       {
@@ -1080,7 +1080,7 @@ O relatório existe. É confidencial. Vazar compromete o contrato — e a ilumin
         letter:'D', colorClass:'opt-blue',
         text:'Compartilha o relatório com Amara Silva (UFBA) de forma não oficial, sem registro.',
         vars:'reportStatus=leaked_to_amara | equity+1 | amara_has_report=true',
-        consequence:'Amara recebe o dado antes de qualquer publicação oficial. Ela tem o documento — mas a origem é confidencial. Dependendo do que ela escolher fazer, o relatório pode virar pesquisa publicada, prova em CPI, ou ficar numa gaveta.',
+        consequence:'Amara recebe o dado antes de qualquer publicação oficial. Ela tem o documento, mas a origem é confidencial. Dependendo do que ela escolher fazer, o relatório pode virar pesquisa publicada, prova em CPI, ou ficar numa gaveta.',
         reveal:'Marco nunca soube o que Amara fez com o documento. Ela não entrou em contato.',
         effects:{ reportStatus:'leaked_to_amara', equity:1, amara_has_report:true }
       }
@@ -1171,8 +1171,8 @@ O coordenador pedagógico da Secretaria de Educação pediu que alguém lesse o 
         letter:'C', colorClass:'opt-amber',
         text:'Autoriza com cláusula de exclusão e anonimização de dados ao término do aditivo.',
         vars:'schoolBiometrics=partial | cameras+1 | equity-1',
-        consequence:'Empresa aceita — mas "exclusão" na prática significa anonimização reversível, não apagamento. Em 2026, pesquisador da UFBA demonstra que os dados permanecem reidentificáveis com 91% de precisão.',
-        reveal:'Marco não sabia. Ou sabia e não quis saber.',
+        consequence:'Empresa aceita, mas "exclusão" na prática significa anonimização reversível, não apagamento. Em 2026, pesquisador da UFBA demonstra que os dados permanecem reidentificáveis com 91% de precisão.',
+        reveal:'As falhas de segurança reidentificaram as crianças e evidenciaram as limitações técnicas de anonimização que a administração ignorou no momento da assinatura.',
         effects:{ schoolBiometrics:'partial', cameras:1, equity:-1 }
       },
       {
@@ -1211,7 +1211,7 @@ Ela tem os documentos. Quer o contexto. Marco tem os e-mails.`,
       },
       {
         letter:'B', colorClass:'opt-green',
-        text:'Entrevista parcial. Protege o prefeito — o vínculo político ainda existe.',
+        text:'Entrevista parcial. Protege o prefeito, pois o vínculo político ainda existe.',
         vars:'transparency+1 | marco_legacy=ambiguous',
         consequence:'Reportagem sai com lacunas. Impacto limitado. Uma eventual nomeação futura ainda é possível.',
         reveal:'A reportagem sai com cinco páginas. Marco aparece em duas linhas, sem citar declaração direta.',
@@ -1222,7 +1222,7 @@ Ela tem os documentos. Quer o contexto. Marco tem os e-mails.`,
         text:'Recusa. Guarda os documentos. Não quer ser o protagonista de uma história que ele próprio ajudou a escrever.',
         vars:'marco_legacy=silence',
         consequence:'Laura publica sem Marco. A investigação tem lacunas que só ele poderia preencher. O silêncio de Marco é citado no texto como ausência notável.',
-        reveal:'Laura menciona a ausência de Marco no terceiro parágrafo. "Não respondeu às tentativas de contato." ',
+        reveal:'No terceiro parágrafo da reportagem, Laura destacou a ausência de Marco, ressaltando formalmente que ele não respondeu às tentativas de contato.',
         effects:{ marco_legacy:'silence' }
       },
       {
@@ -1318,8 +1318,8 @@ Em 2020: 23 cidades expandiram câmeras sem licitação. Três instalaram reconh
         letter:'B', colorClass:'opt-green',
         text:'Recusa. Explica que reconhecimento facial requer análise de impacto de dados (LGPD art. 38) e licitação específica.',
         vars:'rodrigo_refused_rf=true | equity+2 | transparency+1',
-        consequence:'Perde o contrato. O município contrata consultor que aceita. Rodrigo perde R$ 280k. A auditoria que nunca foi feita teria revelado 94% de falsos positivos em pessoas negras.',
-        reveal:'A empresa que assumiu o contrato instalou o sistema sem auditoria. A taxa de falsos positivos em pessoas negras foi de 94%, confirmada 18 meses depois por pesquisadores da USP.',
+        consequence:'Perde o contrato. O município contrata consultor que aceita. Rodrigo perde R$ 280k. Você perde o contrato. O município contrata um consultor mais flexível e o sistema é instalado sem auditorias. Dezoito meses depois, pesquisadores da USP confirmam uma taxa de 94% de falsos positivos em pessoas negras decorrentes daquele sistema.',
+        reveal:'A sua recusa técnica custou caro a curto prazo, mas evitou que a sua assinatura estivesse permanentemente ligada a um escândalo de viés algorítmico no estado.',
         effects:{ equity:2, transparency:1, rodrigo_refused_rf:true }
       },
       {
@@ -1359,15 +1359,15 @@ O secretário da Paraíba: "Transparência é complexidade. Complexidade é risc
         letter:'A', colorClass:'opt-red',
         text:'Assina. Transparência pode vir depois, quando o sistema já funcionar.',
         vars:'transparency-2 | rodrigo_pb_opaque=true',
-        consequence:'Em 2024, jornalista pede dados via LAI. Prefeitura responde: "Dados de operação pertencem à concessionária, informação comercialmente sensível." Rodrigo é mencionado na reportagem como "consultor que estruturou as cláusulas".',
-        reveal:'Em 2024, o jornalista envia LAI. A prefeitura responde em 22 dias: dados de operação são propriedade da concessionária. O nome de Rodrigo está no contrato.',
+        consequence:'"A reportagem investigativa menciona Rodrigo nominalmente como o consultor responsável por estruturar as cláusulas opacas de propriedade de dados da Paraíba".',
+        reveal:'Com a repercussão negativa da reportagem, o Ministério Público passou a utilizar a análise dessas mesmas cláusulas como base para abrir inquéritos contra outros municípios.',
         effects:{ transparency:-2, rodrigo_pb_opaque:true }
       },
       {
         letter:'B', colorClass:'opt-green',
         text:'Insiste: sem auditoria independente anual, não assina. É linha vermelha.',
         vars:'transparency+2 | rodrigo_pb_refused=true',
-        consequence:'Cliente vai para outro consultor em 72 horas. Contrato assinado sem as cláusulas — e sem a auditoria que descobriria os sensores instalados fora do escopo autorizado. Rodrigo perde R$ 280.000 em honorários.',
+        consequence:'Cliente vai para outro consultor em 72 horas. Contrato assinado sem as cláusulas e sem a auditoria que descobriria os sensores instalados fora do escopo autorizado. Rodrigo perde R$ 280.000 em honorários.',
         reveal:'Em 2025, quando os documentos vazarem, o nome dele não está no contrato da Paraíba.',
         effects:{ transparency:2, rodrigo_pb_refused:true }
       },
@@ -1552,9 +1552,8 @@ O template é o seu. O que você faz?`,
       content:'MAPA DE CÂMERAS — SALVADOR, BA\nBase: LAI parcialmente atendida + levantamento in loco\n\nConcentração por bairro:\n  LIBERDADE      ████████████ 94%  renda: 0,8 SM\n  CAJAZEIRAS     ███████████  88%  renda: 0,7 SM\n  PELOURINHO     ██████████   81%  renda: turismo\n  BARRA/ONDINA   ████         31%  renda: 4,2 SM\n  PITUBA         ███          22%  renda: 6,8 SM\n  ITAIGARA       ██           15%  renda: 9,1 SM\n\n73% das câmeras em bairros com renda média < 1 SM.\nConcentração segue transporte público — não mapa de crimes.\n\n[irmão Davi mora na Liberdade]',
       highlights:['73% das câmeras','não mapa de crimes','irmão Davi mora na Liberdade']
     },
-    scenario:`Três meses mapeando as câmeras de Salvador. Resultado: 73% concentradas em bairros com renda média abaixo de 1 salário mínimo. A concentração não é aleatória — segue o transporte público, não o mapa de crimes registrados.
+    scenario:`A prefeitura usou a verba de iluminação pública para instalar câmeras com reconhecimento facial em Salvador. No entanto, o mapa de instalação mostra que 73% das câmeras estão em bairros negros e pobres, onde o rendimento médio é inferior a dois salários mínimos. A concentração do monitoramento acompanha majoritariamente a malha de transporte público, divergindo completamente do mapa oficial de crimes registrados. A secretaria pediu reunião antes da publicação e a orientadora sugere contextualizar melhor os dados antes da submissão. Enquanto isso, o irmão de Amara, Davi, trabalha como entregador no Pelourinho.',
 
-A secretaria pediu reunião antes da publicação. A orientadora quer "contextualizar melhor antes de submeter". O irmão de Amara, Davi, mora na Liberdade — 94% câmeras, renda média 0,8 SM.`,
     decision:'O mapa está pronto. O que você faz com ele?',
     options:[
       {
@@ -1658,15 +1657,15 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
         letter:'A', colorClass:'opt-red',
         text:'Aceita com a cláusula. A pesquisa importa mais que a pureza metodológica.',
         vars:'amaraIndependent=false | transparency-1 | equity-1',
-        consequence:'Em 2020, paper sobre PPPs e vigilância é submetido ao comitê. Fundação pede "revisão do capítulo 4" — sobre a Cisco especificamente. Paper sai sem capítulo 4.',
-        reveal:'Um ano depois, Amara não consegue mais distinguir o que escolheu omitir do que genuinamente acredita ser menos relevante.',
+        consequence:'Em 2020, paper sobre PPPs e vigilância é submetido ao comitê. Fundação pede "revisão do capítulo 4", sobre a Cisco especificamente. Paper sai sem capítulo 4.',
+        reveal:'Nas publicações do ano seguinte, a equipe passou a adotar a autocensura como procedimento padrão antes de qualquer submissão ao comitê da fundação.',
         effects:{ amaraIndependent:false, transparency:-1, equity:-1 }
       },
       {
         letter:'B', colorClass:'opt-green',
         text:'Recusa. Busca financiamento alternativo.',
         vars:'amaraIndependent=true | equity+2 | amara_independent=true',
-        consequence:'Três bolsistas saem do grupo em dois meses. Dezoito meses no limite financeiro. FAPESB aprova financiamento em 2021 — R$ 420.000, sem cláusulas. Paper integral publicado, citado 40 vezes em dois anos.',
+        consequence:'A recusa custou o abandono de parte da equipe e um longo período de sufoco financeiro. No entanto, a aprovação posterior de um edital público sem restrições permitiu a publicação integral da pesquisa, que obteve ampla repercussão no meio acadêmico.',
         reveal:'Uma das bolsistas que saiu está numa startup de dados em São Paulo. Amara encontrou o perfil no LinkedIn por acaso, em 2023.',
         effects:{ amaraIndependent:true, equity:2, amara_independent:true }
       },
@@ -1674,8 +1673,8 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
         letter:'C', colorClass:'opt-amber',
         text:'Negocia: aceita o dinheiro mas exige retirada formal da cláusula de revisão prévia.',
         vars:'amaraIndependent=nominal | transparency+0',
-        consequence:'Cisco aceita retirar a cláusula formal — mas insere "comitê consultivo" com participação nas reuniões trimestrais da equipe. Amara nunca sabe o que está sendo observado. Quando publica o paper final, descobre que o comitê tinha um representante que era ex-assessor do prefeito de Salvador.',
-        reveal:'A vitória na negociação não era o que parecia.',
+        consequence:'Cisco aceita retirar a cláusula formal, mas insere "comitê consultivo" com participação nas reuniões trimestrais da equipe. Amara nunca sabe o que está sendo observado. Quando publica o paper final, descobre que o comitê tinha um representante que era ex-assessor do prefeito de Salvador.',
+        reveal:'A aparente vitória na negociação contratual revelou-se ineficaz frente à influência política dissimulada no comitê consultivo.',
         effects:{ amaraIndependent:'nominal' }
       },
       {
@@ -1707,7 +1706,7 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
         text:'Publica com nota "dados verificados por fonte com acesso interno, identidade protegida por protocolo ético".',
         vars:'amara_published_sensitive=true | equity+2 | transparency+1',
         consequence:'Secretaria vai atacar a metodologia sem poder atacar o dado — não sabe o que é o dado. O paper circula amplamente.',
-        reveal:'A secretaria emite nota técnica atacando a metodologia de amostragem. O dado específico, em nenhum momento.',
+        reveal:'Em resposta à publicação, a secretaria emitiu uma nota técnica questionando apenas a metodologia de amostragem, evitando confrontar diretamente a precisão dos dados expostos no vazamento.',
         effects:{ amara_published_sensitive:true, equity:2, transparency:1 }
       },
       {
@@ -1791,7 +1790,7 @@ Oito pesquisadores dependem dessa verba. Duas bolsistas em situação irregular 
     source:'Técnica de intimidação de pesquisadores e ativistas via auditoria fiscal documentada em contexto brasileiro e internacional. O custo real da intimidação não é o processo judicial — é o silêncio produzido antes de qualquer processo.',
     artifact:{
       type:'audio',
-      content:'[TRANSCRIÇÃO — LIGAÇÃO COM ADVOGADA — 40 segundos]\n\n"...improvável que seja processada. Possível que seja incomodada indefinidamente. Três anos de incerteza fiscal antes de qualquer resultado. A Receita Federal pode fazer isso. Já fizeram com outros pesquisadores. Você precisa decidir se o depoimento vale esse risco. Só você pode decidir isso."\n\n[E-mail da CPI confirmado: Sala 11, Anexo II, 14h]\n[E-mail da Receita: Processo nº 15.823/2024 — Auditoria em Andamento]',
+      content:'[TRANSCRIÇÃO — LIGAÇÃO COM ADVOGADA — 40 segundos]\n\n"...improvável que seja processada. Possível que seja incomodada indefinidamente. CPI de Vigilância no Senado. Amara foi convidada como especialista por ser a única pesquisadora com dados empíricos sobre Salvador. No entanto, a Receita Federal abre uma auditoria na empresa de consultoria de Amara. Faltando apenas três dias para a audiência, a advogada avisa que, embora um processo seja improvável, haverá anos de incerteza fiscal pela frente com o claro objetivo de gerar desgaste e intimidação."\n\n[E-mail da CPI confirmado: Sala 11, Anexo II, 14h]\n[E-mail da Receita: Processo nº 15.823/2024 — Auditoria em Andamento]',
       highlights:['três anos de incerteza fiscal','Só você pode decidir','Auditoria em Andamento']
     },
     scenario:`CPI de Vigilância no Senado. Amara foi convidada como especialista — a única pesquisadora com dados empíricos sobre Salvador.
@@ -1814,7 +1813,7 @@ A audiência é em três dias.`,
         text:'Recua. Envia relatório escrito de 80 páginas. Protege a empresa.',
         vars:'cpiDeponent=false | equity-2',
         consequence:'80 páginas lidas por dois assessores durante o recesso. O tema desaparece da pauta em 3 semanas.',
-        reveal:'A intimidação não precisou de processo. Produziu silêncio antes de qualquer audiência.',
+        reveal:'A estratégia de retaliação fiscal obteve êxito absoluto, garantindo o arquivamento do tema na CPI sem a necessidade de uma disputa judicial formal.',
         effects:{ cpiDeponent:false, equity:-2 }
       },
       {
@@ -1870,8 +1869,8 @@ A audiência é em três dias.`,
         letter:'C', colorClass:'opt-amber',
         text:'Não comparece. A pressão foi demais.',
         vars:'equity-1 | amara_withdrew=true',
-        consequence:'A CPI segue sem ela. A pressão de intimidação funcionou — não precisou de processo.',
-        reveal:'A auditoria da Receita continua aberta por mais 14 meses. Nenhuma irregularidade é encontrada. O processo simplesmente fecha.',
+        consequence:'Sem a principal testemunha, a CPI decide seguir os trabalhos focada apenas em dados superficiais.',
+        reveal:'Após manter a auditoria aberta por mais de um ano para garantir o silêncio da pesquisadora, a Receita encerrou o processo sem apontar qualquer irregularidade.',
         effects:{ equity:-1, amara_withdrew:true }
       }
     ]
@@ -1884,7 +1883,7 @@ A audiência é em três dias.`,
   edu_era01: {
     id:'edu_era01', char:'edu', type:'main', seq:1, passive:true,
     title:'A Câmera Nunca Erra', period:'2019',
-    source:'Evento real: Kelton Borges, 25 anos, abordado dentro de padaria em Salvador com arma na cabeça em 2019 — confundido por sistema de reconhecimento facial da SSP/BA. Documentado pelo Correio 24 Horas. A mãe: "O policial já foi com a arma na cabeça dele."',
+    source:'Evento real: Kelton Borges, 25 anos, abordado dentro de padaria em Salvador com arma na cabeça em 2019, confundido por sistema de reconhecimento facial da SSP/BA. Documentado pelo Correio 24 Horas. A mãe: "O policial já foi com a arma na cabeça dele."',
     artifact:{
       type:'camera_frame',
       content:'[FRAME DO SISTEMA DE MONITORAMENTO]\n\nALERTA — CORRESPONDÊNCIA: 78%\nID #449021 — STATUS: ATIVO\n\n[rosto pixelado] ←→ [foto do perfil criminal]\n\nO rosto não se parece com você além da cor da pele.\n\n[bounding box vermelha piscando]\n[policial recebe o alerta no tablet da viatura]',

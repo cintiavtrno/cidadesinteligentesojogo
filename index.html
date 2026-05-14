@@ -1317,7 +1317,7 @@ Em 2020: 23 cidades expandiram câmeras sem licitação. Três instalaram reconh
         letter:'B', colorClass:'opt-green',
         text:'Recusa. Explica que reconhecimento facial requer análise de impacto de dados (LGPD art. 38) e licitação específica.',
         vars:'rodrigo_refused_rf=true | equity+2 | transparency+1',
-        consequence:'Perde o contrato. O município contrata consultor que aceita. Rodrigo perde R$ 280k. Você perde o contrato. O município contrata um consultor mais flexível e o sistema é instalado sem auditorias. Dezoito meses depois, pesquisadores da USP confirmam uma taxa de 94% de falsos positivos em pessoas negras decorrentes daquele sistema.',
+        consequence:'Perde o contrato. O município contrata consultor que aceita. Rodrigo perde R$ 450 mil. Você perde o contrato. O município contrata um consultor mais flexível e o sistema é instalado sem auditorias. Dezoito meses depois, pesquisadores da USP confirmam uma taxa de 94% de falsos positivos em pessoas negras decorrentes daquele sistema.',
         reveal:'A sua recusa técnica custou caro a curto prazo, mas evitou que a sua assinatura estivesse permanentemente ligada a um escândalo de viés algorítmico no estado.',
         effects:{ equity:2, transparency:1, rodrigo_refused_rf:true }
       },
@@ -2429,13 +2429,11 @@ function getEraQueue(charId) {
     const era = ERAS[eraId];
     if (era.type === 'main') return true;
     if (era.type === 'conditional') {
-      // only include if condition is met
       return era.condition && era.condition(ST);
     }
     return true;
   });
 }
-
 function getCurrentEraId(charId) {
   if (!PROG.currentEraIdx[charId]) PROG.currentEraIdx[charId] = 0;
   const queue = getEraQueue(charId);
@@ -2445,13 +2443,19 @@ function getCurrentEraId(charId) {
 
 function advanceEra(charId) {
   if (!PROG.currentEraIdx[charId]) PROG.currentEraIdx[charId] = 0;
+  const currentQueue = getEraQueue(charId);
+  const currentEraId = currentQueue[PROG.currentEraIdx[charId]];
   PROG.currentEraIdx[charId]++;
-  const queue = getEraQueue(charId);
-    if (PROG.currentEraIdx[charId] >= queue.length) {
+  const newQueue = getEraQueue(charId);
+  const newIdx = newQueue.indexOf(currentEraId);
+  if (newIdx >= 0) {
+    PROG.currentEraIdx[charId] = newIdx + 1;
+  }
+  if (PROG.currentEraIdx[charId] >= newQueue.length) {
     PROG.completed[charId] = true;
     return null;
   }
-  return queue[PROG.currentEraIdx[charId]];
+  return newQueue[PROG.currentEraIdx[charId]];
 }
 
 function allCharsComplete() {
@@ -2887,8 +2891,11 @@ function openPanel(charId, era) {
   }
 
   // Scenario
-  setEl('panel-scenario', era.scenario);
-
+  let scenarioText = era.scenario;
+  if (ST.marco_fired && era.char === 'marco' && era.seq > 1) {
+    scenarioText = '[Marco foi demitido anteriormente — esta era ocorre numa linha alternativa onde permaneceu no cargo.]\n\n' + scenarioText;
+  }
+  setEl('panel-scenario', scenarioText);
   // Decision
   showDecision(charId, era);
 

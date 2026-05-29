@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>CIDADE ONLINE</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
@@ -741,21 +741,46 @@ html, body {
 /* ─── UTILITIES ──────────────────────────────────── */
 .hidden { display: none !important; }
 
-/* ─── RESPONSIVE ─────────────────────────────────── */
 @media (max-width: 767px) {
+  /* Topbar: aperta os elementos para caber em telas estreitas */
+  #topbar { padding: 0 8px; }
+  .game-title { font-size: 9px; letter-spacing: 0.05em; }
+  .era-label { display: none; } /* Esconde a era no topo para ganhar espaço */
+  #topbar-right { gap: 6px; }
+  .stat-pill { gap: 3px; font-size: 8px; }
+  .stat-bar { width: 24px; } /* Barras de status menores */
+
+  /* Painel de Cena: estilo gaveta mais polido com bordas arredondadas */
   #scene-panel {
     width: 100%;
     border-left: none;
     border-top: 1.5px solid var(--line);
+    border-radius: 16px 16px 0 0; /* Arredonda o topo */
     top: auto;
     bottom: 0;
-    height: 80%;
+    height: 85%;
     transform: translateY(100%);
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
   }
   #scene-panel.open { transform: translateY(0); }
-  .report-chars-grid { grid-template-columns: 1fr; }
-}
 
+  /* Legenda do Mapa: move pro topo para não ser coberta pelo painel */
+  #map-legend {
+    bottom: auto;
+    top: 50px; /* Fica logo abaixo do Topbar */
+    left: 10px;
+    padding: 6px 8px;
+    transform: scale(0.9);
+    transform-origin: top left;
+  }
+
+  /* Ajustes de toque: aumenta a área das opções para dedos */
+  .option-card { padding: 12px 10px; }
+  
+  /* Grid do Relatório Final */
+  .report-chars-grid { grid-template-columns: 1fr; }
+  .report-archetype { font-size: 2rem; }
+}
 @media (max-width: 1023px) and (min-width: 768px) {
   #scene-panel { width: 90%; left: 5%; right: 5%; top: 5%; height: 90%; }
   #scene-panel.open { transform: translateX(0); }
@@ -2728,6 +2753,14 @@ function buildPins(svg) {
       display: 'none'
     });
     g.appendChild(badgeRect);
+    const touchArea = svgEl('circle', {
+      cx, cy, r: 25, /* Bem maior que o pino visual */
+      fill: 'transparent'
+    });
+    g.appendChild(touchArea);
+    g.style.cursor = 'pointer';
+    svg.appendChild(g);
+    pinElements[charId] = g;
 
     g.style.cursor = 'pointer';
     svg.appendChild(g);

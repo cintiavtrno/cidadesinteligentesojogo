@@ -2569,11 +2569,59 @@ const ARCHETYPES = [
    CIDADE ONLINE , State Management
    ═══════════════════════════════════════════════════ */
 
+function freshState() {
+  return {
+    cameras: 0, transparency: 6, equity: 6,
+    ibmContract: null, reportStatus: null, schoolBiometrics: null,
+    rodrigoTemplate: null, amaraPublished: null, amaraIndependent: null,
+    cpiDeponent: null, eduRegistered: null, eduOrganized: null,
+    eduWhistle: null, rodrigoWhistle: null,
+    marco_fired: false, marco_leaked_clause: false, marco_deposed: false,
+    marco_survived: false, marco_exposed_later: false, marco_legal_action: false,
+    marco_leaked_acquisition: false, marco_legacy: null,
+    rodrigo_innovator: false, rodrigo_compromised: false, rodrigo_refused_rf: false,
+    rodrigo_audit_reveals: false, rodrigo_pia_compromised: false,
+    rodrigo_pb_opaque: false, rodrigo_pb_refused: false, rodrigo_pb_partial: false,
+    rodrigo_pb_councilors: false, rodrigo_notified: false, rodrigo_published_audit: false,
+    rodrigo_has_audit: false, rodrigo_mp_source: false, rodrigo_testified: false,
+    rodrigo_testified_immunity: false, rodrigo_testified_public: false,
+    amara_public: false, amara_outframed: false, amara_rebuttal: false,
+    amara_press_collaboration: false, amara_public_hearing: false,
+    amara_ignored_debate: false, amara_journalist_ally: false,
+    amara_independent: false, amara_lgpd_shield: false,
+    amara_published_sensitive: false, amara_guided_by_docs: false,
+    amara_mp_delivery: false, amara_legal_delay: false,
+    amara_stadiums_published: false, amara_integrated_research: false,
+    amara_congressional_hearing: false, amara_community_research: false,
+    amara_second_session: false, amara_withdrew: false, amara_sued: false,
+    amara_has_report: false, amara_has_rodrigo_docs: false,
+    amara_has_marco_analysis: false, amara_has_acquisition_docs: false,
+    amara_notified_school: false, amara_has_bus_testimony: false,
+    amara_has_edu_data: false, amara_has_edu_interview: false,
+    edu_incident_1: undefined, edu_photo: false, edu_has_audio: false,
+    edu_bus_documented: false, edu_bus_organized: false, edu_adapted_bus: false,
+    edu_adapted: false, edu_data_contributed: false, edu_unknown_impact: false,
+    edu_spreadsheet: false, edu_cited: false, edu_named: false,
+    edu_consulted_collective: false, edu_named_case: false, edu_withdrew: false,
+    edu_tactic: false, edu_meeting: null, edu_demand: null,
+    edu_bus_organized_flag: false
+  };
+}
+
+function freshProgress() {
+  return {
+    completed: {},
+    currentChar: null,
+    currentEraIdx: {},
+    choiceHistory: {}
+  };
+}
+
 let ST = freshState();
 let PROG = freshProgress();
 
 // ─── PERSISTÊNCIA EM MEMÓRIA (sem localStorage) ───────────────────────────
-function saveGame() { /* no-op: estado já vive em ST e PROG */ }
+function saveGame() { /* no-op */ }
 function loadGame() { return false; }
 function resetGame() {
   Object.assign(ST, freshState());
@@ -2582,6 +2630,7 @@ function resetGame() {
   PROFILE.dominant = null;
   PROFILE.tags = [];
 }
+
 // ─── PERFIL DO JOGADOR ─────────────────────────────────────────────────────
 const PROFILE = {
   scores: { empatico: 0, cetico: 0, provocador: 0, observador: 0 },

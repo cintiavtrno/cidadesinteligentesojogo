@@ -799,7 +799,272 @@ html, body {
   vertical-align: middle;
   text-transform: uppercase;
 }
+/* ─── CHAT OVERLAY ───────────────────────────────── */
+#chat-overlay {
+  position: fixed;
+  inset: 0;
+  top: 40px;
+  background: var(--bg);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  max-width: 640px;
+  margin: 0 auto;
+  border-left: 1px solid rgba(42,36,32,.12);
+  border-right: 1px solid rgba(42,36,32,.12);
+}
+#chat-overlay.hidden { display: none; }
 
+#chat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(42,36,32,.15);
+  background: var(--cream);
+  flex-shrink: 0;
+}
+#chat-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+#chat-header-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+#chat-npc-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--line);
+}
+#chat-npc-role {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--line2);
+  opacity: .65;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#chat-close {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--line2);
+  padding: 4px 8px;
+  opacity: .6;
+  flex-shrink: 0;
+}
+#chat-close:hover { opacity: 1; }
+
+#chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scroll-behavior: smooth;
+}
+
+.bubble {
+  max-width: 82%;
+  padding: 9px 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  border-radius: 2px;
+  animation: bubbleIn .18s ease;
+}
+.bubble-npc {
+  align-self: flex-start;
+  background: var(--cream);
+  border: 1px solid rgba(42,36,32,.14);
+  color: var(--line);
+  border-left: 3px solid var(--npc-color, #2A2420);
+}
+.bubble-player {
+  align-self: flex-end;
+  background: var(--line);
+  color: var(--cream);
+}
+.bubble-opening {
+  align-self: flex-start;
+  background: transparent;
+  border: none;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--line2);
+  opacity: .75;
+  padding: 2px 0;
+  max-width: 92%;
+}
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+#intent-flash {
+  position: fixed;
+  bottom: max(140px, 30vh);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  padding: 4px 10px;
+  border-radius: 2px;
+  background: var(--cream);
+  border: 1px solid rgba(42,36,32,.15);
+  pointer-events: none;
+  z-index: 300;
+  transition: opacity .4s;
+  white-space: nowrap;
+}
+#intent-flash.hidden { display: none; }
+
+#chat-input-area {
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px;
+  border-top: 1px solid rgba(42,36,32,.12);
+  background: var(--cream);
+  flex-shrink: 0;
+}
+#chat-textarea {
+  flex: 1;
+  font-family: var(--font-sys);
+  font-size: 13px;
+  padding: 8px 10px;
+  border: 1px solid rgba(42,36,32,.2);
+  background: var(--paper);
+  color: var(--line);
+  resize: none;
+  border-radius: 2px;
+  line-height: 1.4;
+}
+#chat-textarea:focus {
+  outline: none;
+  border-color: rgba(42,36,32,.45);
+}
+#chat-textarea:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+#chat-send {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  padding: 0 14px;
+  background: var(--line);
+  color: var(--cream);
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+#chat-send:hover { opacity: .8; }
+#chat-send:disabled { opacity: .3; cursor: not-allowed; }
+
+#chat-decision {
+  padding: 12px 14px;
+  border-top: 1px solid rgba(42,36,32,.12);
+  background: var(--paper);
+  flex-shrink: 0;
+}
+#chat-decision.hidden { display: none; }
+#chat-decision-question {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--line2);
+  margin-bottom: 10px;
+  opacity: .7;
+}
+#chat-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.chat-opt {
+  padding: 8px 10px;
+  border: 1px solid rgba(42,36,32,.18);
+  background: var(--cream);
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: left;
+  border-radius: 2px;
+  transition: border-color .15s, background .15s;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.chat-opt:hover { border-color: rgba(42,36,32,.4); background: var(--bg); }
+.chat-opt.selected { border-color: var(--line); background: var(--line); color: var(--cream); }
+.chat-opt-letter {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.chat-opt-text { font-family: var(--font-sys); }
+
+/* HUD de perfil (canto sup. direito no topbar) */
+#profile-hud {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.profile-pip {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(42,36,32,.15);
+  transition: background .3s;
+}
+#profile-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--line2);
+  opacity: .5;
+  min-width: 72px;
+}
+
+@media (max-width: 420px) {
+  #chat-options { grid-template-columns: 1fr; }
+  .bubble { max-width: 94%; }
+}
+  /* ─── CÂMERAS NO MAPA ────────────────────────────── */
+.cam-cone {
+  transform-origin: center top;
+  animation: conePulse 2.4s ease-in-out infinite;
+}
+.cam-dot {
+  animation: dotPulse 2.4s ease-in-out infinite;
+}
+@keyframes conePulse {
+  0%, 100% { opacity: .55; }
+  50%       { opacity: 1; }
+}
+@keyframes dotPulse {
+  0%, 100% { r: 3.5; opacity: .85; }
+  50%       { r: 5;   opacity: 1; }
+}
 /* ─── REDUCED MOTION ─────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .pin-pulse { animation: none; opacity: 0; }
@@ -816,6 +1081,13 @@ html, body {
     <span id="era-label" class="era-label"></span>
   </div>
   <div id="topbar-right">
+  <div id="profile-hud">
+    <div class="profile-pip"></div>
+    <div class="profile-pip"></div>
+    <div class="profile-pip"></div>
+    <div class="profile-pip"></div>
+    <span id="profile-label">PERFIL</span>
+  </div>
     <div class="stat-pill">
       <span class="stat-label">CÂMERAS</span>
       <span class="stat-value" id="val-cameras">0</span>
@@ -926,6 +1198,7 @@ html, body {
 
   <!-- FINAL REPORT -->
   <div id="final-report" class="hidden">
+    <div id="report-profile"></div>
     <div id="report-content"></div>
   </div>
 
@@ -2296,136 +2569,574 @@ const ARCHETYPES = [
    CIDADE ONLINE , State Management
    ═══════════════════════════════════════════════════ */
 
-const SAVE_KEY = 'cidade_online_v4';
-
-function freshState() {
-  return {
-    cameras: 0,
-    transparency: 6,
-    equity: 6,
-    ibmContract: null,
-    reportStatus: null,
-    schoolBiometrics: null,
-    rodrigoTemplate: null,
-    amaraPublished: null,
-    amaraIndependent: null,
-    cpiDeponent: null,
-    eduRegistered: null,
-    eduOrganized: null,
-    eduWhistle: null,
-    rodrigoWhistle: null,
-    // flags
-    marco_fired: false,
-    marco_leaked_clause: false,
-    marco_deposed: false,
-    marco_survived: false,
-    marco_exposed_later: false,
-    marco_legal_action: false,
-    marco_leaked_acquisition: false,
-    marco_legacy: null,
-    rodrigo_innovator: false,
-    rodrigo_compromised: false,
-    rodrigo_refused_rf: false,
-    rodrigo_audit_reveals: false,
-    rodrigo_pia_compromised: false,
-    rodrigo_pb_opaque: false,
-    rodrigo_pb_refused: false,
-    rodrigo_pb_partial: false,
-    rodrigo_pb_councilors: false,
-    rodrigo_notified: false,
-    rodrigo_published_audit: false,
-    rodrigo_has_audit: false,
-    rodrigo_mp_source: false,
-    rodrigo_testified: false,
-    rodrigo_testified_immunity: false,
-    rodrigo_testified_public: false,
-    amara_public: false,
-    amara_outframed: false,
-    amara_rebuttal: false,
-    amara_press_collaboration: false,
-    amara_public_hearing: false,
-    amara_ignored_debate: false,
-    amara_journalist_ally: false,
-    amara_independent: false,
-    amara_lgpd_shield: false,
-    amara_published_sensitive: false,
-    amara_guided_by_docs: false,
-    amara_mp_delivery: false,
-    amara_legal_delay: false,
-    amara_stadiums_published: false,
-    amara_integrated_research: false,
-    amara_congressional_hearing: false,
-    amara_community_research: false,
-    amara_second_session: false,
-    amara_withdrew: false,
-    amara_sued: false,
-    amara_has_report: false,
-    amara_has_rodrigo_docs: false,
-    amara_has_marco_analysis: false,
-    amara_has_acquisition_docs: false,
-    amara_notified_school: false,
-    amara_has_bus_testimony: false,
-    amara_has_edu_data: false,
-    amara_has_edu_interview: false,
-    edu_incident_1: undefined,
-    edu_photo: false,
-    edu_has_audio: false,
-    edu_bus_documented: false,
-    edu_bus_organized: false,
-    edu_adapted_bus: false,
-    edu_adapted: false,
-    edu_data_contributed: false,
-    edu_unknown_impact: false,
-    edu_spreadsheet: false,
-    edu_cited: false,
-    edu_named: false,
-    edu_consulted_collective: false,
-    edu_named_case: false,
-    edu_withdrew: false,
-    edu_tactic: false,
-    edu_meeting: null,
-    edu_demand: null,
-    edu_bus_organized_flag: false
-  };
-}
-
-function freshProgress() {
-  return {
-    completed: {},       // charId => true
-    currentChar: null,
-    currentEraIdx: {},   // charId => index in ERA_ORDER[charId]
-    choiceHistory: {}    // eraId => { letter, optionIdx }
-  };
-}
-
 let ST = freshState();
 let PROG = freshProgress();
 
-function saveGame() {
-  try {
-    localStorage.setItem(SAVE_KEY, JSON.stringify({ st: ST, prog: PROG }));
-  } catch(e) {}
-}
-
-function loadGame() {
-  try {
-    const raw = localStorage.getItem(SAVE_KEY);
-    if (raw) {
-      const saved = JSON.parse(raw);
-      Object.assign(ST, saved.st);
-      Object.assign(PROG, saved.prog);
-      return true;
-    }
-  } catch(e) {}
-  return false;
-}
-
+// ─── PERSISTÊNCIA EM MEMÓRIA (sem localStorage) ───────────────────────────
+function saveGame() { /* no-op: estado já vive em ST e PROG */ }
+function loadGame() { return false; }
 function resetGame() {
-  ST = freshState();
-  PROG = freshProgress();
-  localStorage.removeItem(SAVE_KEY);
+  Object.assign(ST, freshState());
+  Object.assign(PROG, freshProgress());
+  PROFILE.scores = { empatico:0, cetico:0, provocador:0, observador:0 };
+  PROFILE.dominant = null;
+  PROFILE.tags = [];
+}
+// ─── PERFIL DO JOGADOR ─────────────────────────────────────────────────────
+const PROFILE = {
+  scores: { empatico: 0, cetico: 0, provocador: 0, observador: 0 },
+  dominant: null,   // traço com maior score
+  tags: []          // tags acumuladas (ex: 'solidario', 'calculista')
+};
+
+// Regras de classificação (PT-BR, normalizado sem acento)
+const INTENT_RULES = [
+  { trait:'empatico',    tag:'solidario',   patterns:['entendo','sinto','te afeta','me preocupa','importa','apoio','estou junto','ajudar','solidario','solidária','solidária','que voce sente','como voce esta','tudo bem','voce precisa','posso ajudar','cuida','cuidado'] },
+  { trait:'empatico',    tag:'cuidador',    patterns:['como voce ta','ta bem','precisa de apoio','precisa de ajuda','voce ok','ta ok','que pena','lamento','fiquei triste','doeu'] },
+  { trait:'cetico',      tag:'calculista',  patterns:['por que','qual a prova','como sabe','tem certeza','dados','evidencia','fonte','pesquisa','comprova','mostrar','mostrar isso','de onde','baseado em que','referencia'] },
+  { trait:'cetico',      tag:'analista',    patterns:['mas e se','por outro lado','depende','contexto','afinal','na verdade','pensando bem','contradicao','inconsistencia','ressalva'] },
+  { trait:'provocador',  tag:'confrontador',patterns:['absurdo','inaceitavel','precisa parar','nao pode','responda','cobrar','exijo','denunciar','enfrentar','escandaloso','vergonhoso','criminoso','cumplicidade','conivencia'] },
+  { trait:'provocador',  tag:'direto',      patterns:['vai fazer o que','o que voce faz','precisa agir','vai cobrar','e agora','cadê a acao','faz nada','omissao','omisso'] },
+  { trait:'observador',  tag:'estrategista',patterns:['quando','timing','momento certo','estrategia','plano','articular','longo prazo','calculo','calcular','esperar','oportunidade'] },
+  { trait:'observador',  tag:'documentador',patterns:['anotar','registrar','documentar','gravar','prova','guardar','mapear','arquivo','arquivar','evidencia guardada','salvar','screenshot'] }
+];
+
+// Normaliza texto: minúsculas + remove acentos
+function normalizeText(txt) {
+  return txt.toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9 ]/g, ' ');
 }
 
+// Classifica uma fala → atualiza PROFILE → retorna { trait, tag } ou null
+function classifyIntent(text) {
+  const norm = normalizeText(text);
+  let matched = null;
+  for (const rule of INTENT_RULES) {
+    if (rule.patterns.some(p => norm.includes(p))) {
+      matched = { trait: rule.trait, tag: rule.tag };
+      break; // primeira regra que casa
+    }
+  }
+  if (matched) {
+    PROFILE.scores[matched.trait]++;
+    if (!PROFILE.tags.includes(matched.tag)) PROFILE.tags.push(matched.tag);
+  }
+  // Recalcular dominante
+  const entries = Object.entries(PROFILE.scores);
+  const max = Math.max(...entries.map(([,v]) => v));
+  if (max > 0) {
+    PROFILE.dominant = entries.find(([,v]) => v === max)[0];
+  }
+  return matched;
+}
+
+// Cores e rótulos dos traços
+const TRAIT_META = {
+  empatico:   { label: 'EMPÁTICO',   color: '#10B981' },
+  cetico:     { label: 'CÉTICO',     color: '#3B82F6' },
+  provocador: { label: 'PROVOCADOR', color: '#EF4444' },
+  observador: { label: 'OBSERVADOR', color: '#F59E0B' }
+};
+  // ─── BANCOS DE RESPOSTAS POR NPC × TRAÇO ──────────────────────────────────
+// Estrutura: NPC_RESPONSES[charId][trait] = array de falas
+// classifyIntent detecta o traço → sorteia uma fala do banco correspondente
+// Se nenhum traço foi detectado → usa 'default'
+
+const NPC_RESPONSES = {
+
+  marco: {
+    empatico: [
+      'Você ouve antes de julgar. Isso é raro. Mas escuta não muda o que está assinado.',
+      'Aprecio a disposição. O problema é que compaixão não aparece no contrato.',
+      'Não estou acostumado com quem pergunta como eu estou. A resposta é: exausto.'
+    ],
+    cetico: [
+      'Você quer os números. Página 47, cláusula 9-B. Auditoria prevista, nunca executada.',
+      'Dado correto: 96% de falsos positivos na pele escura. Dado que a secretaria usou: zero.',
+      'A fonte é o próprio contrato. Nunca foi publicado. Eu tenho uma cópia.'
+    ],
+    provocador: [
+      'Sim, eu assinei. E vou ter que viver com isso. O que você quer — confissão pública?',
+      'Cobrar é fácil. Eu também cobrava, antes de sentar nessa cadeira.',
+      'Inaceitável é a palavra certa. Mas inaceitável e irreversível às vezes são a mesma coisa.'
+    ],
+    observador: [
+      'Você está mapeando. Inteligente. O timing importa — agora é tarde demais para alguns nós.',
+      'Registrar é a única coisa que ainda faz sentido fazer. Eu devia ter feito antes.',
+      'Estratégia? A deles era de longo prazo. A nossa era de mandato. Perdemos no prazo.'
+    ],
+    default: [
+      'Isso é mais complicado do que parece. Sempre é.',
+      'Há coisas que não posso dizer aqui. Há coisas que já disse e não mudou nada.',
+      'Você pergunta como se houvesse uma resposta simples. Não há.'
+    ]
+  },
+
+  rodrigo: {
+    empatico: [
+      'Obrigado por perguntar. Ninguém pergunta como o engenheiro está. A resposta: arrependido.',
+      'Eu também me preocupo. Com o Davi, com os 264, com o meu nome nesse relatório.',
+      'Cuidado é o que faltou no processo inteiro. De todos nós.'
+    ],
+    cetico: [
+      'Você já leu os contratos. Eu consigo ver. A cláusula de revisão está na página 12.',
+      'Os dados de falso positivo estão no pen-drive. Auditoria informal — fiz por conta própria.',
+      'Evidência existe. O problema não é falta de prova. É falta de quem queira usar.'
+    ],
+    provocador: [
+      'Exige? Justo. Eu também exigi internamente. Me mandaram revisar o prazo, não o sistema.',
+      'Confrontar é o que o pen-drive faz, se eu entregar. Ainda estou calculando o custo.',
+      'Absurdo é a palavra técnica correta para o que foi aprovado. Eu usei ela no memo. Ignoraram.'
+    ],
+    observador: [
+      'Timing. Você entende. Antes da renovação do contrato é o momento. Depois é tarde.',
+      'Estou documentando desde 2021. Tenho 340 páginas. O problema é para quem entregar.',
+      'A estratégia deles foi fragmentar a responsabilidade. Cada nó nega o sistema inteiro.'
+    ],
+    default: [
+      'Tem um arquivo no pen-drive que responde isso melhor do que eu.',
+      'Não sei se devo dizer mais. Depende do que você vai fazer com isso.',
+      'Projetei o sistema. Não projetei o uso que fizeram dele. Sei que essa distinção não resolve nada.'
+    ]
+  },
+
+  amara: {
+    empatico: [
+      'O irmão do Edu se chama Davi. Dezessete anos. Parado toda semana no mesmo ponto.',
+      'Importa sim. Por isso ainda estou aqui, mesmo depois da carta de advogado.',
+      'Solidariedade sem dado é gesto. Com dado, é argumento. Preciso dos dois.'
+    ],
+    cetico: [
+      'A metodologia deles é circular: usam os próprios dados do sistema para validar o sistema.',
+      'Meu mapa sobrepõe câmeras e censo racial. A correlação é 0,87. Isso é dado.',
+      'Fonte: Hemeroteca Digital, registros da SSP-BA e meu próprio levantamento de campo. Peer-reviewed.'
+    ],
+    provocador: [
+      'Exatamente. Não é correção política — é necessário. As câmeras seguem o mapa racial, não o de crimes.',
+      'Inaceitável e documentado. São duas coisas diferentes. Eu tenho o documento.',
+      'Cobrar a secretaria sem publicar o mapa é cobrar no escuro. Precisamos de luz pública.'
+    ],
+    observador: [
+      'Você notou que o mapa de câmeras repete o mapa do redlining histórico de Salvador.',
+      'Estou esperando o momento certo para entregar à jornalista. Antes do paper, não depois.',
+      'Documentar a parada do Davi é estratégia, não voyeurismo. Nome e rosto mudam o debate.'
+    ],
+    default: [
+      'O dado existe. A questão é quem tem acesso a ele e quem controla a narrativa.',
+      'Já tentei o canal institucional. A resposta foi uma nota de esclarecimento de duas linhas.',
+      'Pesquisa sem consequência é arquivo. Eu quero consequência.'
+    ]
+  },
+
+  edu: {
+    empatico: [
+      'Você pergunta como eu estou. Cansado. Quatro vezes pela mesma câmera, mesma esquina.',
+      'Obrigado por ouvir. A maioria quer o dado, não a pessoa. Eu sou os dois.',
+      'Importa saber que alguém se importa. Mas importar não desfaz os 47 registros.'
+    ],
+    cetico: [
+      'Você quer prova? Tenho 47 vídeos no celular. Cada parada, data, hora, câmera.',
+      'Dado: fui parado 4 vezes pela mesma câmera em 6 semanas. Dado: sou o caso mais documentado dos 264.',
+      'A fonte sou eu. E os outros 263 que pararam de contar porque cansa.'
+    ],
+    provocador: [
+      'Absurdo é o meu cotidiano. Você está indignado agora — eu estou indignado há dois anos.',
+      'Cobrar quem? Cobrei. Registrei. Mandei e-mail para a ouvidoria. Resposta: protocolo aberto.',
+      'Enfrentar com nome e rosto é o que pedem que eu não faça. Por isso talvez seja exatamente o que eu precise fazer.'
+    ],
+    observador: [
+      'Você notou a câmera na esquina antes de eu apontar. Então você entende.',
+      'Estou documentando desde a primeira parada. Planilha, foto, testemunha quando tem.',
+      'Timing: antes ou depois da renovação do contrato? Isso muda tudo sobre o que vale fazer agora.'
+    ],
+    default: [
+      'Tenho 47 registros. O sistema tem 264 casos. Eu sou o mais documentado porque fui o mais parado.',
+      'Não sei o que você vai fazer com o que estou contando. Mas estou contando.',
+      'O sobrinho do meu vizinho tem onze anos. Ainda não foi parado. Ainda.'
+    ]
+  }
+};
+
+// Sorteia uma fala do banco correto (trait detectado ou default)
+function getNPCResponse(charId, trait) {
+  const bank = NPC_RESPONSES[charId];
+  if (!bank) return '...';
+  const pool = (trait && bank[trait]) ? bank[trait] : bank.default;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+  // ─── REAÇÕES DE ABERTURA AO PERFIL DOMINANTE ──────────────────────────────
+// Aparece no início do diálogo se o jogador já tem um traço dominante.
+// PROFILE_OPENINGS[charId][dominant] = string
+// Se dominant === null (sem perfil ainda) → não exibe nada.
+
+const PROFILE_OPENINGS = {
+  marco: {
+    empatico:   'Ele para por um momento. Não está acostumado com quem ouve antes de julgar.',
+    cetico:     '"Você já leu os contratos." Ele conclui antes de você terminar a pergunta.',
+    provocador: 'Ele endurece. Já esperava confronto — e se preparou para ele.',
+    observador: '"Você está mapeando." Não é pergunta. Ele notou antes de você abrir a boca.'
+  },
+  rodrigo: {
+    empatico:   'Ele relaxa um milímetro. Talvez pela primeira vez em semanas alguém perguntou como ele estava.',
+    cetico:     '"Você quer os dados." Ele já está abrindo o pen-drive antes de responder.',
+    provocador: 'Ele segura o pen-drive com mais força. Sabia que esse momento ia chegar.',
+    observador: '"Você entende de timing." Ele avalia você por dois segundos antes de continuar.'
+  },
+  amara: {
+    empatico:   'Ela abre o mapa com cuidado. Percebeu que você está ouvindo de verdade.',
+    cetico:     '"Exatamente." Mais firme. Ela gosta de quem chega com perguntas, não com certezas.',
+    provocador: '"Exatamente." Mais firme. "Não é correção política — é necessário."',
+    observador: '"Você notou o padrão antes de eu explicar." Ela marca um ponto no mapa.'
+  },
+  edu: {
+    empatico:   'Ele para a bicicleta. Não está acostumado com quem pergunta antes de pedir o dado.',
+    cetico:     '"Você quer número." Ele já está abrindo o celular. "Tenho 47 vídeos."',
+    provocador: '"Você está com raiva." Pausa. "Eu também. Há dois anos."',
+    observador: '"Você notou a câmera na esquina antes de eu apontar." Ele te olha diferente.'
+  }
+};
+
+// Retorna a fala de abertura ou null se ainda não há dominante
+function getProfileOpening(charId) {
+  if (!PROFILE.dominant) return null;
+  const openings = PROFILE_OPENINGS[charId];
+  if (!openings) return null;
+  return openings[PROFILE.dominant] || null;
+}
+  // ─── MOTOR DE CHAT ─────────────────────────────────────────────────────────
+
+// Estado da conversa ativa
+const CHAT = {
+  charId:    null,
+  exchanges: 0,      // trocas livres feitas
+  maxFree:   2,      // trocas livres antes de mostrar decisão
+  decided:   false,  // decisão já tomada nesta era
+  npcColor:  '#2A2420'
+};
+
+// Abre o chat para um NPC (substitui openPanel para a fase de conversa livre)
+function openChat(charId) {
+  const meta   = CHARS_META[charId];
+  const eraId  = getCurrentEraId(charId);
+  const era    = eraId ? ERAS[eraId] : null;
+
+  CHAT.charId    = charId;
+  CHAT.exchanges = 0;
+  CHAT.decided   = false;
+  CHAT.npcColor  = meta.color;
+
+  // Cabeçalho
+  document.getElementById('chat-dot').style.background = meta.color;
+  document.getElementById('chat-npc-name').textContent  = meta.name;
+  document.getElementById('chat-npc-role').textContent  = meta.role;
+
+  // Cor do NPC nos balões
+  document.getElementById('chat-overlay').style.setProperty('--npc-color', meta.color);
+
+  // Limpa mensagens anteriores e decisão
+  document.getElementById('chat-messages').innerHTML = '';
+  document.getElementById('chat-decision').classList.add('hidden');
+  document.getElementById('chat-options').innerHTML = '';
+
+  // Reativa input
+  setChatInputEnabled(true);
+
+  // Mostra overlay
+  document.getElementById('chat-overlay').classList.remove('hidden');
+
+  // 1. Reação de abertura ao perfil (se houver dominante)
+  const opening = getProfileOpening(charId);
+  if (opening) appendBubble(opening, 'opening');
+
+  // 2. Saudação do NPC (sorteada entre variações da era ou genérica)
+  const greet = getGreeting(charId, era);
+  setTimeout(() => appendBubble(greet, 'npc'), opening ? 350 : 50);
+}
+
+// Saudações por NPC (3 variações cada)
+const NPC_GREETINGS = {
+  marco: [
+    'Tenho pouco tempo. O que você quer saber?',
+    'Pesquisadora. Certo. Pode perguntar — não garanto que vou responder tudo.',
+    'Você veio de fora. Isso muda o que posso dizer e o que não posso.'
+  ],
+  rodrigo: [
+    'Engenheiro Rodrigo Maia. Prefiro não dar entrevista, mas aqui estou.',
+    'Você sabe onde me encontrou. Isso já diz alguma coisa sobre o que você quer.',
+    'Tenho trinta minutos. Menos se alguém me reconhecer aqui.'
+  ],
+  amara: [
+    'Professora Amara. Pode chamar de Amara. O que trouxe você até aqui?',
+    'Você chegou na hora certa — ou na errada, depende do que vai fazer com o que eu mostrar.',
+    'Tenho o mapa. Tenho os dados. A questão é o que você vai fazer com isso.'
+  ],
+  edu: [
+    'Pode falar, mas rápido — tenho entrega em vinte minutos.',
+    'Você quer saber sobre as paradas. Todo mundo quer. Poucos voltam depois.',
+    'Edu. Entregador. Caso número 47 de 264, se você estiver contando.'
+  ]
+};
+
+function getGreeting(charId, era) {
+  const pool = NPC_GREETINGS[charId];
+  if (!pool) return 'O que você quer saber?';
+  // Usa hash do eraId para variar mas ser consistente por era
+  const idx = era ? (era.seq || 0) % pool.length : Math.floor(Math.random() * pool.length);
+  return pool[idx];
+}
+
+// Adiciona bolha ao chat
+function appendBubble(text, type) {
+  // type: 'npc' | 'player' | 'opening' | 'consequence'
+  const msg = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = `bubble bubble-${type === 'player' ? 'player' : type === 'opening' ? 'opening' : 'npc'}`;
+  if (type === 'consequence') {
+    div.style.fontStyle = 'italic';
+    div.style.opacity = '.75';
+    div.style.fontSize = '12px';
+  }
+  div.textContent = text;
+  msg.appendChild(div);
+  msg.scrollTop = msg.scrollHeight;
+}
+
+// Habilita / desabilita input
+function setChatInputEnabled(enabled) {
+  document.getElementById('chat-textarea').disabled = !enabled;
+  document.getElementById('chat-send').disabled     = !enabled;
+  if (enabled) document.getElementById('chat-textarea').focus();
+}
+
+// Mostra o intent flash (sobe e some em 1.6s)
+function showIntentFlash(trait) {
+  if (!trait) return;
+  const tm = TRAIT_META[trait];
+  if (!tm) return;
+  const el = document.getElementById('intent-flash');
+  el.textContent = `+ ${tm.label}`;
+  el.style.color = tm.color;
+  el.style.borderColor = tm.color + '55';
+  el.classList.remove('hidden');
+  el.style.opacity = '1';
+  clearTimeout(el._timer);
+  el._timer = setTimeout(() => {
+    el.style.opacity = '0';
+    setTimeout(() => el.classList.add('hidden'), 400);
+  }, 1200);
+}
+
+// Atualiza o HUD de perfil no topbar
+function updateProfileHud() {
+  const label = document.getElementById('profile-label');
+  const pips  = document.querySelectorAll('.profile-pip');
+  if (!label) return;
+
+  if (PROFILE.dominant) {
+    const tm = TRAIT_META[PROFILE.dominant];
+    label.textContent  = tm.label;
+    label.style.color  = tm.color;
+    label.style.opacity = '1';
+  } else {
+    label.textContent = 'PERFIL';
+    label.style.color = '';
+    label.style.opacity = '.5';
+  }
+
+  // Preenche pips proporcionalmente
+  const total = Object.values(PROFILE.scores).reduce((a, b) => a + b, 0);
+  const traits = ['empatico','cetico','provocador','observador'];
+  pips.forEach((pip, i) => {
+    const t = traits[i];
+    const active = PROFILE.scores[t] > 0;
+    pip.style.background = active ? TRAIT_META[t].color : 'rgba(42,36,32,.15)';
+    pip.title = TRAIT_META[t].label + ': ' + PROFILE.scores[t];
+  });
+}
+
+// Processa envio de mensagem do jogador
+function handleChatSend() {
+  const ta   = document.getElementById('chat-textarea');
+  const text = ta.value.trim();
+  if (!text) return;
+
+  ta.value = '';
+
+  // 1. Bolha do jogador
+  appendBubble(text, 'player');
+
+  // 2. Classificar intenção + atualizar perfil
+  const match = classifyIntent(text);
+  showIntentFlash(match ? match.trait : null);
+  updateProfileHud();
+
+  // 3. Incrementa trocas
+  CHAT.exchanges++;
+
+  // 4. Resposta do NPC após breve delay
+  setTimeout(() => {
+    const resp = getNPCResponse(CHAT.charId, match ? match.trait : null);
+    appendBubble(resp, 'npc');
+
+    // 5. Se já atingiu o máximo de trocas livres → mostrar decisão
+    if (CHAT.exchanges >= CHAT.maxFree) {
+      setChatInputEnabled(false);
+      setTimeout(() => showChatDecision(), 600);
+    }
+  }, 320);
+}
+
+// Mostra as opções A/B/C/D no chat
+function showChatDecision() {
+  const charId = CHAT.charId;
+  const eraId  = getCurrentEraId(charId);
+  if (!eraId) return;
+  const era = ERAS[eraId];
+  if (!era || !era.decision) return;
+
+  const decEl  = document.getElementById('chat-decision');
+  const qEl    = document.getElementById('chat-decision-question');
+  const optEl  = document.getElementById('chat-options');
+
+  qEl.textContent  = era.decision;
+  optEl.innerHTML  = '';
+
+  const opts = (era.options || []).filter(o => !o.condition || o.condition(ST));
+  opts.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'chat-opt';
+    btn.innerHTML = `
+      <span class="chat-opt-letter">${opt.letter}</span>
+      <span class="chat-opt-text">${opt.text}</span>
+    `;
+    btn.addEventListener('click', () => onChatOptionChosen(charId, era, opt, idx, btn));
+    optEl.appendChild(btn);
+  });
+
+  decEl.classList.remove('hidden');
+
+  // Rola para a decisão
+  document.getElementById('chat-messages').scrollTop = 9999;
+}
+
+// Processa escolha A/B/C/D no chat
+function onChatOptionChosen(charId, era, opt, idx, btnEl) {
+  if (CHAT.decided) return;
+  CHAT.decided = true;
+
+  // Marca selecionado visualmente
+  document.querySelectorAll('.chat-opt').forEach(b => b.disabled = true);
+  btnEl.classList.add('selected');
+
+  // Aplica efeitos
+  applyEffects(opt.effects);
+  saveGame();
+  updateStats();
+  updateMap();
+
+  // Registra histórico
+  if (!PROG.choiceHistory) PROG.choiceHistory = {};
+  PROG.choiceHistory[era.id] = { letter: opt.letter, idx };
+
+  // Consequência como bolha
+  setTimeout(() => {
+    if (opt.consequence) appendBubble(opt.consequence, 'consequence');
+    if (opt.reveal)      appendBubble('"' + opt.reveal + '"', 'consequence');
+
+    // Avança era
+    const nextEraId = advanceEra(charId);
+
+    setTimeout(() => {
+      if (nextEraId) {
+        // Tem próxima era: botão continuar
+        appendContinueBtn(charId, nextEraId);
+      } else {
+        // Personagem completo
+        PROG.completed[charId] = true;
+        saveGame();
+        updateMap();
+        appendCloseBtn(charId);
+      }
+    }, 600);
+  }, 400);
+}
+
+// Adiciona botão "continuar" para próxima era
+function appendContinueBtn(charId, nextEraId) {
+  const msg = document.getElementById('chat-messages');
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;justify-content:flex-end;margin-top:8px;';
+  const btn = document.createElement('button');
+  btn.className = 'btn-primary';
+  btn.textContent = 'CONTINUAR →';
+  btn.style.fontSize = '10px';
+  btn.style.padding = '8px 16px';
+  btn.addEventListener('click', () => {
+    document.getElementById('chat-decision').classList.add('hidden');
+    document.getElementById('chat-options').innerHTML = '';
+    CHAT.exchanges = 0;
+    CHAT.decided   = false;
+    setChatInputEnabled(true);
+
+    // Saudação da nova era
+    const nextEra = ERAS[nextEraId];
+    const nextGreet = nextEra.title
+      ? `— ${nextEra.title} —`
+      : 'Vamos continuar.';
+    appendBubble(nextGreet, 'opening');
+    setTimeout(() => {
+      const greet = getGreeting(charId, nextEra);
+      appendBubble(greet, 'npc');
+    }, 300);
+  });
+  wrap.appendChild(btn);
+  msg.appendChild(wrap);
+  msg.scrollTop = msg.scrollHeight;
+}
+
+// Adiciona botão "fechar / perspectiva completa"
+function appendCloseBtn(charId) {
+  const msg = document.getElementById('chat-messages');
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;justify-content:flex-end;margin-top:8px;';
+  const btn = document.createElement('button');
+  btn.className = 'btn-primary';
+  btn.textContent = allCharsComplete() ? 'VER RELATÓRIO →' : 'FECHAR ✓';
+  btn.style.fontSize = '10px';
+  btn.style.padding  = '8px 16px';
+  btn.addEventListener('click', () => {
+    document.getElementById('chat-overlay').classList.add('hidden');
+    if (allCharsComplete()) {
+      setTimeout(showFinalReport, 300);
+    }
+  });
+  wrap.appendChild(btn);
+  msg.appendChild(wrap);
+  msg.scrollTop = msg.scrollHeight;
+}
+
+// Fecha o chat
+function closeChat() {
+  document.getElementById('chat-overlay').classList.add('hidden');
+  highlightPin(null, false);
+  updateMap();
+}
+
+// Bindings do chat (chamado no init)
+function bindChat() {
+  document.getElementById('chat-close').addEventListener('click', closeChat);
+
+  document.getElementById('chat-send').addEventListener('click', handleChatSend);
+
+  document.getElementById('chat-textarea').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleChatSend();
+    }
+  });
+}
 function applyEffects(effects) {
   if (!effects) return;
   for (const [k, v] of Object.entries(effects)) {
@@ -2774,25 +3485,32 @@ function updateCameras() {
   if (!layer) return;
   layer.innerHTML = '';
 
-  if (camPositions.length < count) {
-    camPositions = generateCameraPositions(12);
-  }
-
   for (let i = 0; i < count; i++) {
     const p = camPositions[i];
+    if (!p) continue;
+
+    // Cone de visão (triângulo SVG, animado via CSS)
+    const cone = svgEl('polygon', {
+      points: `${p.x},${p.y} ${p.x - 14},${p.y + 22} ${p.x + 14},${p.y + 22}`,
+      fill: 'rgba(239,68,68,0.13)',
+      class: 'cam-cone'
+    });
+    layer.appendChild(cone);
+
+    // Ponto da câmera
     const dot = svgEl('circle', {
-      cx: p.x.toFixed(1),
-      cy: p.y.toFixed(1),
-      r: '2.5',
-      class: count >= 7 ? 'cam-dot cam-dot-alert' : 'cam-dot'
+      cx: p.x, cy: p.y, r: 3.5,
+      fill: 'var(--cam)',
+      opacity: '.85',
+      class: 'cam-dot'
     });
     layer.appendChild(dot);
   }
 
-  // Camera overlay if dense
   const camOverlay = document.getElementById('map-camera-overlay');
   if (camOverlay) {
-    camOverlay.style.opacity = count >= 7 ? '0.04' : '0';
+    const ratio = count / 12;
+    camOverlay.style.opacity = (ratio * 0.18).toFixed(3);
   }
 }
 
@@ -2811,21 +3529,27 @@ function updatePinState(charId) {
   const pin = pinElements[charId];
   if (!pin) return;
 
-  const isComplete = isCharComplete(charId);
-  const isUnlocked = isCharUnlocked(charId);
+  const isComplete  = isCharComplete(charId);
+  const isUnlocked  = isCharUnlocked(charId);
 
   if (isComplete) {
-    pin.classList.add('visited');
+    // Dessatura todo o grupo do pin
+    pin.style.filter  = 'saturate(0.25) opacity(0.55)';
+    pin.style.cursor  = 'default';
     const check = document.getElementById(`pin-check-${charId}`);
-    if (check) check.setAttribute('display', 'block');
-  }
-
-  if (!isUnlocked) {
-    pin.style.opacity = '0.3';
-    pin.style.cursor = 'not-allowed';
+    if (check) check.style.display = 'block';
+  } else if (!isUnlocked) {
+    // Bloqueado: opaco e sem interação clara
+    pin.style.filter  = 'opacity(0.35)';
+    pin.style.cursor  = 'not-allowed';
+    const check = document.getElementById(`pin-check-${charId}`);
+    if (check) check.style.display = 'none';
   } else {
-    pin.style.opacity = '1';
-    pin.style.cursor = 'pointer';
+    // Disponível: normal
+    pin.style.filter  = '';
+    pin.style.cursor  = 'pointer';
+    const check = document.getElementById(`pin-check-${charId}`);
+    if (check) check.style.display = 'none';
   }
 }
 
@@ -3065,6 +3789,70 @@ function showFinalReport() {
   const reportEl = document.getElementById('final-report');
   const content = document.getElementById('report-content');
 
+  // ── Bloco de perfil do jogador ──────────────────────────────────────────
+  const profileEl = document.getElementById('report-profile');
+  if (profileEl) {
+    const dominant = PROFILE.dominant;
+    const tm = dominant ? TRAIT_META[dominant] : null;
+
+    // Barras de cada traço
+    const total = Object.values(PROFILE.scores).reduce((a, b) => a + b, 0) || 1;
+    const barsHTML = ['empatico','cetico','provocador','observador'].map(t => {
+      const meta  = TRAIT_META[t];
+      const score = PROFILE.scores[t];
+      const pct   = Math.round((score / total) * 100);
+      const isDom = t === dominant;
+      return `
+        <div style="margin-bottom:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
+            <span style="font-family:var(--font-mono);font-size:9px;text-transform:uppercase;
+              letter-spacing:.08em;color:${meta.color};font-weight:${isDom?'700':'400'};">
+              ${meta.label}${isDom ? ' ◀' : ''}
+            </span>
+            <span style="font-family:var(--font-mono);font-size:9px;color:var(--line2);opacity:.6;">
+              ${score} interação${score !== 1 ? 'ões' : ''}
+            </span>
+          </div>
+          <div style="height:4px;background:rgba(42,36,32,.1);border-radius:2px;overflow:hidden;">
+            <div style="height:100%;width:${pct}%;background:${meta.color};
+              border-radius:2px;transition:width .6s ease;"></div>
+          </div>
+        </div>`;
+    }).join('');
+
+    // Tags acumuladas
+    const tagsHTML = PROFILE.tags.length
+      ? PROFILE.tags.map(tag =>
+          `<span style="font-family:var(--font-mono);font-size:9px;text-transform:uppercase;
+            letter-spacing:.06em;padding:2px 7px;border:1px solid rgba(42,36,32,.2);
+            border-radius:2px;color:var(--line2);">${tag}</span>`
+        ).join(' ')
+      : '<span style="font-family:var(--font-mono);font-size:9px;color:var(--line2);opacity:.5;">nenhuma detectada</span>';
+
+    profileEl.innerHTML = `
+      <div style="border:1px solid rgba(42,36,32,.15);padding:16px 18px;
+        margin-bottom:20px;background:var(--cream);">
+        <div style="font-family:var(--font-mono);font-size:9px;text-transform:uppercase;
+          letter-spacing:.12em;color:var(--line2);opacity:.6;margin-bottom:12px;">
+          PERFIL DA PESQUISADORA
+        </div>
+        ${tm ? `
+        <div style="font-family:var(--font-mono);font-size:18px;font-weight:700;
+          color:${tm.color};margin-bottom:14px;letter-spacing:.04em;">
+          ${tm.label}
+        </div>` : ''}
+        ${barsHTML}
+        <div style="margin-top:12px;">
+          <div style="font-family:var(--font-mono);font-size:9px;text-transform:uppercase;
+            letter-spacing:.08em;color:var(--line2);opacity:.5;margin-bottom:6px;">
+            MARCADORES
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;">${tagsHTML}</div>
+        </div>
+      </div>`;
+  }
+  // ── fim bloco de perfil ─────────────────────────────────────────────────
+
   const epigraph = ST.edu_demand === 'meaning'
     ? '"Não quero que tenha sido em vão." , Edu Santos, entregador, Salvador, 2024.'
     : ST.edu_demand === 'future'
@@ -3100,6 +3888,13 @@ function showFinalReport() {
     <div class="report-archetype" style="color:${arch.color}">${arch.name}</div>
 
     <div class="report-sub">${arch.desc}</div>
+    ${PROFILE.dominant && PROFILE.tags.length
+      ? `<p style="font-family:var(--font-mono);font-size:10px;color:var(--line2);
+           margin-top:6px;opacity:.7;">
+           Traço dominante: <strong>${TRAIT_META[PROFILE.dominant].label}</strong>
+           · marcadores: ${PROFILE.tags.join(', ')}
+         </p>`
+      : ''}
 
     <div class="report-state-bars">
       <div class="report-bar-row">
@@ -3180,14 +3975,15 @@ function init() {
   const mapScreen = document.getElementById('map-screen');
   const finalReport = document.getElementById('final-report');
 
-  // If game was previously started, go to map
+
   const hasProgress = Object.keys(PROG.completed || {}).length > 0 ||
                       Object.keys(PROG.currentEraIdx || {}).length > 0;
 
   if (hasProgress) {
     splash.classList.add('hidden');
     mapScreen.classList.remove('hidden');
-    buildMap();
+   buildMap();
+    bindChat();
     bindPins();
     updateStats();
     updateMap();
@@ -3201,6 +3997,7 @@ function init() {
     splash.classList.add('hidden');
     mapScreen.classList.remove('hidden');
     buildMap();
+    bindChat();
     bindPins();
     updateStats();
     updateMap();
@@ -3261,9 +4058,8 @@ function onPinClick(charId) {
     return;
   }
 
-  openPanel(charId, era);
+  openChat(charId);
   saveGame();
-}
 
 function showHint(charId) {
   const hint = document.getElementById('map-hint');
@@ -3304,5 +4100,42 @@ function onRestart() {
 document.addEventListener('DOMContentLoaded', init);
 
 </script>
+  <!-- ─── CHAT OVERLAY ──────────────────────────────────────────────────────── -->
+<div id="chat-overlay" class="hidden">
+
+  <!-- Cabeçalho do NPC -->
+  <div id="chat-header">
+    <div id="chat-dot"></div>
+    <div id="chat-header-text">
+      <span id="chat-npc-name"></span>
+      <span id="chat-npc-role"></span>
+    </div>
+    <button id="chat-close" aria-label="Fechar">✕</button>
+  </div>
+
+  <!-- Área de mensagens -->
+  <div id="chat-messages"></div>
+
+  <!-- Intent flash (sobe e some) -->
+  <div id="intent-flash" class="hidden"></div>
+
+  <!-- Campo de input livre -->
+  <div id="chat-input-area">
+    <textarea
+      id="chat-textarea"
+      placeholder="Digite sua resposta..."
+      rows="2"
+      maxlength="300"
+    ></textarea>
+    <button id="chat-send">ENVIAR</button>
+  </div>
+
+  <!-- Decisão A/B/C/D (aparece depois das trocas livres) -->
+  <div id="chat-decision" class="hidden">
+    <div id="chat-decision-question"></div>
+    <div id="chat-options"></div>
+  </div>
+
+</div>
 </body>
 </html>
